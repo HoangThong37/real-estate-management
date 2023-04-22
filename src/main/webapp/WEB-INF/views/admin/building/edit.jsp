@@ -1,5 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/common/taglib.jsp" %>
+<c:url var="buildingAPI" value="/api/building"  />
 <html>
 <head>
     <title>Chỉnh sửa tòa nhà</title>
@@ -26,9 +28,9 @@
                 <div class="col-xs-12">
                     <form class="form-horizontal" role="form" id="formEdit">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for=""> Tên tòa nhà </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="name"> Tên tòa nhà </label>
                             <div class="col-sm-9">
-                                <input type="text" id="name" class="form-control" name="name"/>
+                                <input type="text" id="name" class="form-control" name="name" value="name"/>
                             </div>
                         </div>
 
@@ -152,7 +154,7 @@
                         </div>
 
 
-                        <div class="form-group">
+<%--                        <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="buildingTypes" > Loại tòa nhà </label>
                             <div class="col-sm-9">
                                 <label class="checkbox-inline">
@@ -165,7 +167,7 @@
                                     <input type="checkbox" value="NOI_THAT" id="buildingTypes3" name="" >Nội thất
                                 </label>
                             </div>
-                        </div>
+                        </div>--%>
 
 
                         <div class="form-group">
@@ -191,27 +193,33 @@
 
 <script>
     //btnAddBuilding
-    $('#btnAddBuilding').click(function () {
+    $('#btnAddBuilding').click(function (e) {
         //  call api add building function
         // t1. cái pthuc đẩy về là : POST
         // t2. nhập đoạn url vô
         // t3. cái dữ liệu mình đẩy vô là chuỗi json - cần phải định nghĩa (chuỗi: text/plain / json: json)
+        e.preventDefault();
         var data = {};
         var buildingTypes = [];
         var formData = $('#formEdit').serializeArray;
 
-        $.each(collection, function (index, v) {
+        /*$.each(formData, function (index, v) {
             if (v.name == 'buildingTypes') {
                 buildingTypes.push(v.value);
             } else {
                 data["" + v.name + ""] = v.value;
             }
         });
-        data["buildingTypes"] = buildingTypes;
+        data["buildingTypes"] = buildingTypes;*/
+
+        $.each(formData, function (index, v) {
+                data["" + v.name + ""] = v.value;
+        });
+
 
         $.ajax({
-            type: "POST",
-            url: "/api/building",
+            type: 'POST',
+            url: "${buildingAPI}",
             data: JSON.stringify(data),
             dataType: "json",
             contentType: "application/json",
