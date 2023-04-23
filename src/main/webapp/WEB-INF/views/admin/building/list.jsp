@@ -146,12 +146,10 @@
                                             <div class="col-sm-3">
                                                 <div>
                                                     <label for="name">Chọn nhân viên quản lý</label>
-                                                    <select class="form-control" id="staffId" aria-label="Default select example">
-                                                        <option selected>--Chọn nhân viên phụ trách--</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
+                                                    <form:select cssClass="form-control" path="staffId">
+                                                        <form:option value="-1" label="--- Chọn nhân viên ---" />
+                                                        <form:options items="${staffmaps}"/>
+                                                    </form:select>
                                                 </div>
                                             </div>
 
@@ -215,6 +213,7 @@
                             <tr>
                                 <th></th>
                                 <th>Tên sản phẩm</th>
+                                <th>Số tầng hầm</th>
                                 <th>Địa chỉ</th>
                                 <th>Tên quản lí</th>
                                 <th>Số điện thoại</th>
@@ -226,22 +225,25 @@
                             </thead>
 
                             <tbody>
-                            <tr>
-                                <td><input type="checkbox" value="1" id="checkbox_1"></td>
-                                <td>Building Tower</td>
-                                <td>Quận Bình Thạnh</td>
-                                <td>a Bắc</td>
-                                <td>0939387475</td>
-                                <td>150</td>
-                                <td>145</td>
-                                <td>45</td>
-                                <td>
-                                    <button class="btn btn-xs" data-toggle="tooltip"
-                                            title="Giao tòa nhà" onclick="assingmentBuilding(1)">
-                                        <i class="fa fa-home" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            <c:forEach var="item" items="${buildings}">
+                                <tr>
+                                    <td><input type="checkbox" value="1" id="checkbox_1"></td>
+                                    <td>${item.name}</td>
+                                    <td>${item.numberOfBasement}</td>
+                                    <td>Quận Bình Thạnh</td>
+                                    <td>a Bắc</td>
+                                    <td>0939387475</td>
+                                    <td>150</td>
+                                    <td>145</td>
+                                    <td>45</td>
+                                    <td>
+                                        <button class="btn btn-xs" data-toggle="tooltip"
+                                                title="Giao tòa nhà" onclick="assingmentBuilding(1)">
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
