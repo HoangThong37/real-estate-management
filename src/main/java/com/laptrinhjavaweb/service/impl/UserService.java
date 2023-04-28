@@ -159,10 +159,13 @@ public class UserService implements IUserService {
     public Map<Long, String> getStaffMaps() {
         Map<Long, String> result = new HashMap<>();
         List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "USER");
+        //List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "staff");
         for (UserEntity item : staffs) {
             result.put(item.getId(), item.getFullName());
         }
         return result;
     }
+
+
 
 }

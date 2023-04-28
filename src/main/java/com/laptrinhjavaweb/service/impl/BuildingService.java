@@ -7,6 +7,7 @@ import com.laptrinhjavaweb.dto.RoleDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.enums.DistrictsEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
@@ -48,6 +49,7 @@ public class BuildingService implements IBuildingService {
         BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
         buildingRepository.save(buildingEntity);
 	}
+
 
 
 

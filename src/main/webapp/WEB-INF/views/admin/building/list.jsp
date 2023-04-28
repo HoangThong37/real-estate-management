@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var="buildingListURL" value="/admin/building-list"  />
+<c:url var="buildingListURL" value="/admin/building-list"/>
+<c:url var="loadStaffAPI" value="/api/building"/>
+
+
 <html>
 <head>
     <title>Danh sách tòa nhà</title>
@@ -59,15 +62,18 @@
 
                                             <div class="col-sm-4">
                                                 <div>
-                                                    <label for="name">Quận hiện có</label>
-                                                    <select class="form-control" aria-label="Default select example">
-                                                        <option selected>--Chọn quận--</option>
-                                                        <option value="1">One</option>
-                                                        <option value="2">Two</option>
-                                                        <option value="3">Three</option>
-                                                    </select>
-                                                    <%--<form:select ></form:select>--%>
-                                                </div>
+                                                    <label>Quận hiện có</label>
+                                                    <form:select cssClass="form-control" path="district">
+                                                        <option value="">Chọn Quận</option>
+                                                        <c:forEach items="${districts}" var="item">
+                                                            <form:option value="${item.code}">${item.name}</form:option>
+                                                        </c:forEach>
+                                                    </form:select>
+                                                        <%--<form:select cssClass="form-control" path="districtCode">--%>
+                                                            <%--<form:option value="-1" label="--- Chọn quận ---" />--%>
+                                                            <%--<form:options items="${districts}"/>--%>
+                                                        <%--</form:select>--%>
+                                            </div>
                                             </div>
 
                                             <div class="col-sm-4">
@@ -224,6 +230,7 @@
                             </tr>
                             </thead>
 
+                             <%--tí nhớ thêm data--%>
                             <tbody>
                             <c:forEach var="item" items="${buildings}">
                                 <tr>
@@ -263,7 +270,7 @@
             </div>
 
             <div class="modal-body">
-                <table class="table table-bordered" id="staffList">
+                <table class="table table-bordered" id="staffList"> <%--staffList là id định danh cho cái table này--%>
                     <thead>
                     <tr>
                         <th>Choose Staff</th>
@@ -271,18 +278,24 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><input type="checkbox" value="1" id="customCheck1" checked></td>
-                        <td>staff a</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" value="2" id="customCheck2" checked></td>
-                        <td>staff b</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" value="3" id="customCheck3" checked></td>
-                        <td>staff c</td>
-                    </tr>
+                    <c:forEach var="item" items="${staffmaps}">
+                        <tr>
+                            <td></td>
+                            <td>${item.value}</td>
+                        </tr>
+                    </c:forEach>
+                       <%-- <tr>
+                            <td><input type="checkbox" value="1" id="customCheck1" checked></td>
+                            <td>staff a</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" value="2" id="customCheck2" checked></td>
+                            <td>staff b</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" value="3" id="customCheck3" checked></td>
+                            <td>staff c</td>
+                        </tr>--%>
                     </tbody>
                 </table>
                 <input type="hidden" name="buildingId" id="buildingId" value="">
@@ -299,6 +312,8 @@
 <script>
     function assingmentBuilding(buildingId) {
         openModalAssingmentBuilding();
+        //loadStaffAssign();
+
         $("#buildingId").val(buildingId);
         console.log($("#buildingId").val());
     }
@@ -306,6 +321,35 @@
     function openModalAssingmentBuilding() {
         $('#assignmentBuildingModal').modal();
     }
+
+    /*function loadStaffAssign() {
+        // function này sẽ call 1 api về từ dưới db - nó sẽ load dsach nv lên -> sử dụng ajax
+        $.ajax({
+            type: "GET",
+            url: "${loadStaffAPI}/1/staffs",
+            //data: JSON.stringify(data),  // data gửi về
+            dataType: "json",   // kiểu dữ liệu gửi từ server
+            contentType: "application/json",   // gửi từ server
+
+            success: function (response) {
+                //console.log('success');
+                / data : chính là cục chứa data của tk staffListTO
+                var row = '';
+                $.each(response.data, function (index, item) {
+                    row += '<tr>';
+                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + '" class="check-box-element" ' + item.checked + ' /></td>';
+                    row += '<td class="text-center">' + item.fullName + '</td>';
+                    row += '</tr>';
+                });
+                $('#staffList tbody').html(row);
+
+            },
+            error: function (response) {
+                console.log('faild')
+                console.log(response)
+            }
+        });
+    }*/
 
     $('#btnAssignBuilding').click(function (e) {
         e.preventDefault();
@@ -325,7 +369,7 @@
     function assignStaff(data) {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/api-user-assignment",
+            url: "${buildingListURL}",
             data: JSON.stringify(data),
             dataType: "json",
             contentType: "application/json",

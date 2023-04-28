@@ -62,9 +62,9 @@
                         </div>
 
                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for=""> Kết cấu </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="structure"> Kết cấu </label>
                             <div class="col-sm-9">
-                                <input type="number" id="n" class="form-control" name="street"  />
+                                <input type="number" id="structure" class="form-control" name="street"  />
                             </div>
                         </div>
 
@@ -119,30 +119,30 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for=""> Mô tả giá </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="priceDescription"> Mô tả giá </label>
                             <div class="col-sm-9">
-                                <input type="text" id="e" class="form-control"  />
+                                <input type="text" id="priceDescription" class="form-control"  />
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for=""> Phí dịch vụ </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="serviceCharge"> Phí dịch vụ </label>
                             <div class="col-sm-9">
-                                <input type="number" id="d" class="form-control"  />
+                                <input type="number" id="serviceCharge" class="form-control"  />
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for=""> Phí ngoài giờ </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="overtimeFee"> Phí ngoài giờ </label>
                             <div class="col-sm-9">
-                                <input type="number" id="c" class="form-control"  />
+                                <input type="number" id="overtimeFee" class="form-control"  />
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right" for=""> Tiền điện </label>
+                            <label class="col-sm-3 control-label no-padding-right" for="money"> Tiền điện </label>
                             <div class="col-sm-9">
-                                <input type="number" id="b" class="form-control" />
+                                <input type="number" id="money" class="form-control" />
                             </div>
                         </div>
 
@@ -201,7 +201,7 @@
         e.preventDefault();
         var data = {};
         //var buildingTypes = [];
-        var formData = $('#formEdit').serializeArray;
+        var formData = $('#formEdit').serializeArray;  // lấy data tự động
 
         /*$.each(formData, function (index, v) {
             if (v.name == 'buildingTypes') {

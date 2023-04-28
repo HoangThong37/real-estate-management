@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.controller.admin;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.service.impl.BuildingService;
+import com.laptrinhjavaweb.service.impl.DistrictService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class BuildingController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private DistrictService districtService;
+
 	@RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
 	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingDTO buildingDTO) {
 		ModelAndView mav = new ModelAndView("admin/building/list");
@@ -27,6 +31,7 @@ public class BuildingController {
 		mav.addObject("modelSearch", buildingDTO); // gửi đi và nhận vào đều là modelSearch
 		mav.addObject("buildings", buildingService.findAll());
 		mav.addObject("staffmaps", userService.getStaffMaps());
+		mav.addObject("districts", districtService.getAllDistrict());
 		return mav;
 	}
 

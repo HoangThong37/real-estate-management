@@ -21,4 +21,5 @@ public interface IUserService {
     UserDTO updateProfileOfUser(String id, UserDTO userDTO);
     void delete(long[] ids);
     Map<Long, String> getStaffMaps();
+    //List<UserDTO> findAll
 }
