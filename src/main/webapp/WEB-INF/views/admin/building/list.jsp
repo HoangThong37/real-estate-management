@@ -69,10 +69,6 @@
                                                             <form:option value="${item.code}">${item.name}</form:option>
                                                         </c:forEach>
                                                     </form:select>
-                                                        <%--<form:select cssClass="form-control" path="districtCode">--%>
-                                                            <%--<form:option value="-1" label="--- Chọn quận ---" />--%>
-                                                            <%--<form:options items="${districts}"/>--%>
-                                                        <%--</form:select>--%>
                                             </div>
                                             </div>
 

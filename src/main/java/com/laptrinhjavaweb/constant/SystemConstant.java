@@ -2,9 +2,9 @@ package com.laptrinhjavaweb.constant;
 
 public class SystemConstant {
     /*Spring security 4: ROLE_ADMIN, Spring security 3 not required*/
-    public static final String ADMIN_ROLE = "ROLE_ADMIN";
+    public static final String ADMIN_ROLE = "ROLE_MANAGER";
     /*Spring security 4: ROLE_ADMIN, Spring security 3 not required*/
-    public static final String USER_ROLE = "ROLE_USER";
+    public static final String USER_ROLE = "ROLE_STAFF";
     public static final String MANAGER_ROLE = "MANAGER";
     public static final String HOME = "/trang-chu";
     public static final String ADMIN_HOME = "/admin/home";

@@ -2,80 +2,10 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-
-@Entity
-@Table(name = "building")
-public class BuildingEntity extends BaseEntity {
-
-    private static final long serialVersionUID = -6525302831793188081L;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "number_of_basement")
-    private String numberOfBasement; // số tầng hầm
-
-    @Column(name = "buildingarea")
-    private String buildingArea;   // khu vực xây dựng
-
-    @Column(name = "street")
-    private String street;    // đường
-
-    @Column(name = "ward")
-    private String ward;  // phường
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNumberOfBasement() {
-        return numberOfBasement;
-    }
-
-    public void setNumberOfBasement(String numberOfBasement) {
-        this.numberOfBasement = numberOfBasement;
-    }
-
-    public String getBuildingArea() {
-        return buildingArea;
-    }
-
-    public void setBuildingArea(String buildingArea) {
-        this.buildingArea = buildingArea;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getWard() {
-        return ward;
-    }
-
-    public void setWard(String ward) {
-        this.ward = ward;
-    }
-}
-
-
-
-
-/*
-package com.laptrinhjavaweb.entity;
-
-import javax.persistence.*;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
@@ -86,80 +16,110 @@ public class BuildingEntity extends BaseEntity {
     private String name;
 
     @Column(name = "street")
-    private String street;    // đường
+    private String street;
 
     @Column(name = "ward")
-    private String ward;  // phường
+    private String ward;
 
     @Column(name = "district")
-    private String district;  // quận
+    private String district;
 
     @Column(name = "structure")
-    private String structure;  // kết cấu
+    private String structure;
 
     @Column(name = "numberofbasement")
-    private Integer numberOfBasement;  // số tầng hầm
+    private Integer numberOfBasement;
 
     @Column(name = "floorarea")
-    private Integer floorArea;  // diện tích sàn
+    private Integer floorArea;
 
     @Column(name = "direction")
-    private String direction;  // phương hướng
+    private String direction;
 
     @Column(name = "level")
-    private String level;  // hạng
+    private String level;
 
     @Column(name = "rentprice")
-    private Integer rentPrice;  // số tầng hầm
+    private Integer rentPrice;
 
     @Column(name = "rentpricedescription")
-    private String rentPriceDescription;  // mô tả giá thuê
+    private String rentpriceDescription;
 
     @Column(name = "servicefee")
-    private String serviceFee;  // phí dịch vụ
+    private String serviceFee;
 
     @Column(name = "carfee")
-    private String carFee;  // phí ô tô
+    private String carFee;
 
     @Column(name = "motofee")
-    private String motoFee;  // phí xe máy
+    private String motoFee;
 
     @Column(name = "overtimefee")
-    private String overtimeFee;  // phí ngoài giờ
+    private String overtimeFee;
 
     @Column(name = "waterfee")
-    private String waterFee;  // phí nước
+    private String waterFee;
 
     @Column(name = "electricityfee")
-    private String electricityFee;  // Giá điện
+    private String electricityFee;
 
     @Column(name = "deposit")
-    private String deposit;  // tiền gửi
+    private String deposit;
 
     @Column(name = "payment")
-    private String payment;  // sự chi trả
+    private String payment;
 
     @Column(name = "renttime")
-    private String renttime;  // thời gian thuê
+    private String rentTime;
 
     @Column(name = "decorationtime")
-    private String decorationtime;  // thời gian trang trí
+    private String decorationTime;
 
     @Column(name = "brokeragetee")
-    private DecimalFormat brokeragetee;  // người môi giới
+    private String brokeragetee;
 
     @Column(name = "type")
-    private List<String> type;  // loại tòa nhà
+    private String types;
 
     @Column(name = "note")
-    private String note;  // GHI CHÚ
+    private String note;
 
-    @Column(name = "managername")
-    private String managerName;  // tên quản lí
+    @Column(name = "linkofbuilding")
+    private String linkOfBuilding;
 
-    @Column(name = "managerphone")
-    private String managerPhone;  // số điện thoiaji quản lí
+    @Column(name = "map")
+    private String map;
 
+    @Column(name = "avatar")
+    private String avatar;
+
+    // 1 building - n rentarea
+    @OneToMany
+    @JoinColumn(name = "building_id")
+    private List<RentareaEntity> rentareas = new ArrayList<>();
+
+    // 1 building - n assignmentBuiding
+    @OneToMany
+    @JoinColumn(name = "building_id")
+    private List<AssignBuildingEntity> assignBuildings = new ArrayList<>();
+
+
+
+    public List<AssignBuildingEntity> getAssignBuildings() {
+        return assignBuildings;
+    }
+
+    public void setAssignBuildings(List<AssignBuildingEntity> assignBuildings) {
+        this.assignBuildings = assignBuildings;
+    }
+
+    public List<RentareaEntity> getRentareas() {
+        return rentareas;
+    }
+
+    public void setRentareas(List<RentareaEntity> rentareas) {
+        this.rentareas = rentareas;
+    }
 
     public String getName() {
         return name;
@@ -241,12 +201,12 @@ public class BuildingEntity extends BaseEntity {
         this.rentPrice = rentPrice;
     }
 
-    public String getRentPriceDescription() {
-        return rentPriceDescription;
+    public String getRentpriceDescription() {
+        return rentpriceDescription;
     }
 
-    public void setRentPriceDescription(String rentPriceDescription) {
-        this.rentPriceDescription = rentPriceDescription;
+    public void setRentpriceDescription(String rentpriceDescription) {
+        this.rentpriceDescription = rentpriceDescription;
     }
 
     public String getServiceFee() {
@@ -313,36 +273,36 @@ public class BuildingEntity extends BaseEntity {
         this.payment = payment;
     }
 
-    public String getRenttime() {
-        return renttime;
+    public String getRentTime() {
+        return rentTime;
     }
 
-    public void setRenttime(String renttime) {
-        this.renttime = renttime;
+    public void setRentTime(String rentTime) {
+        this.rentTime = rentTime;
     }
 
-    public String getDecorationtime() {
-        return decorationtime;
+    public String getDecorationTime() {
+        return decorationTime;
     }
 
-    public void setDecorationtime(String decorationtime) {
-        this.decorationtime = decorationtime;
+    public void setDecorationTime(String decorationTime) {
+        this.decorationTime = decorationTime;
     }
 
-    public DecimalFormat getBrokeragetee() {
+    public String getBrokeragetee() {
         return brokeragetee;
     }
 
-    public void setBrokeragetee(DecimalFormat brokeragetee) {
+    public void setBrokeragetee(String brokeragetee) {
         this.brokeragetee = brokeragetee;
     }
 
-    public List<String> getType() {
-        return type;
+    public String getTypes() {
+        return types;
     }
 
-    public void setType(List<String> type) {
-        this.type = type;
+    public void setTypes(String types) {
+        this.types = types;
     }
 
     public String getNote() {
@@ -353,20 +313,27 @@ public class BuildingEntity extends BaseEntity {
         this.note = note;
     }
 
-    public String getManagerName() {
-        return managerName;
+    public String getLinkOfBuilding() {
+        return linkOfBuilding;
     }
 
-    public void setManagerName(String managerName) {
-        this.managerName = managerName;
+    public void setLinkOfBuilding(String linkOfBuilding) {
+        this.linkOfBuilding = linkOfBuilding;
     }
 
-    public String getManagerPhone() {
-        return managerPhone;
+    public String getMap() {
+        return map;
     }
 
-    public void setManagerPhone(String managerPhone) {
-        this.managerPhone = managerPhone;
+    public void setMap(String map) {
+        this.map = map;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
-*/

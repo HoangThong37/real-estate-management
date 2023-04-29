@@ -59,7 +59,7 @@ public class UserService implements IUserService {
             UserDTO userDTO = userConverter.convertToDto(userEntity);
             userDTO.setRoleCode(userEntity.getRoles().get(0).getCode());
             result.add(userDTO);
-        }
+    }
         return result;
     }
 

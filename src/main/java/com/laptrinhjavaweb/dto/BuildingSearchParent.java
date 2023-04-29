@@ -3,8 +3,8 @@ package com.laptrinhjavaweb.dto;
 import java.util.Date;
 
 public class BuildingSearchParent {
-    private Long id;
 
+    private Long id;
     private Date createdDate;
     private Date modifiedDate;
     private String createdBy;
