@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -16,21 +17,13 @@ public class RoleEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String code;
 
-    // 1 role - n user
-    @OneToMany
-    @JoinColumn(name = "role_id")
-    private List<UserRoleEntity> userRoles = new ArrayList<>();
-
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-    }
-
-//    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+//    @ManyToMany(mappedBy = "roles")
 //    private List<UserEntity> users = new ArrayList<>();
+
+    // 1 role - n user
+    @OneToMany(mappedBy="role") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    private Set<UserRoleEntity> userRoles;
+
 
     public String getName() {
         return name;
@@ -48,5 +41,11 @@ public class RoleEntity extends BaseEntity {
         this.code = code;
     }
 
+    public Set<UserRoleEntity> getUserRoles() {
+        return userRoles;
+    }
 
+    public void setUserRoles(Set<UserRoleEntity> userRoles) {
+        this.userRoles = userRoles;
+    }
 }

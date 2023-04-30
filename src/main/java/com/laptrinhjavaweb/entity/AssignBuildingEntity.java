@@ -7,12 +7,14 @@ import javax.persistence.*;
 public class AssignBuildingEntity extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "building_id", insertable = false, updatable = false)
+    @JoinColumn(name="building_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private BuildingEntity building;
 
     @ManyToOne
-    @JoinColumn(name = "building_id", insertable = false, updatable = false)
+    @JoinColumn(name="user_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private UserEntity user;
+
+
 
     public UserEntity getUser() {
         return user;

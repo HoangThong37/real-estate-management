@@ -2,8 +2,8 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -94,31 +94,28 @@ public class BuildingEntity extends BaseEntity {
     private String avatar;
 
     // 1 building - n rentarea
-    @OneToMany
-    @JoinColumn(name = "building_id")
-    private List<RentareaEntity> rentareas = new ArrayList<>();
+    @OneToMany(mappedBy="building") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    private Set<RentareaEntity> rentareas;
 
     // 1 building - n assignmentBuiding
-    @OneToMany
-    @JoinColumn(name = "building_id")
-    private List<AssignBuildingEntity> assignBuildings = new ArrayList<>();
+    @OneToMany(mappedBy="building") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    private Set<AssignBuildingEntity> assignBuildings;
 
 
-
-    public List<AssignBuildingEntity> getAssignBuildings() {
-        return assignBuildings;
-    }
-
-    public void setAssignBuildings(List<AssignBuildingEntity> assignBuildings) {
-        this.assignBuildings = assignBuildings;
-    }
-
-    public List<RentareaEntity> getRentareas() {
+    public Set<RentareaEntity> getRentareas() {
         return rentareas;
     }
 
-    public void setRentareas(List<RentareaEntity> rentareas) {
+    public void setRentareas(Set<RentareaEntity> rentareas) {
         this.rentareas = rentareas;
+    }
+
+    public Set<AssignBuildingEntity> getAssignBuildings() {
+        return assignBuildings;
+    }
+
+    public void setAssignBuildings(Set<AssignBuildingEntity> assignBuildings) {
+        this.assignBuildings = assignBuildings;
     }
 
     public String getName() {

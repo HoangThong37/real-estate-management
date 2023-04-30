@@ -10,11 +10,12 @@ import javax.persistence.Table;
 public class UserRoleEntity extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @JoinColumn(name="role_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private RoleEntity role;
 
+
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name="user_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private UserEntity user;
 
     public RoleEntity getRole() {
@@ -32,4 +33,6 @@ public class UserRoleEntity extends BaseEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+
 }

@@ -10,11 +10,11 @@ import javax.persistence.Table;
 public class AssignCustomerEntity extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "staff_id", insertable = false, updatable = false)
+    @JoinColumn(name="staff_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private UserEntity user;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id", nullable=false)
     private CustomerEntity customer;
 
     public UserEntity getUser() {
@@ -32,6 +32,4 @@ public class AssignCustomerEntity extends BaseEntity {
     public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
     }
-
-
 }

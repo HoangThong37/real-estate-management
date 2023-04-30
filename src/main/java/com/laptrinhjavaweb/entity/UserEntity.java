@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -29,22 +30,25 @@ public class UserEntity extends BaseEntity {
     private String phone;
 
     // 1 user - n assignBuilding
-    @OneToMany
-    @JoinColumn(name = "staff_id")
-    private List<AssignBuildingEntity> buildings  = new ArrayList<>();
+    @OneToMany(mappedBy="user") //
+    private Set<AssignBuildingEntity> buildings;
 
     // 1 user - n assignCustomer
-    @OneToMany
-    @JoinColumn(name = "customer_id")
-    private List<AssignCustomerEntity> customers  = new ArrayList<>();
+    @OneToMany(mappedBy="user")
+    private List<AssignCustomerEntity> customers;
 
     // 1 user - n role
-    @OneToMany
-    @JoinColumn(name = "customer_id")
-    private List<UserRoleEntity> userRoles = new ArrayList<>();
+    @OneToMany(mappedBy="user") //
+    private Set<UserRoleEntity> userRoles;
 
-    @ElementCollection
-    private List<RoleEntity> roles;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "user_role",
+//            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+//            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+//    private List<RoleEntity> roles = new ArrayList<>();
+
+    @ElementCollection()
+    List<RoleEntity> roles = new ArrayList<>();
 
     public List<RoleEntity> getRoles() {
         return roles;
@@ -53,12 +57,14 @@ public class UserEntity extends BaseEntity {
     public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id", nullable = false),
-//            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-//    private List<RoleEntity> roles = new ArrayList<>();
 
+    public Set<UserRoleEntity> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRoleEntity> userRoles) {
+        this.userRoles = userRoles;
+    }
 
     public String getUserName() {
         return userName;
@@ -108,11 +114,11 @@ public class UserEntity extends BaseEntity {
         this.phone = phone;
     }
 
-    public List<AssignBuildingEntity> getBuildings() {
+    public Set<AssignBuildingEntity> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(List<AssignBuildingEntity> buildings) {
+    public void setBuildings(Set<AssignBuildingEntity> buildings) {
         this.buildings = buildings;
     }
 
@@ -124,13 +130,6 @@ public class UserEntity extends BaseEntity {
         this.customers = customers;
     }
 
-    public List<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
-    }
 
 
 }
