@@ -1,18 +1,10 @@
 package com.laptrinhjavaweb.dto.response;
 
-public class DistrictResponse {
-
+public class BuildingTypesResponse {
     private String name;
     private String code;
-    private String selected = "";
+    private String checked = "";
 
-    public String getSelected() {
-        return selected;
-    }
-
-    public void setSelected(String selected) {
-        this.selected = selected;
-    }
     public String getName() {
         return name;
     }
@@ -27,5 +19,13 @@ public class DistrictResponse {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getChecked() {
+        return checked;
+    }
+
+    public void setChecked(String checked) {
+        this.checked = checked;
     }
 }

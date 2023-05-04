@@ -5,7 +5,7 @@ import java.util.List;
 public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 
     private String name;
-    private String numberOfBasement; // số tầng hầm
+    private Integer numberOfBasement; // số tầng hầm
     private String buildingArea;
     private String street;
     private String ward;
@@ -15,7 +15,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private Integer floorArea;
     private String direction;
     private String level;
-    private String rentPrice;
+    private Integer rentPrice;
     private String rentPriceDescription;
     private String costDescription;
     private String serviceCost;
@@ -23,12 +23,12 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String motorbikeCost;
     private String overtimeCost;
     private List<String> types;
-    private String costRentFrom;
-    private String costRentTo;
-    private String areaRentFrom;
-    private String areaRentTo;
-    private String staffId;
-    private String electricityCost;
+    private Integer costRentFrom;
+    private Integer costRentTo;
+    private Integer areaRentFrom;
+    private Integer areaRentTo;
+    private Integer staffId;
+    private Integer electricityCost;
     private String deposit;
     private String payment;
     private String timeRent;
@@ -39,6 +39,8 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String linkOfBuilding;
     private String map;
     private String avatar;
+    private String managerPhone;
+    private String managerName;
 
     public String getName() {
         return name;
@@ -48,11 +50,11 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.name = name;
     }
 
-    public String getNumberOfBasement() {
+    public Integer getNumberOfBasement() {
         return numberOfBasement;
     }
 
-    public void setNumberOfBasement(String numberOfBasement) {
+    public void setNumberOfBasement(Integer numberOfBasement) {
         this.numberOfBasement = numberOfBasement;
     }
 
@@ -128,11 +130,11 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.level = level;
     }
 
-    public String getRentPrice() {
+    public Integer getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(String rentPrice) {
+    public void setRentPrice(Integer rentPrice) {
         this.rentPrice = rentPrice;
     }
 
@@ -192,51 +194,51 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.types = types;
     }
 
-    public String getCostRentFrom() {
+    public Integer getCostRentFrom() {
         return costRentFrom;
     }
 
-    public void setCostRentFrom(String costRentFrom) {
+    public void setCostRentFrom(Integer costRentFrom) {
         this.costRentFrom = costRentFrom;
     }
 
-    public String getCostRentTo() {
+    public Integer getCostRentTo() {
         return costRentTo;
     }
 
-    public void setCostRentTo(String costRentTo) {
+    public void setCostRentTo(Integer costRentTo) {
         this.costRentTo = costRentTo;
     }
 
-    public String getAreaRentFrom() {
+    public Integer getAreaRentFrom() {
         return areaRentFrom;
     }
 
-    public void setAreaRentFrom(String areaRentFrom) {
+    public void setAreaRentFrom(Integer areaRentFrom) {
         this.areaRentFrom = areaRentFrom;
     }
 
-    public String getAreaRentTo() {
+    public Integer getAreaRentTo() {
         return areaRentTo;
     }
 
-    public void setAreaRentTo(String areaRentTo) {
+    public void setAreaRentTo(Integer areaRentTo) {
         this.areaRentTo = areaRentTo;
     }
 
-    public String getStaffId() {
+    public Integer getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(String staffId) {
+    public void setStaffId(Integer staffId) {
         this.staffId = staffId;
     }
 
-    public String getElectricityCost() {
+    public Integer getElectricityCost() {
         return electricityCost;
     }
 
-    public void setElectricityCost(String electricityCost) {
+    public void setElectricityCost(Integer electricityCost) {
         this.electricityCost = electricityCost;
     }
 
@@ -318,5 +320,21 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getManagerPhone() {
+        return managerPhone;
+    }
+
+    public void setManagerPhone(String managerPhone) {
+        this.managerPhone = managerPhone;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
     }
 }

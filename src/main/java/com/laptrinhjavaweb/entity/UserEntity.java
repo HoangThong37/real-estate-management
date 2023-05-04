@@ -38,17 +38,22 @@ public class UserEntity extends BaseEntity {
     private List<AssignCustomerEntity> customers;
 
     // 1 user - n role
-    @OneToMany(mappedBy="user") //
-    private Set<UserRoleEntity> userRoles;
+//    @OneToMany(mappedBy="user") //
+//    private Set<UserRoleEntity> userRoles;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id", nullable = false),
-//            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
-//    private List<RoleEntity> roles = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
+    private List<RoleEntity> roles = new ArrayList<>();
 
-    @ElementCollection()
-    List<RoleEntity> roles = new ArrayList<>();
+//    @ElementCollection()
+//    List<RoleEntity> roles = new ArrayList<>();
+//    public List<RoleEntity> getRoles() {
+//        return roles;
+//    }
+//
+
 
     public List<RoleEntity> getRoles() {
         return roles;
@@ -56,14 +61,6 @@ public class UserEntity extends BaseEntity {
 
     public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
-    }
-
-    public Set<UserRoleEntity> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
     }
 
     public String getUserName() {

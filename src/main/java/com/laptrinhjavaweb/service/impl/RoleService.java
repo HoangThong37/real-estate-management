@@ -15,10 +15,10 @@ import java.util.Map;
 
 @Service
 public class RoleService implements IRoleService {
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private RoleConverter roleConverter;
 

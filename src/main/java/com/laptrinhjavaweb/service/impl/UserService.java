@@ -9,6 +9,7 @@ import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import com.laptrinhjavaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserConverter userConverter;
+
+    @Autowired
+    private UserRepositoryCustom repositoryCustom;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -156,15 +160,26 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Map<Long, String> getStaffMaps() {
-        Map<Long, String> result = new HashMap<>();
-        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "USER");
-        //List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "staff");
-        for (UserEntity item : staffs) {
-            result.put(item.getId(), item.getFullName());
+    public List<UserDTO> getAllStaff() {
+        List<UserDTO> result = new ArrayList<>();
+         List<UserEntity> listStaff = repositoryCustom.getAllStaff();
+        for (UserEntity item : listStaff) {
+            // convert từ entity qua dto
+            UserDTO userDTO  = userConverter.convertToDto(item);
+            result.add(userDTO);
         }
         return result;
     }
+
+//    @Override
+//    public Map<Long, String> getStaffMaps() {
+//        Map<Long, String> result = new HashMap<>();
+//        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
+//        for (UserEntity item : staffs) {
+//            result.put(item.getId(), item.getFullName());
+//        }
+//        return result;
+//    }
 
 
 

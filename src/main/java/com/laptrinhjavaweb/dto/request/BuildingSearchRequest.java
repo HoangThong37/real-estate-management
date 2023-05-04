@@ -8,7 +8,7 @@ public class BuildingSearchRequest extends BuildingSearchParent {
 
     private String name;
     private Integer floorArea;
-    private String districtCode;  // quận : Q1, Q2, ..
+    private String districtCode;      // quận : Q1, Q2, ..
     private String ward;
     private String street;
     private Integer numberOfBasement; //  số tầng hầm
@@ -18,9 +18,27 @@ public class BuildingSearchRequest extends BuildingSearchParent {
     private Integer rentAreaTo;
     private Integer rentPriceFrom;    // giá thuê từ
     private Integer rentPriceTo;      // giá thuê đến
-    private Integer areaRentTo;
-    private Integer staffId;    // nhân viên phụ trách
-    private List<String> rentTypes;  // loại tòa nhà
+    private Integer staffId;          // nhân viên phụ trách
+    private List<String> types;       // loại tòa nhà
+    private String managerName;
+    private String managerPhone;
+
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
+
+    public String getManagerPhone() {
+        return managerPhone;
+    }
+
+    public void setManagerPhone(String managerPhone) {
+        this.managerPhone = managerPhone;
+    }
 
     public String getName() {
         return name;
@@ -118,13 +136,6 @@ public class BuildingSearchRequest extends BuildingSearchParent {
         this.rentPriceTo = rentPriceTo;
     }
 
-    public Integer getAreaRentTo() {
-        return areaRentTo;
-    }
-
-    public void setAreaRentTo(Integer areaRentTo) {
-        this.areaRentTo = areaRentTo;
-    }
 
     public Integer getStaffId() {
         return staffId;
@@ -134,12 +145,11 @@ public class BuildingSearchRequest extends BuildingSearchParent {
         this.staffId = staffId;
     }
 
-    public List<String> getRentTypes() {
-        return rentTypes;
+    public List<String> getTypes() {
+        return types;
     }
 
-    public void setRentTypes(List<String> rentTypes) {
-        this.rentTypes = rentTypes;
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
-
 }

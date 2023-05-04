@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "com.laptrinhjavaweb")
 public class ModelMapperConfig {
+
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }
+
+
 }

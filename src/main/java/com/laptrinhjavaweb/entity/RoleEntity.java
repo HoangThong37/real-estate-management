@@ -17,12 +17,12 @@ public class RoleEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String code;
 
-//    @ManyToMany(mappedBy = "roles")
-//    private List<UserEntity> users = new ArrayList<>();
+    @ManyToMany(mappedBy = "roles")
+    private List<UserEntity> users = new ArrayList<>();
 
     // 1 role - n user
-    @OneToMany(mappedBy="role") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
-    private Set<UserRoleEntity> userRoles;
+//    @OneToMany(mappedBy="role") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+//    private Set<UserRoleEntity> userRoles;
 
 
     public String getName() {
@@ -41,11 +41,11 @@ public class RoleEntity extends BaseEntity {
         this.code = code;
     }
 
-    public Set<UserRoleEntity> getUserRoles() {
-        return userRoles;
+    public List<UserEntity> getUsers() {
+        return users;
     }
 
-    public void setUserRoles(Set<UserRoleEntity> userRoles) {
-        this.userRoles = userRoles;
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
     }
 }

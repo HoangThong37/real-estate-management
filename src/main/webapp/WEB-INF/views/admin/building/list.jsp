@@ -1,12 +1,11 @@
+<%@ page import="com.laptrinhjavaweb.dto.DistrictDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
-<c:url var="buildingListURL" value="/admin/building-list"/>
-<c:url var="loadStaffAPI" value="/api/building"/>
-
+<c:url var="buildingListURL" value="/admin/building-list"></c:url>
 
 <html>
 <head>
-    <title>Danh sách tòa nhà</title>
+    <title>Danh sách toà nhà</title>
 </head>
 <body>
 
@@ -14,15 +13,18 @@
     <div class="main-content-inner">
         <div class="breadcrumbs" id="breadcrumbs">
             <script type="text/javascript">
-                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
             </script>
 
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href="<c:url value="/admin/home"/> ">Trang chủ</a>
                 </li>
-                <li class="active">Dashboard</li>
+                <li class="active">Danh sách Building</li>
             </ul><!-- /.breadcrumb -->
         </div>
 
@@ -30,391 +32,390 @@
             <div class="row">
                 <div class="widget-box">
                     <div class="widget-header">
-                        <h4 class="widget-title">Tìm kiếm</h4>
+                        <h4 class="widget-title">Tìm toà nhà</h4>
                         <div class="widget-toolbar">
                             <a href="#" data-action="collapse">
                                 <i class="ace-icon fa fa-chevron-up"></i>
                             </a>
                         </div>
-
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="GET">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <!-- PAGE CONTENT BEGINS -->
-                                            <div class="col-sm-6">
-                                                <div>
-                                                    <label for="name">Tên tòa nhà</label>
-                                                    <%--<input type="text" id="name" class="form-control" name="name" value="${modelSearch.name}"/>--%>
-                                                    <!-- name="name" hỗ trợ việc chúng ta tìm kiếm, gửi dữ liệu từ client về server thì nó nhận ra đc  -->
-                                                    <form:input path="name" cssClass="form-control" />
-                                               </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="get">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-xs-12 ">
+                                            <!-- PAGE CONTENT BEGIN -->
+                                            <div class="col-md-6">
+                                                <label><b>Tên Toà Nhà</b></label>
+                                                    <%--                                                <input type="text" id="name" name="name" class="form-control" value="${modelSearch.name}">--%>
+                                                <form:input path="name" cssClass="form-control"/>
                                             </div>
 
-                                            <div class="col-sm-6">
-                                                <div>
-                                                    <label for="name">Diện tích sàn</label>
-                                                    <input type="number" id="floorArea" class="form-control" />
-                                                    <%-- type="number" -> dùng kiểu bình thường --%>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label>Quận hiện có</label>
-                                                    <form:select cssClass="form-control" path="district">
-                                                        <option value="">Chọn Quận</option>
-                                                        <c:forEach items="${districts}" var="item">
-                                                            <form:option value="${item.code}">${item.name}</form:option>
-                                                        </c:forEach>
-                                                    </form:select>
-                                            </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="ward">Phường</label>
-                                                    <form:input path="ward" cssClass="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="street">Đường</label>
-                                                    <form:input path="street" cssClass="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="name">Số tầng hầm</label>
-                                                    <input type="text" id="numberOfBasement" class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="name">Hướng</label>
-                                                    <input type="text" id="direction" class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="name">Hạng</label>
-                                                    <input type="text" id="level" class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <div>
-                                                    <label for="name">Diện tích từ</label>
-                                                    <input type="text" id="areaRentFrom" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div>
-                                                    <label for="name">Diện tích đến</label>
-                                                    <input type="text" id="areaRentTo" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div>
-                                                    <label for="name">Gía thuê từ</label>
-                                                    <input type="text" id="costRentFrom" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div>
-                                                    <label for="name">Gía thuê đến</label>
-                                                    <input type="text" id="costRentTo" class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="name">Tên quản lí</label>
-                                                    <input type="text" id="nameManage" class="form-control" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div>
-                                                    <label for="name">Điện thoại quản lý</label>
-                                                    <input type="text" id="phoneManage" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div>
-                                                    <label for="name">Chọn nhân viên quản lý</label>
-                                                    <form:select cssClass="form-control" path="staffId">
-                                                        <form:option value="-1" label="--- Chọn nhân viên ---" />
-                                                        <form:options items="${staffmaps}"/>
-                                                    </form:select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-3">
-                                                <input class="" type="checkbox" value="" id="checkbox1">
-                                                <label class="" >
-                                                    Tầng trệt
-                                                </label>
-
-                                                <input class="" type="checkbox" value="" id="checkbox2" checked>
-                                                <label class="" >
-                                                    Nguyên căn
-                                                </label>
-
-                                                <input class="" type="checkbox" value="" id="checkbox3" checked>
-                                                <label class="" >
-                                                    Nội thất
-                                                </label>
-                                            </div>
-
-
-                                            <div class="col-sm-12">
-                                                <button type="button" id="btnSearch" class="btn btn-sm btn-success">
-                                                    Tìm kiếm
-                                                    <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-                                                </button>
+                                            <div class="col-md-6">
+                                                <label><b>Diện Tích sàn</b></label>
+                                                <input type="number" name="floorArea" class="form-control"
+                                                       value="${modelSearch.floorArea}">
                                             </div>
                                             <!-- PAGE CONTENT ENDS -->
                                         </div><!-- /.col -->
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-xs-12 ">
+                                            <div class="col-md-4">
+                                                <label><b>Quận Hiện Có</b></label>
+                                                <form:select path="districtCode" cssClass="form-control">
+                                                    <option selected value="">Chọn Quận</option>
+                                                    <c:forEach var="item" items="${districts}">
+                                                        <form:option value="${item.code}">${item.name}</form:option>
+                                                    </c:forEach>
+                                                </form:select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label><b>Phường</b></label>
+                                                <form:input path="ward" cssClass="form-control"/>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="street"><b>Đường</b></label>
+                                                <form:input path="street" cssClass="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <!-- PAGE CONTENT BEGIN -->
+                                        <div class="col-md-4">
+                                            <label><b>Số Tầng Hầm</b></label>
+                                            <input type="number" name="numberOfBasement" class="form-control"
+                                                   value="${modelSearch.numberOfBasement}">
+                                        </div>
 
-                                </form:form>
+                                        <div class="col-md-4">
+                                            <label><b>Hướng</b></label>
+                                            <form:input path="direction" cssClass="form-control"/>
+                                        </div>
 
-                            </div>
+                                        <div class="col-md-4">
+                                            <label><b>Hạng</b></label>
+                                            <form:input path="level" cssClass="form-control"/>
+
+                                        </div>
+                                        <!-- PAGE CONTENT ENDS -->
+                                    </div><!-- /.col -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <!-- PAGE CONTENT BEGIN -->
+                                        <div class="col-md-3">
+                                            <label><b>Diện Tích Từ</b></label>
+                                            <input type="number" name="rentAreaFrom" class="form-control"
+                                                   value="${modelSearch.rentAreaFrom}">
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label><b>Diện Tích Đến</b></label>
+                                            <input type="number" name="rentAreaTo" class="form-control"
+                                                   value="${modelSearch.rentAreaTo}">
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label><b>Giá Thuê Từ</b></label>
+                                            <input type="number" name="rentPriceFrom" class="form-control"
+                                                   value="${modelSearch.rentPriceFrom}">
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label><b>Giá Thuê Đến</b></label>
+                                            <input type="number" name="rentPriceTo" class="form-control"
+                                                   value="${modelSearch.rentPriceTo}">
+
+                                        </div>
+                                        <!-- PAGE CONTENT ENDS -->
+                                    </div><!-- /.col -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <!-- PAGE CONTENT BEGIN -->
+                                        <div class="col-md-4">
+                                            <label><b>Tên Quản Lí</b></label>
+                                            <form:input path="managerName" cssClass="form-control"/>
+
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label><b>Điện Thoại Quản Lí</b></label>
+                                            <form:input path="managerPhone" cssClass="form-control"/>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label><b>Chọn Nhân Viên Quản Lí</b></label>
+                                            <form:select path="staffId" class="form-control">
+                                                <option selected value="">Chọn nhân viên quản lí</option>
+                                                <c:forEach var="item" items="${staffmaps}">
+                                                    <form:option value="${item.id}">${item.fullName}</form:option>
+                                                </c:forEach>
+                                            </form:select>
+                                        </div>
+                                        <!-- PAGE CONTENT ENDS -->
+                                    </div><!-- /.col -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-6">
+                                            <div class="form-check">
+                                                <c:forEach var="item" items="${districts}">
+                                                    <form:checkbox id="rent" path="types" value="${item.code}"
+                                                                   label="${item.name}" cssClass="form-check-input"/>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="col-md-3">
+                                            <button class="btn btn-primary" id="btnSearch">Tìm Kiếm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form:form>
                         </div>
-                    </div>
-                </div><!-- /.row -->
-
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-success" data-toggle="tooltip"
-                                    title="Thêm tòa nhà">
-                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-danger " data-toggle="tooltip"\
-                                    title="Xóa tòa nhà" id="btnDeleteBuilding">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
+                    </div><!-- /.row -->
                 </div>
-                <br/>
 
-                <div class="row">
-                    <div class="col-xs-12">
-                        <table id="buildingList" class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Tên sản phẩm</th>
-                                <th>Số tầng hầm</th>
-                                <th>Địa chỉ</th>
-                                <th>Tên quản lí</th>
-                                <th>Số điện thoại</th>
-                                <th>D.T sàn</th>
-                                <th>Gía thuê</th>
-                                <th>Phí dịch vụ</th>
-                                <th>Thao tác</th>
-                            </tr>
-                            </thead>
-
-                             <%--tí nhớ thêm data--%>
-                            <tbody>
-                            <c:forEach var="item" items="${buildings}">
-                                <tr>
-                                    <td><input type="checkbox" value="1" id="checkbox_1"></td>
-                                    <td>${item.name}</td>
-                                    <td>${item.numberOfBasement}</td>
-                                    <td>Quận Bình Thạnh</td>
-                                    <td>a Bắc</td>
-                                    <td>0939387475</td>
-                                    <td>150</td>
-                                    <td>145</td>
-                                    <td>45</td>
-                                    <td>
-                                        <button class="btn btn-xs" data-toggle="tooltip"
-                                                title="Giao tòa nhà" onclick="assingmentBuilding(1)">
-                                            <i class="fa fa-home" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <button id="xoaBuilding" class="btn btn-white btn-warning btn-bold" data-toggle="tooltip,modal"
+                                title="Xoá Toà Nhà">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
                     </div>
+
+                    <div class="pull-right">
+                        <button class="btn btn-white btn-info btn-bold " data-toggle="tooltip"
+                                title="Thêm Toà Nhà"
+                                onclick="window.location.href='<c:url value="/admin/building-edit"/>'">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
                 </div>
             </div>
-        </div>
+            <br/>
+            <!-- Modal Xac Nhan xoa-->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Xác nhận xoá</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Bạn có muốn xoá Building đã chọn ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="btnXoa" class="btn btn-default">Xoá</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <table id="simple-table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" id="selectAll" class="ace"/>
+                                    <span class="lbl"></span>
+                                </label>
+                            </th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Địa Chỉ</th>
+                            <th>Tên Quản Lí</th>
+                            <th>Số Điện Thoại</th>
+                            <th>Diện Tích Sàn</th>
+                            <th>Giá Thuê</th>
+                            <th>Phí Dịch Vụ</th>
+                            <th>Thao Tác</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <c:forEach var="item" items="${buildings}">
+                            <tr>
+                                <td class="center">
+                                    <label class="pos-rel">
+                                        <input type="checkbox" class="ace" name="checkBuildings[]" value="${item.id}">
+                                        <span class="lbl"></span>
+                                    </label>
+                                </td>
+                                <td>${item.name}</td>
+                                <td>${item.address}</td>
+                                <td>${item.managerName}</td>
+                                <td>${item.managerPhone}</td>
+                                <td>${item.floorArea}</td>
+                                <td>${item.rentCost}</td>
+                                <td>${item.serviceFee}</td>
+                                <td>
+                                    <button class="btn btn-xs btn-info" data-toggle="tooltip"
+                                            title="Giao toà nhà cho nhân viên quản lí" value="${item.id}"
+                                            onclick="assignmentBuilding(value)">
+                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn btn-xs btn-dark" data-toggle="tooltip"
+                                            title="Sửa thông tin toà nhà" value="${item.id}"
+                                            onclick="editBuilding(value)">
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn btn-xs btn-danger" data-toggle="tooltip"
+                                            title="Xoá toà nhà" value="${item.id}"
+                                            onclick="deleteOneBuilding(value)">
+                                        <i class="fa fa-remove" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div><!-- /.span -->
+            </div>
+        </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-content -->
-
-<div class="modal fade" id="assignmentBuildingModal" role="dialog">
+<!-- Modal -->
+<div id="assignmentBuildingModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Giao tòa nhà cho nhân viên</h4>
+                <h4 class="modal-title">Danh Sách Nhân Viên</h4>
             </div>
-
             <div class="modal-body">
-                <table class="table table-bordered" id="staffList"> <%--staffList là id định danh cho cái table này--%>
-                    <thead>
-                    <tr>
-                        <th>Choose Staff</th>
-                        <th>Name Staff</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="item" items="${staffmaps}">
+                <form>
+                    <table class="table table-bordered">
+                        <thead>
                         <tr>
-                            <td></td>
-                            <td>${item.value}</td>
+                            <th class="center">
+                                <label class="pos-rel">
+                                    <input type="checkbox" id="selectAll2" class="ace"/>
+                                    <span class="lbl"></span>
+                                </label>
+                            </th>
+                            <th>Full Name</th>
                         </tr>
-                    </c:forEach>
-                       <%-- <tr>
-                            <td><input type="checkbox" value="1" id="customCheck1" checked></td>
-                            <td>staff a</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" value="2" id="customCheck2" checked></td>
-                            <td>staff b</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" value="3" id="customCheck3" checked></td>
-                            <td>staff c</td>
-                        </tr>--%>
-                    </tbody>
-                </table>
-                <input type="hidden" name="buildingId" id="buildingId" value="">
+                        </thead>
+                        <tbody id="dsnv">
+
+                        </tbody>
+                    </table>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="btnAssignBuilding">Giao tòa nhà</button>
+            <div class="modal-footer">'
+                <button type="button" id="assignment" class="btn btn-default" data-dismiss="modal">Giao Toà Nhà</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
 
     </div>
 </div>
-
 <script>
-    function assingmentBuilding(buildingId) {
-        openModalAssingmentBuilding();
-        //loadStaffAssign();
 
-        $("#buildingId").val(buildingId);
-        console.log($("#buildingId").val());
-    }
-
-    function openModalAssingmentBuilding() {
+    function openModalAssignmentBuilding() {
         $('#assignmentBuildingModal').modal();
     }
-
-    /*function loadStaffAssign() {
-        // function này sẽ call 1 api về từ dưới db - nó sẽ load dsach nv lên -> sử dụng ajax
-        $.ajax({
-            type: "GET",
-            url: "${loadStaffAPI}/1/staffs",
-            //data: JSON.stringify(data),  // data gửi về
-            dataType: "json",   // kiểu dữ liệu gửi từ server
-            contentType: "application/json",   // gửi từ server
-
-            success: function (response) {
-                //console.log('success');
-                / data : chính là cục chứa data của tk staffListTO
-                var row = '';
-                $.each(response.data, function (index, item) {
-                    row += '<tr>';
-                    row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + '" class="check-box-element" ' + item.checked + ' /></td>';
-                    row += '<td class="text-center">' + item.fullName + '</td>';
-                    row += '</tr>';
-                });
-                $('#staffList tbody').html(row);
-
-            },
-            error: function (response) {
-                console.log('faild')
-                console.log(response)
-            }
-        });
-    }*/
-
-    $('#btnAssignBuilding').click(function (e) {
-        e.preventDefault();
-        //call api
-        var data ={};
-        var staffs = [];
-        data['buildingId'] = $('#buildingId').val();
-        // $('#staffList').find('tbody input[type=checkbox]:checked')
-        // đoạn code này tương tự staff = [1,2,3], là 1 mảng chứa staff
-        var staffs = $('#staffList').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get();
-        data['staffs'] = staffs;
-        assignStaff(data);
-    });
-
-    function assignStaff(data) {
-        $.ajax({
-            type: "POST",
-            url: "${buildingListURL}",
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-
-            success: function (response) {
-                console.log('success');
-            },
-            error: function (response) {
-                console.log('faild')
-                console.log(response)
-            }
-        });
-    }
-
-    $('#btnDeleteBuilding').click(function (e) {
-        e.preventDefault();
-        var data = {};
-        var buildingIds = $('#buildingList').find('tbody input[type=checkbox]:checked').map(function () {
-            return $(this).val();
-        }).get();
-        data['buildingIds'] = buildingIds; // push buildingIds vào data
-        deleteBuilding(data);
-    });
-
-    function deleteBuilding(data) {
-        $.ajax({
-            type: "DELETE",
-            url: "http://localhost:8080/api-deleteBuilding",
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-
-            success: function (response) {
-                console.log('success');
-            },
-            error: function (response) {
-                console.log('faild')
-                console.log(response)
-            }
-        });
-    }
-
-    $('#btnSearch').click(function (e) {
+    $("#btnSearch").click(function (e) {
         e.preventDefault();
         $("#listForm").submit();
-
+    })
+    $("#xoaBuilding").click(function (e) {
+        e.preventDefault();
+        $("#myModal").modal();
+    })
+    let idOne;
+    $("#btnXoa").click(function (e) {
+        e.preventDefault();
+        let values = [];
+        if (idOne != null)
+            values.push(idOne);
+        $.each($("input[name='checkBuildings[]']:checked"), function () {
+            values.push($(this).val());
+        });
+        let data = {};
+        data["buildingIds"] = values;
+        $.ajax({
+            type: "DELETE",
+            url: '<c:url value="/api/building"/>',
+            data:JSON.stringify(data),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (response) {
+                alert("fail")
+                console.log(response)
+            }
+        });
+    })
+    function deleteOneBuilding(value) {
+        idOne = value;
+        $("#myModal").modal();
+    }
+    $("#assignment").click(function (e) {
+        e.preventDefault();
+        let values = [];
+        $.each($("input[name='checkStaffs[]']:checked"), function () {
+            values.push($(this).val());
+        });
+        let data = {
+            "staffIds": values
+        }
+        $.ajax({
+            type: "post",
+            url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
+            data: JSON.stringify(values),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                console.log("sucess");
+                window.location.reload();
+            },
+            error: function (response) {
+                alert("fail")
+                console.log(response)
+            }
+        });
+    })
+    $("#selectAll").click(function () {
+        $("input[name='checkBuildings[]']").prop('checked', $(this).prop('checked'));
     });
-
+    $("#selectAll2").click(function () {
+        $("input[name='checkStaffs[]']").prop('checked', $(this).prop('checked'));
+    });
+    function editBuilding(value) {
+        window.location.href = "<c:url value="/admin/building-edit"/>" + "?buildingid=" + value;
+    }
+    if ((${modelSearch.types}) != []) {
+        $.each(${modelSearch.types}, function (index, value) {
+            $("#rent[value='" + value + "']").prop('checked', true);
+        });
+    }
 </script>
-
 </body>
 </html>
+
+

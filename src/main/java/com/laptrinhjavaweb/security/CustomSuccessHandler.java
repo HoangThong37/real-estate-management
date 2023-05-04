@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+  private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)

@@ -2,7 +2,6 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 

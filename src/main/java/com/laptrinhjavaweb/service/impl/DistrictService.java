@@ -27,13 +27,21 @@ public class DistrictService implements IDistrictService {
     @Override
     public List<DistrictResponse> getDistrictByBuilding(BuildingDTO buildingDTO) {
         List<DistrictResponse> result = new ArrayList<>();
-        for (DistrictsEnum item : DistrictsEnum.values()) {
-            DistrictResponse response = new DistrictResponse();
-            response.setCode(item.name());
-            response.setName(item.getDistrictValue());
-            //if (buildingDTO.get)
-           // result.add(response);
+        try {
+            for (DistrictsEnum item : DistrictsEnum.values()) {
+                DistrictResponse response = new DistrictResponse();
+                response.setCode(item.name());
+                response.setName(item.getDistrictValue());
+                if (buildingDTO.getDistrict() != null && buildingDTO.getDistrict().equals(item.name())) {
+                    response.setSelected("selected");
+                    result.add(response);
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error districtService");
+            return new ArrayList<>();
         }
-        return result;
     }
 }

@@ -20,6 +20,7 @@ public interface IUserService {
     UserDTO resetPassword(long id);
     UserDTO updateProfileOfUser(String id, UserDTO userDTO);
     void delete(long[] ids);
-    Map<Long, String> getStaffMaps();
-    //List<UserDTO> findAll
+    //Map<Long, String> getStaffMaps();
+    List<UserDTO> getAllStaff();
+
 }

@@ -1,22 +1,29 @@
 package com.laptrinhjavaweb.controller.admin;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.service.IBuildingTypeService;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.DistrictService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller(value = "buildingControllerOfAdmin")
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping("/admin")
 public class BuildingController {
 
 	@Autowired
 	private BuildingService buildingService;
+
+	@Autowired
+	private IBuildingTypeService buildingTypeService;
 
 	@Autowired
 	private UserService userService;
@@ -24,18 +31,25 @@ public class BuildingController {
 	@Autowired
 	private DistrictService districtService;
 
-	@RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
-	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingDTO buildingDTO) {
-		ModelAndView mav = new ModelAndView("admin/building/list");
-		// mav.addObject("buildingModelSearch", new BuildingDTO());
-		mav.addObject("modelSearch", buildingDTO); // gửi đi và nhận vào đều là modelSearch
-		mav.addObject("buildings", buildingService.findAll());
-		mav.addObject("staffmaps", userService.getStaffMaps());
-		mav.addObject("districts", districtService.getAllDistrict());
-		return mav;
+	@GetMapping("/building-list")
+	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest request,
+									 @RequestParam(required = false) Map<String, Object> params,
+									 @RequestParam(required = false) List<String> types) {
+		try {
+			ModelAndView mav = new ModelAndView("admin/building/list");
+			//mav.addObject("modelSearch", buildingDTO); // gửi đi và nhận vào đều là modelSearch
+			mav.addObject("buildings", buildingService.getBuildingList(params, types));
+			mav.addObject("staffmaps", userService.getAllStaff());
+			mav.addObject("districts", districtService.getAllDistrict());
+			mav.addObject("buildingTypes", buildingTypeService.getAll());
+			return mav;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
-	@RequestMapping(value = "/admin/building-edit", method = RequestMethod.GET)
+	@GetMapping("/building-edit")
 	public ModelAndView buildingEdit() {
 		ModelAndView mav = new ModelAndView("admin/building/edit");
 		mav.addObject("buildingModel", new BuildingDTO());
