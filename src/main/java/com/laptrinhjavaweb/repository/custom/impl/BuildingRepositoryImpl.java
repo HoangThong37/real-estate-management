@@ -40,8 +40,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             for (Field field : fields) {
                 field.setAccessible(true);
                 String fieldName = field.getName();
-                if (!fieldName.equals("types") && !fieldName.startsWith("rentarea") && !fieldName.equals("districtId")
-                        && !fieldName.equals("staffID") && !fieldName.startsWith("costrent")) {
+                if (!fieldName.equals("types") && !fieldName.startsWith("rentarea")
+                                               && !fieldName.equals("staffID")
+                                               && !fieldName.startsWith("costrent")) {
 
                     Object objectValue = field.get(builder);
                     if (objectValue != null) {
@@ -54,6 +55,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return sql;
     }
@@ -73,12 +75,12 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
         // rentarea
         if (!checkInputSearch.isNullInt(rentAreaFrom) || !checkInputSearch.isNullInt(rentAreaTo)) {
-            sqlJoin.append(" and EXISTS (SELECT * FROM rentarea ra WHERE ra.buildingid = b.id and ");
+            sqlJoin.append(" and EXISTS (SELECT * FROM rentarea ra WHERE ra.building_id = b.id and ");
             if (!checkInputSearch.isNullInt(rentAreaFrom)) {
-                sqlJoin.append(" and ra.value >= " + rentAreaFrom + "");
+                sqlJoin.append(" ra.value >= " + rentAreaFrom + "");
             }
             if (!checkInputSearch.isNullInt(rentAreaTo)) {
-                sqlJoin.append(" and ra.value <= " + rentAreaTo + "");
+                sqlJoin.append(" ra.value <= " + rentAreaTo + "");
             }
             sqlJoin.append(")");
         }
@@ -87,23 +89,16 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         Integer staff = builder.getStaffID();
         if (staff != null) {
             sqlJoin.append(
-                    " inner join assignmentbuilding ab on b.id = ab.buildingid inner join user as u  on ab.staffid = u.id ");
+                    " inner join assignmentbuilding as ab on b.id = ab.building_id inner join user as u  on ab.user_id = u.id  ");
             sqlWhere.append(" and u.id = '" + staff + "'");
-        }
-
-        // districtId
-        Integer districtId = builder.getDistrict();
-        if (districtId != null) {
-            sqlJoin.append(" inner join district as d on b.districtid = d.id ");
-            sqlWhere.append(" and d.id = '" + districtId + "'");
         }
 
         // types //
         if (builder.getTypes() != null && !builder.getTypes().isEmpty()) {
-            sqlJoin.append(" inner join buildingrenttype as br on b.id = br.buildingid \r\n"
-                    + " inner join renttype as rt on br.renttypeid = rt.id ");
+//            sqlJoin.append(" inner join buildingrenttype as br on b.id = br.buildingid \r\n"
+//                    + " inner join renttype as rt on br.renttypeid = rt.id ");
             sqlJoin.append(" and (");
-            String types = builder.getTypes().stream().map(item -> " rt.code LIKE '%" + item + "%'").collect(Collectors.joining(" or "));
+            String types = builder.getTypes().stream().map(item -> " b.type LIKE '%" + item + "%'").collect(Collectors.joining(" or "));
             sqlJoin.append(types);
             sqlJoin.append(")");
         }
