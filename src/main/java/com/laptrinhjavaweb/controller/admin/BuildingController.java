@@ -37,7 +37,6 @@ public class BuildingController {
 									 @RequestParam(required = false) List<String> types) {
 		try {
 			ModelAndView mav = new ModelAndView("admin/building/list");
-			//mav.addObject("modelSearch", buildingDTO); // gửi đi và nhận vào đều là modelSearch
 			mav.addObject("buildings", buildingService.getBuildingList(params, types));
 			mav.addObject("staffmaps", userService.getAllStaff());
 			mav.addObject("districts", districtService.getAllDistrict());

@@ -187,7 +187,6 @@
                         </div>
                     </div><!-- /.row -->
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-xs-12">
@@ -296,6 +295,7 @@
     </div>
 </div><!-- /.main-content -->
 <!-- Modal -->
+
 <div id="assignmentBuildingModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -341,79 +341,12 @@
         e.preventDefault();
         $("#listForm").submit();
     })
+
     $("#xoaBuilding").click(function (e) {
         e.preventDefault();
         $("#myModal").modal();
     })
-    let idOne;
-    $("#btnXoa").click(function (e) {
-        e.preventDefault();
-        let values = [];
-        if (idOne != null)
-            values.push(idOne);
-        $.each($("input[name='checkBuildings[]']:checked"), function () {
-            values.push($(this).val());
-        });
-        let data = {};
-        data["buildingIds"] = values;
-        $.ajax({
-            type: "DELETE",
-            url: '<c:url value="/api/building"/>',
-            data:JSON.stringify(data),
-            dataType: "json",//kieu du lieu tu server tra ve client
-            contentType: "application/json",//kieu du lieu tu client gui ve server
-            success: function (response) {
-                window.location.reload();
-            },
-            error: function (response) {
-                alert("fail")
-                console.log(response)
-            }
-        });
-    })
-    function deleteOneBuilding(value) {
-        idOne = value;
-        $("#myModal").modal();
-    }
-    $("#assignment").click(function (e) {
-        e.preventDefault();
-        let values = [];
-        $.each($("input[name='checkStaffs[]']:checked"), function () {
-            values.push($(this).val());
-        });
-        let data = {
-            "staffIds": values
-        }
-        $.ajax({
-            type: "post",
-            url: '<c:url value="/api/building/"/>' + buildingAssId + '/assignment',
-            data: JSON.stringify(values),
-            dataType: "json",//kieu du lieu tu server tra ve client
-            contentType: "application/json",//kieu du lieu tu client gui ve server
-            success: function (response) {
-                console.log("sucess");
-                window.location.reload();
-            },
-            error: function (response) {
-                alert("fail")
-                console.log(response)
-            }
-        });
-    })
-    $("#selectAll").click(function () {
-        $("input[name='checkBuildings[]']").prop('checked', $(this).prop('checked'));
-    });
-    $("#selectAll2").click(function () {
-        $("input[name='checkStaffs[]']").prop('checked', $(this).prop('checked'));
-    });
-    function editBuilding(value) {
-        window.location.href = "<c:url value="/admin/building-edit"/>" + "?buildingid=" + value;
-    }
-    if ((${modelSearch.types}) != []) {
-        $.each(${modelSearch.types}, function (index, value) {
-            $("#rent[value='" + value + "']").prop('checked', true);
-        });
-    }
+
 </script>
 </body>
 </html>
