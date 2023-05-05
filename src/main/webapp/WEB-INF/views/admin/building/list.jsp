@@ -48,7 +48,6 @@
                                             <!-- PAGE CONTENT BEGIN -->
                                             <div class="col-md-6">
                                                 <label><b>Tên Toà Nhà</b></label>
-                                                    <%--                                                <input type="text" id="name" name="name" class="form-control" value="${modelSearch.name}">--%>
                                                 <form:input path="name" cssClass="form-control"/>
                                             </div>
 

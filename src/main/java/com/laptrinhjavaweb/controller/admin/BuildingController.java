@@ -49,9 +49,19 @@ public class BuildingController {
 	}
 
 	@GetMapping("/building-edit")
-	public ModelAndView buildingEdit() {
+	public ModelAndView buildingEdit(@RequestParam(name = "buildingid", required = false) Long id) {
 		ModelAndView mav = new ModelAndView("admin/building/edit");
-		mav.addObject("buildingModel", new BuildingDTO());
+
+		if (id != null) {
+			mav.addObject("modelBuildingEdit", buildingService.findBuildingById(id));
+			mav.addObject("buildingTypes", buildingTypeService.getAllByBuilding(buildingService.findBuildingById(id)));
+			mav.addObject("districts", districtService.getDistrictByBuilding(buildingService.findBuildingById(id)));
+		}
+		else {
+			mav.addObject("modelBuildingEdit", new BuildingDTO());
+			mav.addObject("buildingTypes", buildingTypeService.getAll());
+			mav.addObject("districts", districtService.getAllDistrict());
+		}
 		return mav;
 	}
 }

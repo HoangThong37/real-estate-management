@@ -35,8 +35,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
     // sử dụng java reflection
     private StringBuilder buidSqlCommonUsingBuider(BuildingSearchBuilder builder, StringBuilder sql) {
+        Field fields[] = BuildingSearchBuilder.class.getDeclaredFields();
         try {
-            Field fields[] = BuildingSearchBuilder.class.getDeclaredFields();
             for (Field field : fields) {
                 field.setAccessible(true);
                 String fieldName = field.getName();
@@ -45,7 +45,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                                                && !fieldName.startsWith("costrent")) {
 
                     Object objectValue = field.get(builder);
-                    if (objectValue != null) {
+                    if (objectValue != null && objectValue != "") {
                         if (field.getType().getName().equals("java.lang.String")) { // tìm kiếm theo like
                             sql.append(" and b." + fieldName.toLowerCase() + " like '%" + objectValue + "%'");
                         } else if (field.getType().getName().equals("java.lang.Integer")) { // tìm kiếm chính xác

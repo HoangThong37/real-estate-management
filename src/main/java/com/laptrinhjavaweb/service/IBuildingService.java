@@ -13,7 +13,7 @@ import java.util.Map;
 public interface IBuildingService {
     List<BuildingDTO> findAll();
     void save(BuildingDTO buildingDTO);
-
+    BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
     List<BuildingSearchResponse> getBuildingList(Map<String, Object> fieldSearch, List<String> types) throws SQLException;
 

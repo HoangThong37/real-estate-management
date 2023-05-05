@@ -18,7 +18,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private Integer rentPrice;
     private String rentPriceDescription;
     private String costDescription;
-    private String serviceCost;
+    private String serviceCost;    // phí dịch vụ
     private String carCost;
     private String motorbikeCost;
     private String overtimeCost;

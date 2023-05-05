@@ -47,6 +47,11 @@
                         <i class="menu-icon fa fa-caret-right"></i>
                         DS tòa nhà
                     </a>
+
+                    <a href='<c:url value='/admin/building-edit'/>'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Chỉnh sửa tòa nhà
+                    </a>
                     <b class="arrow"></b>
                 </li>
             </ul>

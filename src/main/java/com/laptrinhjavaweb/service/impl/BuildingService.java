@@ -53,6 +53,16 @@ public class BuildingService implements IBuildingService {
 	}
 
 	@Override
+	public BuildingDTO findBuildingById(Long id) {
+        if (id != null) {
+            BuildingEntity buildingEntity = buildingRepository.findById(id);
+            BuildingDTO buildingDTO = buildingConverter.convertToDTO(buildingEntity);
+            return buildingDTO;
+        }
+        return null;
+    }
+
+	@Override
 	public Map<String, String> getBuildingTypes() {
 		Map<String, String> buildingTypes = new HashMap<>();
 		for (BuildingTypesEnum item :BuildingTypesEnum.values()) {
@@ -74,12 +84,6 @@ public class BuildingService implements IBuildingService {
 		}
 		return results;
 	}
-
-	@Override
-	public Long assignmentBuilding(List<Long> userId, Long buildingId) {
-		return null;
-	}
-
 
 	private BuildingSearchBuilder convertParamToBuilder(Map<String, Object> requestParams, List<String> types) {
 		try {
@@ -113,6 +117,11 @@ public class BuildingService implements IBuildingService {
 		if (buildingDelete != null) {
 			//buildingRepository.remove(buildingDelete);
 		}
+		return null;
+	}
+
+	@Override
+	public Long assignmentBuilding(List<Long> userId, Long buildingId) {
 		return null;
 	}
 
