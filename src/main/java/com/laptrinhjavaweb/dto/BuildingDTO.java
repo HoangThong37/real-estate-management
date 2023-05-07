@@ -17,18 +17,17 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String level;
     private Integer rentPrice;
     private String rentPriceDescription;
-    private String costDescription;
-    private String serviceCost;    // phí dịch vụ
-    private String carCost;
-    private String motorbikeCost;
-    private String overtimeCost;
+    private String serviceFee;
+    private String carFee;
+    private String motoFee;
+    private String overtimeFee;
     private List<String> types;
     private Integer costRentFrom;
     private Integer costRentTo;
     private Integer areaRentFrom;
     private Integer areaRentTo;
     private Integer staffId;
-    private Integer electricityCost;
+    private Integer electricityFee;
     private String deposit;
     private String payment;
     private String timeRent;
@@ -146,45 +145,6 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.rentPriceDescription = rentPriceDescription;
     }
 
-    public String getCostDescription() {
-        return costDescription;
-    }
-
-    public void setCostDescription(String costDescription) {
-        this.costDescription = costDescription;
-    }
-
-    public String getServiceCost() {
-        return serviceCost;
-    }
-
-    public void setServiceCost(String serviceCost) {
-        this.serviceCost = serviceCost;
-    }
-
-    public String getCarCost() {
-        return carCost;
-    }
-
-    public void setCarCost(String carCost) {
-        this.carCost = carCost;
-    }
-
-    public String getMotorbikeCost() {
-        return motorbikeCost;
-    }
-
-    public void setMotorbikeCost(String motorbikeCost) {
-        this.motorbikeCost = motorbikeCost;
-    }
-
-    public String getOvertimeCost() {
-        return overtimeCost;
-    }
-
-    public void setOvertimeCost(String overtimeCost) {
-        this.overtimeCost = overtimeCost;
-    }
 
     public List<String> getTypes() {
         return types;
@@ -234,12 +194,45 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.staffId = staffId;
     }
 
-    public Integer getElectricityCost() {
-        return electricityCost;
+
+    public String getServiceFee() {
+        return serviceFee;
     }
 
-    public void setElectricityCost(Integer electricityCost) {
-        this.electricityCost = electricityCost;
+    public void setServiceFee(String serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public String getCarFee() {
+        return carFee;
+    }
+
+    public void setCarFee(String carFee) {
+        this.carFee = carFee;
+    }
+
+    public String getMotoFee() {
+        return motoFee;
+    }
+
+    public void setMotoFee(String motoFee) {
+        this.motoFee = motoFee;
+    }
+
+    public String getOvertimeFee() {
+        return overtimeFee;
+    }
+
+    public void setOvertimeFee(String overtimeFee) {
+        this.overtimeFee = overtimeFee;
+    }
+
+    public Integer getElectricityFee() {
+        return electricityFee;
+    }
+
+    public void setElectricityFee(Integer electricityFee) {
+        this.electricityFee = electricityFee;
     }
 
     public String getDeposit() {

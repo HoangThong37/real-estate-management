@@ -5,7 +5,7 @@ import java.util.List;
 public class BuildingSearchBuilder {
     private String name;
     private Integer floorArea;  // diện tích sàn
-    private Integer district;   // quận
+    private String district;   // quận
     private String ward;
     private String street;
     private Integer numberOfBasement;
@@ -28,7 +28,7 @@ public class BuildingSearchBuilder {
         return floorArea;
     }
 
-    public Integer getDistrict() {
+    public String getDistrict() {
         return district;
     }
 
@@ -106,7 +106,7 @@ public class BuildingSearchBuilder {
     public static final class Builder {
         private String name;
         private Integer floorArea;
-        private Integer district;
+        private String district;
         private String ward;
         private String street;
         private Integer numberOfBasement;
@@ -135,7 +135,7 @@ public class BuildingSearchBuilder {
 
 
 
-        public Builder setDistrict(Integer district) {
+        public Builder setDistrict(String district) {
             this.district = district;
             return this;
         }

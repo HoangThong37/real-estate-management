@@ -7,6 +7,8 @@ import com.laptrinhjavaweb.dto.response.ResponseDTO;
 import com.laptrinhjavaweb.exception.BuildingNotFoundException;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -20,18 +22,18 @@ public class BuildingAPI {
     @Autowired
     private BuildingService buildingService;
 
-    @GetMapping()
-    public List<BuildingSearchResponse> searchBuilding(@RequestParam(required = false) Map<String, Object> fieldSearch,
-                                                        @RequestParam(required = false) List<String> types)
-            throws SQLException {
-        return buildingService.getBuildingList(fieldSearch, types);
-    }
+//    @GetMapping()
+//    public List<BuildingSearchResponse> searchBuilding(@RequestParam(required = false) Map<String, Object> fieldSearch,
+//                                                        @RequestParam(required = false) List<String> types)
+//            throws SQLException {
+//        return buildingService.findAll(fieldSearch, types);
+//    }
 
     @PostMapping
-    public BuildingDTO createBuilding(@RequestBody BuildingDTO buildingDTO) {
-        buildingService.save(buildingDTO);
-        return buildingDTO;
+    public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
+        return buildingService.save(buildingDTO);
     }
+
 
     // api load satff
     @GetMapping("/{buildingid}/staff")
@@ -48,12 +50,6 @@ public class BuildingAPI {
         return id;
     }
 
-    // insert
-    @PostMapping("/new")
-    public BuildingDTO insertBuilding(@RequestBody BuildingDTO buildingDTO) {
-
-        return buildingDTO;
-    }
 
     // update
     @PutMapping("/edit")
@@ -75,11 +71,5 @@ public class BuildingAPI {
         }
     }
 
-//    @GetMapping()
-//    public List<BuildingSearchResponse> searchBuilding3(@RequestParam(required = false) Map<String, Object> fieldSearch,
-//                                                        @RequestParam(required = false) List<String> types)
-//            throws SQLException {
-//        return buildingService.getBuildingList3(fieldSearch, types);
-//    }
 
 }

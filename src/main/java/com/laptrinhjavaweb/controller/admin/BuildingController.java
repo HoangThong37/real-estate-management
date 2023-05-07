@@ -32,12 +32,12 @@ public class BuildingController {
 	private DistrictService districtService;
 
 	@GetMapping("/building-list")
-	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest request,
-									 @RequestParam(required = false) Map<String, Object> params,
-									 @RequestParam(required = false) List<String> types) {
+	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest
+									 ) {
 		try {
 			ModelAndView mav = new ModelAndView("admin/building/list");
-			mav.addObject("buildings", buildingService.getBuildingList(params, types));
+			//mav.addObject("buildings", buildingService.getBuildingList(params, types));
+			mav.addObject("buildings", buildingService.findAll(buildingSearchRequest));
 			mav.addObject("staffmaps", userService.getAllStaff());
 			mav.addObject("districts", districtService.getAllDistrict());
 			mav.addObject("buildingTypes", buildingTypeService.getAll());

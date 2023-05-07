@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "building")
 public class BuildingEntity extends BaseEntity {
@@ -91,6 +90,12 @@ public class BuildingEntity extends BaseEntity {
 
     @Column(name = "avatar")
     private String avatar;
+
+    @Column(name = "managername")
+    private String managerName;
+
+    @Column(name = "managerphone")
+    private Integer managerPhone;
 
     // 1 building - n rentarea
     @OneToMany(mappedBy="building") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
@@ -331,5 +336,21 @@ public class BuildingEntity extends BaseEntity {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
+
+    public Integer getManagerPhone() {
+        return managerPhone;
+    }
+
+    public void setManagerPhone(Integer managerPhone) {
+        this.managerPhone = managerPhone;
     }
 }

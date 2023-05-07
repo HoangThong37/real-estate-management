@@ -99,12 +99,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                           <label class="col-sm-3 control-label no-padding-right"> Diện tích thuê </label>
-                            <div class="col-sm-9">
-                                <form:input path="areaRent" cssClass="form-control"/>
-                            </div>
-                        </div>
+                        <%--<div class="form-group">--%>
+                           <%--<label class="col-sm-3 control-label no-padding-right"> Diện tích thuê </label>--%>
+                            <%--<div class="col-sm-9">--%>
+                                <%--<form:input path="rentArea" cssClass="form-control"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
 
                         <%--  <div class="form-group">
@@ -138,21 +138,21 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Phí ngoài giờ </label>
                             <div class="col-sm-9">
-                                <form:input path="overtimeCost" cssClass="form-control"/>
+                                <form:input path="overtimeFee" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Tiền điện </label>
                             <div class="col-sm-9">
-                                <form:input path="electricityCost" cssClass="form-control"/>
+                                <form:input path="electricityFee" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Phí dịch vụ </label>
                             <div class="col-sm-9">
-                                <form:input path="serviceCost" cssClass="form-control"/>
+                                <form:input path="serviceFee" cssClass="form-control"/>
                             </div>
                         </div>
 
@@ -179,7 +179,7 @@
                         <div class="form-group">
                             <div class="col-sm-9 text-center">
                                 <button type="button" class="btn btn-primary" id="btnAddBuilding" name="btnAddBuilding" >Add Building</button>
-                                <button type="button" class="btn btn-primary" id="btnRemove" name="btnRemove"  >Update Building</button>
+                                <button type="button" class="btn btn-primary" id="btnRemove" name="btnRemove">Update Building</button>
                             </div>
                         </div>
                     </form:form>
@@ -190,46 +190,45 @@
 </div><!-- /.main-content -->
 
 <script>
-    //btnAddBuilding
     $('#btnAddBuilding').click(function (e) {
-        //  call api add building function
-        // t1. cái pthuc đẩy về là : POST
-        // t2. nhập đoạn url vô
-        // t3. cái dữ liệu mình đẩy vô là chuỗi json - cần phải định nghĩa (chuỗi: text/plain / json: json)
         e.preventDefault();
-        var data = {};
-        //var buildingTypes = [];
-        var formData = $('#formEdit').serializeArray;  // lấy data tự động
-
-        /*$.each(formData, function (index, v) {
+        var data = {}
+        var formData = $('#formEdit').serializeArray();
+        var id = ${modelBuilding.id} + '';
+        if ((id) != '') {
+            data["id"] = id;
+        }
+        var buildingTypes = [];
+        $.each(formData, function (index, v) {
             if (v.name == 'buildingTypes') {
                 buildingTypes.push(v.value);
             } else {
                 data["" + v.name + ""] = v.value;
             }
         });
-        data["buildingTypes"] = buildingTypes;*/
+        data["buildingTypes"] = buildingTypes;
 
         $.each(formData, function (index, v) {
-                data["" + v.name + ""] = v.value;
+            data["" + v.name + ""] = v.value;
         });
+        data["type"] = buildingTypes;
         $.ajax({
-            type: 'POST',
-            url: "${buildingAPI}",
+            type: "post",
+            url: '<c:url value="/api/building"/>',
             data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-
+            dataType: "json",               // kiểu dữ liệu server gửi cho client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
-                console.log('success');
+                window.location.href = '<c:url value="/admin/building-list" />'
             },
             error: function (response) {
-                console.log('faild')
+                alert("fail")
                 console.log(response)
             }
         });
-    });
+    })
 </script>
+
 
 </body>
 </html>

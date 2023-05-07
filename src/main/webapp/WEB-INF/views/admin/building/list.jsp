@@ -167,7 +167,7 @@
                                     <div class="col-xs-12">
                                         <div class="col-md-6">
                                             <div class="form-check">
-                                                <c:forEach var="item" items="${districts}">
+                                                <c:forEach var="item" items="${buildingTypes}">
                                                     <form:checkbox id="rent" path="types" value="${item.code}"
                                                                    label="${item.name}" cssClass="form-check-input"/>
                                                 </c:forEach>
