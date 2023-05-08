@@ -4,12 +4,14 @@ import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.UserConverter;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
+import com.laptrinhjavaweb.repository.custom.impl.UserRepositoryImpl;
 import com.laptrinhjavaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserRepositoryImpl userRepoCustom;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -171,16 +176,22 @@ public class UserService implements IUserService {
         return result;
     }
 
-//    @Override
-//    public Map<Long, String> getStaffMaps() {
-//        Map<Long, String> result = new HashMap<>();
-//        List<UserEntity> staffs = userRepository.findByStatusAndRoles_Code(1, "STAFF");
-//        for (UserEntity item : staffs) {
-//            result.put(item.getId(), item.getFullName());
-//        }
-//        return result;
-//    }
+    @Override
+    public List<StaffResponseDTO> finAllStaffByBuilding(Long id) {
+        List<UserEntity> listStaff  = userRepoCustom.getAllStaff();
+        List<UserEntity> listStaffByBuilding  = userRepoCustom.getAllStaffByBuilding(id);
 
-
+        List<StaffResponseDTO> staffResponseDTO  = userConverter.convertToDtoResponse(listStaffByBuilding);
+        for (UserEntity staffAll : listStaff) {
+            StaffResponseDTO staffResponse = new StaffResponseDTO();
+            for (UserEntity staffByBuilding : listStaffByBuilding) { //
+                  if (staffAll.getId() == staffByBuilding.getId()) {
+                      staffResponse.setChecked("checked");
+                  }
+            }
+            staffResponseDTO.add(staffResponse);
+        }
+        return staffResponseDTO;
+    }
 
 }

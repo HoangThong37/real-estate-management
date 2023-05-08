@@ -12,6 +12,7 @@ import com.laptrinhjavaweb.repository.BuildingRepository;
 
 import com.laptrinhjavaweb.repository.custom.impl.BuildingRepositoryImpl;
 import com.laptrinhjavaweb.service.IBuildingService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,7 +76,6 @@ public class BuildingService implements IBuildingService {
 
 
 
-	// test
 	@Override
 	public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
 		List<BuildingSearchResponse> result = new ArrayList<>();
@@ -86,6 +86,23 @@ public class BuildingService implements IBuildingService {
 		}
 		return result;
 	}
+
+	@Override
+	@Transactional
+	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
+		try {
+			if (buildingDTO.getId() != null) {
+				BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+				return buildingConverter.convertToDTO(buildingRepository.save(buildingEntity));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error building update in service");
+		}
+       return null;
+	}
+
+
 
 	private BuildingSearchBuilder convertParamToBuilder(BuildingSearchRequest buildingSearchRequest) {
 		try {
@@ -114,18 +131,17 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-	@Override
-	public BuildingDeleteRequest removeBuilding(BuildingDeleteRequest buildingDelete) {
-		if (buildingDelete != null) {
-			//buildingRepository.remove(buildingDelete);
-		}
-		return null;
-	}
 
 	@Override
 	public Long assignmentBuilding(List<Long> userId, Long buildingId) {
 		return null;
 	}
 
-
+	@Override
+	@Transactional
+	public void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+		if (buildingDeleteRequest.getBuildingId() != null) {
+			buildingRepository.deleteByIdIn(buildingDeleteRequest.getBuildingId());
+		}
+	}
 }

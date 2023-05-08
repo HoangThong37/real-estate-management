@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.service;
 
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
 
@@ -23,4 +24,5 @@ public interface IUserService {
     //Map<Long, String> getStaffMaps();
     List<UserDTO> getAllStaff();
 
+    List<StaffResponseDTO> finAllStaffByBuilding(Long id);
 }

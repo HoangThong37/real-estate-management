@@ -207,8 +207,9 @@
                 </div>
             </div>
             <br/>
+
             <!-- Modal Xac Nhan xoa-->
-            <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal fade" id="myModal" role="dialog" >
                 <div class="modal-dialog">
 
                     <!-- Modal content-->
@@ -218,7 +219,7 @@
                             <h4 class="modal-title">Xác nhận xoá</h4>
                         </div>
                         <div class="modal-body">
-                            <p>Bạn có muốn xoá Building đã chọn ?</p>
+                            <p>Bạn có muốn xoá tòa nhà đã chọn ?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -336,6 +337,11 @@
     function openModalAssignmentBuilding() {
         $('#assignmentBuildingModal').modal();
     }
+
+    function assignmentBuilding(value) {
+        $("#assignmentBuildingModal").modal();
+    }
+
     $("#btnSearch").click(function (e) {
         e.preventDefault();
         $("#listForm").submit();
@@ -345,6 +351,42 @@
         e.preventDefault();
         $("#myModal").modal();
     })
+
+    var idOne;
+    $("#btnXoa").click(function (e) {
+        e.preventDefault();
+        var values = [];
+        if (idOne != null)
+            values.push(idOne);
+        $.each($("input[name='checkBuildings[]']:checked"), function () {
+            values.push($(this).val());
+        });
+        var data = {};
+        data["buildingId"] = values;
+        $.ajax({
+            type: "DELETE",
+            url: '<c:url value="/api/building"/>',
+            data:JSON.stringify(data),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                window.location.reload();
+            },
+            error: function (response) {
+                alert("fail")
+                console.log(response)
+            }
+        });
+    })
+
+    function editBuilding(value) {
+        window.location.href = '<c:url value="/admin/building-edit" />' + '?buildingid=' + value;
+    }
+
+    function deleteOneBuilding(value) {
+        idOne = value;
+        $("#myModal").modal();
+    }
 
 </script>
 </body>

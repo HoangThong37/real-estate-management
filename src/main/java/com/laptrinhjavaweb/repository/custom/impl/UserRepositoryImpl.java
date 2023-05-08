@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
-    public List<UserEntity> getAllStaffByBuilding(Long buildingId) {
+    public List<UserEntity> getAllStaffByBuilding(Long buildingId) { // lấy tất cả nhân viên giữ tòa nhà (a,b,c)
         StringBuilder sql = new StringBuilder("select * from user as u inner join assignmentbuilding as ab on u.id = ab.user_id ");
         sql.append(" where ab.building_id = ").append(buildingId);
 

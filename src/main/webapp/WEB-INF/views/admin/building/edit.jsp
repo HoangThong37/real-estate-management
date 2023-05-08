@@ -177,9 +177,17 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"></label>
                             <div class="col-sm-9 text-center">
-                                <button type="button" class="btn btn-primary" id="btnAddBuilding" name="btnAddBuilding" >Add Building</button>
-                                <button type="button" class="btn btn-primary" id="btnRemove" name="btnRemove">Update Building</button>
+                                <c:if test="${modelBuildingEdit.id == null}" >
+                                     <button type="button" class="btn btn-primary" id="btnAddBuilding">Thêm Tòa Nhà</button>
+                                </c:if>
+
+                                <c:if test="${modelBuildingEdit.id != null}" >
+                                     <button type="button" class="btn btn-primary" id="btnEditBuilding">Update Tòa Nhà</button>
+                                </c:if>
+
+                                <button type="button" class="btn btn-primary">Huỷ</button>
                             </div>
                         </div>
                     </form:form>
@@ -192,28 +200,21 @@
 <script>
     $('#btnAddBuilding').click(function (e) {
         e.preventDefault();
-        var data = {}
+        var data = {};
         var formData = $('#formEdit').serializeArray();
-        var id = ${modelBuilding.id} + '';
-        if ((id) != '') {
-            data["id"] = id;
-        }
         var buildingTypes = [];
+
         $.each(formData, function (index, v) {
-            if (v.name == 'buildingTypes') {
+            if (v.name == 'types') {
                 buildingTypes.push(v.value);
             } else {
                 data["" + v.name + ""] = v.value;
             }
         });
-        data["buildingTypes"] = buildingTypes;
+        data["types"] = buildingTypes;
 
-        $.each(formData, function (index, v) {
-            data["" + v.name + ""] = v.value;
-        });
-        data["type"] = buildingTypes;
         $.ajax({
-            type: "post",
+            type: "POST",
             url: '<c:url value="/api/building"/>',
             data: JSON.stringify(data),
             dataType: "json",               // kiểu dữ liệu server gửi cho client
@@ -227,8 +228,41 @@
             }
         });
     })
-</script>
 
+
+    $('#btnEditBuilding').click(function (e) {
+        e.preventDefault();
+        var data = {};
+        var formData = $('#formEdit').serializeArray();
+        var id = ${modelBuildingEdit.id} + '';
+        if(id != '') {
+            data["id"] = id;
+        }
+        var types = [];
+        $.each(formData, function (index, v) {
+            if (v.name == 'types') {
+                buildingTypes.push(v.value);
+            } else {
+                data["" + v.name + ""] = v.value;
+            }
+        });
+        data["types"] = types;
+        $.ajax({
+            type: "PUT",
+            url: '<c:url value="/api/building"/>',
+            data: JSON.stringify(data),
+            dataType: "json",               // kiểu dữ liệu server gửi cho client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                window.location.href = '<c:url value="/admin/building-list" />'
+            },
+            error: function (response) {
+                alert("error : fail")
+                console.log(response)
+            }
+        });
+    })
+</script>
 
 </body>
 </html>

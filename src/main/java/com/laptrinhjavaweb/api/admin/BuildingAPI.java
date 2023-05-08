@@ -4,8 +4,11 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.dto.response.ResponseDTO;
+import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.exception.BuildingNotFoundException;
 import com.laptrinhjavaweb.service.impl.BuildingService;
+import com.laptrinhjavaweb.service.impl.UserService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,19 +18,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@RestController("buildingAPIOfAdmin")
+@RestController
 @RequestMapping("/api/building")
 public class BuildingAPI {
 
     @Autowired
     private BuildingService buildingService;
 
-//    @GetMapping()
-//    public List<BuildingSearchResponse> searchBuilding(@RequestParam(required = false) Map<String, Object> fieldSearch,
-//                                                        @RequestParam(required = false) List<String> types)
-//            throws SQLException {
-//        return buildingService.findAll(fieldSearch, types);
-//    }
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
@@ -36,10 +35,9 @@ public class BuildingAPI {
 
 
     // api load satff
-    @GetMapping("/{buildingid}/staff")
-    public ResponseDTO loadData() {
-
-        return null;
+    @GetMapping("/{id}/staff")
+    public List<StaffResponseDTO> loadStaffByBuilding(@PathVariable("id") Long id) {
+        return userService.finAllStaffByBuilding(id);
     }
 
     // giao tòa nhà cho nhân viên quản lí
@@ -51,25 +49,19 @@ public class BuildingAPI {
     }
 
 
-    // update
-    @PutMapping("/edit")
-    public BuildingDTO updateBuilding(@RequestBody BuildingDTO buildingDTO) {
+    // update building
+    @PutMapping
+    public BuildingDTO updateBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
+        buildingService.updateBuilding(buildingDTO);
 
         return buildingDTO;
     }
 
-    // delete n id
-    @DeleteMapping()
-    public BuildingDeleteRequest updateBuilding(@RequestBody BuildingDeleteRequest buildingDelete) {
-        try {
-            BuildingDeleteRequest deleteBuilding =  buildingService.removeBuilding(buildingDelete);
-            return deleteBuilding;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error api delete building");
-            return null;
-        }
+    // delete building n
+    @DeleteMapping
+    public BuildingDeleteRequest deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+        buildingService.removeBuilding(buildingDeleteRequest);
+        return buildingDeleteRequest;
     }
-
 
 }
