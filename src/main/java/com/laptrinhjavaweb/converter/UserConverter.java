@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.converter;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.repository.custom.impl.UserRepositoryImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,15 +17,29 @@ public class UserConverter {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private UserRepositoryImpl userRepository;
+
     public UserDTO convertToDto (UserEntity entity){
         UserDTO result = modelMapper.map(entity, UserDTO.class);
         return result;
     }
 
-    public List<StaffResponseDTO> convertToDtoResponse(List<UserEntity> entity){ // nó trả về 1 list user
+    public List<StaffResponseDTO> convertToDtoResponse(List<UserEntity> listUserEntity){
         List<StaffResponseDTO> result = new ArrayList<>();
-        StaffResponseDTO listStaff = modelMapper.map(entity, StaffResponseDTO.class);
-        result.add(listStaff);
+        for (UserEntity staffAll : userRepository.getAllStaff()) { // For example: id=1 -> in ra 3 building: b,c,d
+            int i = 0;
+            for (UserEntity userList : listUserEntity) {  // 2 tòa nhà b,c
+                if (staffAll.getId() == userList.getId()) {
+                   i++;
+                }
+            }
+            StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
+            if (i > 0) {
+                listStaff.setChecked("checked");
+                result.add(listStaff);
+            }
+        }
         return result;
     }
 

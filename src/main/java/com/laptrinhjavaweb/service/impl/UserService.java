@@ -178,20 +178,8 @@ public class UserService implements IUserService {
 
     @Override
     public List<StaffResponseDTO> finAllStaffByBuilding(Long id) {
-        List<UserEntity> listStaff  = userRepoCustom.getAllStaff();
-        List<UserEntity> listStaffByBuilding  = userRepoCustom.getAllStaffByBuilding(id);
 
-        List<StaffResponseDTO> staffResponseDTO  = userConverter.convertToDtoResponse(listStaffByBuilding);
-        for (UserEntity staffAll : listStaff) {
-            StaffResponseDTO staffResponse = new StaffResponseDTO();
-            for (UserEntity staffByBuilding : listStaffByBuilding) { //
-                  if (staffAll.getId() == staffByBuilding.getId()) {
-                      staffResponse.setChecked("checked");
-                  }
-            }
-            staffResponseDTO.add(staffResponse);
-        }
-        return staffResponseDTO;
+        return userConverter.convertToDtoResponse(userRepoCustom.getAllStaffByBuilding(id));
     }
 
 }

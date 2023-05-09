@@ -276,7 +276,7 @@
                                     </button>
                                     <button class="btn btn-xs btn-dark" data-toggle="tooltip"
                                             title="Sửa thông tin toà nhà" value="${item.id}"
-                                            onclick="editBuilding(${item.id})">
+                                            onclick="editBuilding(value)">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                     </button>
 
@@ -335,13 +335,44 @@
 </div>
 <script>
 
+    function assignmentBuilding(value) {
+            // loadStaffAssign(value); // load nhân viên quản lí building
+            // function này sẽ call 1 api về từ dưới db - nó sẽ load dsach nv lên -> sử dụng ajax
+            // buildingAssigmentId = value;
+            $.ajax({
+                type: "GET",
+                url: "<c:url value='/api/building'/>" + '/' + value + '/staff',
+                //data: JSON.stringify(data),  // data gửi về
+                dataType: "json",            // kiểu dữ liệu gửi từ server
+                contentType: "application/json",   // gửi từ server
+
+                success: function (response) {
+                    // data : chính là cục chứa data của tk staffListDTO
+                    //var arrBuilding  = response;
+                    var row = '';
+                    $("#dsnv").empty();
+                    $.each(response.data, function (index, item) {
+                        row += '<tr>';
+                        row += '<td class="text-center"><input type="checkbox" ' + item.checked + '  value=' + item.staffId  + ' id="checkbox_' + item.staffId + '" name="checkStaffs[]" class="check-box-element" /></td>';
+                        row += '<td class="text-center">' + item.fullName + '</td>';
+                        row += '</tr>';
+                    });
+                    //$('#staffList tbody').html(row);
+                    $("#dsnv").append(row);
+                },
+                error: function (response) {
+                    console.log('faild')
+                    console.log(response)
+                }
+            });
+        openModalAssignmentBuilding();
+    }
+
+        
     function openModalAssignmentBuilding() {
         $('#assignmentBuildingModal').modal();
     }
 
-    function assignmentBuilding(value) {
-        $("#assignmentBuildingModal").modal();
-    }
 
     $("#btnSearch").click(function (e) {
         e.preventDefault();
@@ -395,6 +426,17 @@
         idOne = value;
         $("#myModal").modal();
     }
+
+    // id : selectAll -> checkbox  - building
+    $("#selectAll").click(function () {
+        $("input[name='checkBuildings[]']").pop('checked', $(this).prop('checked'));
+    })
+
+    // id : selectAll2 -> checkbox - staff
+    $("#selectAll2").click(function () {
+        $("input[name='checkStaffs[]']").pop('checked', $(this).prop('checked'));
+    })
+
 
 
 
