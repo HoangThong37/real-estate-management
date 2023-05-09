@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.dto.request;
 
 import com.laptrinhjavaweb.dto.BuildingSearchParent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingSearchRequest extends BuildingSearchParent {
@@ -19,9 +20,9 @@ public class BuildingSearchRequest extends BuildingSearchParent {
     private Integer rentPriceFrom;    // giá thuê từ
     private Integer rentPriceTo;      // giá thuê đến
     private Integer staffId;          // nhân viên phụ trách
-    private List<String> types;       // loại tòa nhà
+    private List<String> types = new ArrayList<>();
     private String managerName;
-    private String managerPhone;
+    private Integer managerPhone;
 
 
     public String getManagerName() {
@@ -32,11 +33,11 @@ public class BuildingSearchRequest extends BuildingSearchParent {
         this.managerName = managerName;
     }
 
-    public String getManagerPhone() {
+    public Integer getManagerPhone() {
         return managerPhone;
     }
 
-    public void setManagerPhone(String managerPhone) {
+    public void setManagerPhone(Integer managerPhone) {
         this.managerPhone = managerPhone;
     }
 
@@ -135,7 +136,6 @@ public class BuildingSearchRequest extends BuildingSearchParent {
     public void setRentPriceTo(Integer rentPriceTo) {
         this.rentPriceTo = rentPriceTo;
     }
-
 
     public Integer getStaffId() {
         return staffId;

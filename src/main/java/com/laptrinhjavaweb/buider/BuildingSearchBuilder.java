@@ -16,7 +16,7 @@ public class BuildingSearchBuilder {
     private Integer rentPriceFrom; // giá thuê từ
     private Integer rentPriceTo;   // giá thuê đến
     private String managerName;
-    private String managerPhone;
+    private Integer managerPhone;
     private Integer staffID;       // chọn nhân viên phụ trách
     private List<String> types;    // chọn loại tòa nhà mong muốn
 
@@ -72,7 +72,7 @@ public class BuildingSearchBuilder {
         return managerName;
     }
 
-    public String getManagerPhone() {
+    public Integer getManagerPhone() {
         return managerPhone;
     }
 
@@ -117,7 +117,7 @@ public class BuildingSearchBuilder {
         private Integer rentPriceFrom;
         private Integer rentPriceTo;
         private String managerName;
-        private String managerPhone;
+        private Integer managerPhone;
         private Integer staffID;
         private List<String> types;
 
@@ -212,7 +212,7 @@ public class BuildingSearchBuilder {
 
 
 
-        public Builder setManagerPhone(String managerPhone) {
+        public Builder setManagerPhone(Integer managerPhone) {
             this.managerPhone = managerPhone;
             return this;
         }

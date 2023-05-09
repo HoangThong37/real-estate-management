@@ -99,18 +99,18 @@
                             </div>
                         </div>
 
-                        <%--<div class="form-group">--%>
-                           <%--<label class="col-sm-3 control-label no-padding-right"> Diện tích thuê </label>--%>
-                            <%--<div class="col-sm-9">--%>
-                                <%--<form:input path="rentArea" cssClass="form-control"/>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
+                        <div class="form-group">
+                           <label class="col-sm-3 control-label no-padding-right"> Diện tích thuê </label>
+                            <div class="col-sm-9">
+                                <form:input path="areaRent" cssClass="form-control"/>
+                            </div>
+                        </div>
 
 
-                        <%--  <div class="form-group">
+                          <%--<div class="form-group">
                               <label class="col-sm-3 control-label no-padding-right"> Mô tả diện tích </label>
                               <div class="col-sm-9">
-                                  <form:input path="" cssClass="form-control"/>
+                                  <form:input path="rent" cssClass="form-control"/>
                               </div>
                           </div>--%>
 
@@ -161,7 +161,7 @@
                             <div class="col-sm-9">
                                 <c:forEach items="${buildingTypes}" var="item">
                                     <input class="form-check-input" type="checkbox" name="type"
-                                        ${item.checked} value="${item.code}">
+                                           ${item.checked}  value="${item.code}">
                                     <label class="form-check-label" >
                                             ${item.name}
                                     </label>
@@ -175,6 +175,22 @@
                                 <form:input path="note" cssClass="form-control"/>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Tên quản lí </label>
+                            <div class="col-sm-9">
+                                <form:input path="managerName" cssClass="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right"> Số điện thoại quản lý </label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" name="managerPhone"
+                                       value="${modelBuildingEdit.managerPhone}" />
+                            </div>
+                        </div>
+
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"></label>
@@ -233,6 +249,7 @@
     $('#btnEditBuilding').click(function (e) {
         e.preventDefault();
         var data = {};
+        var buildingTypes = [];
         var formData = $('#formEdit').serializeArray();
         var id = ${modelBuildingEdit.id} + '';
         if(id != '') {

@@ -31,10 +31,14 @@ public class BuildingConverter {
     // convert Entity-to-BuildingSearchResponse
     public BuildingSearchResponse convertEntityToBuildingResponse(BuildingEntity entity) {
         String districtName = "";
+        String codeDistrict = entity.getDistrict();  // QUAN_1
+
         for (DistrictsEnum item : DistrictsEnum.values()) {
-            districtName = item.getDistrictValue();
-            break;
+            if (codeDistrict.equals(item.name())) {
+                districtName = item.getDistrictValue();
+            }
         }
+
         String address = entity.getStreet() + " - " + entity.getWard() + " - " + districtName;
         BuildingSearchResponse response = modelMapper.map(entity, BuildingSearchResponse.class);
         response.setAddress(address);

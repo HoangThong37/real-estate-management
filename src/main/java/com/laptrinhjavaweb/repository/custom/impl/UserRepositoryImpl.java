@@ -1,6 +1,5 @@
 package com.laptrinhjavaweb.repository.custom.impl;
 
-import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.stereotype.Repository;

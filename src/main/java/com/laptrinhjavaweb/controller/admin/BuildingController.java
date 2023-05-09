@@ -32,8 +32,7 @@ public class BuildingController {
 	private DistrictService districtService;
 
 	@GetMapping("/building-list")
-	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest
-									 ) {
+	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
 		try {
 			ModelAndView mav = new ModelAndView("admin/building/list");
 			//mav.addObject("buildings", buildingService.getBuildingList(params, types));
@@ -52,12 +51,12 @@ public class BuildingController {
 	public ModelAndView buildingEdit(@RequestParam(name = "buildingid", required = false) Long id) {
 		ModelAndView mav = new ModelAndView("admin/building/edit");
 
-		if (id != null) {
+		if (id != null) {  // edit
 			mav.addObject("modelBuildingEdit", buildingService.findBuildingById(id));
 			mav.addObject("buildingTypes", buildingTypeService.getAllByBuilding(buildingService.findBuildingById(id)));
 			mav.addObject("districts", districtService.getDistrictByBuilding(buildingService.findBuildingById(id)));
 		}
-		else {
+		else { // add
 			mav.addObject("modelBuildingEdit", new BuildingDTO());
 			mav.addObject("buildingTypes", buildingTypeService.getAll());
 			mav.addObject("districts", districtService.getAllDistrict());

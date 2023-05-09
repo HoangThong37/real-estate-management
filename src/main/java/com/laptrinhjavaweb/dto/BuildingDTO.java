@@ -38,7 +38,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String linkOfBuilding;
     private String map;
     private String avatar;
-    private String managerPhone;
+    private Integer managerPhone;
     private String managerName;
 
     public String getName() {
@@ -315,11 +315,11 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.avatar = avatar;
     }
 
-    public String getManagerPhone() {
+    public Integer getManagerPhone() {
         return managerPhone;
     }
 
-    public void setManagerPhone(String managerPhone) {
+    public void setManagerPhone(Integer managerPhone) {
         this.managerPhone = managerPhone;
     }
 

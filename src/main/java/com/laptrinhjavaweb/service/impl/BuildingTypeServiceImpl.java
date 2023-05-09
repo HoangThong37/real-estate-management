@@ -33,7 +33,7 @@ public class BuildingTypeServiceImpl implements IBuildingTypeService {
             types.setName(item.getBuildingTypeValue());
             if (buildingDTO.getTypes() != null) {
                 for (String check : buildingDTO.getTypes()) {
-                    if (check.equals(item.name())) { // ktra xem có tòa nhà chưa
+                    if (check.equals(item.name())) { // check xem TANG_TRET equal TANG_TRET ko
                         types.setChecked("checked");
                     }
                 }

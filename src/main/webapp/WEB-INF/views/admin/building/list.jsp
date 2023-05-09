@@ -276,9 +276,10 @@
                                     </button>
                                     <button class="btn btn-xs btn-dark" data-toggle="tooltip"
                                             title="Sửa thông tin toà nhà" value="${item.id}"
-                                            onclick="editBuilding(value)">
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                            onclick="editBuilding(${item.id})">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
                                     </button>
+
                                     <button class="btn btn-xs btn-danger" data-toggle="tooltip"
                                             title="Xoá toà nhà" value="${item.id}"
                                             onclick="deleteOneBuilding(value)">
@@ -383,10 +384,19 @@
         window.location.href = '<c:url value="/admin/building-edit" />' + '?buildingid=' + value;
     }
 
+    var valueType = ${modelSearch.types} + '';
+    if (valueType != '') {
+        $.each(valueType, function (index, value) {
+            $("#rent[value='" + value + "']").prop('checked', true);
+        });
+    }
+
     function deleteOneBuilding(value) {
         idOne = value;
         $("#myModal").modal();
     }
+
+
 
 </script>
 </body>
