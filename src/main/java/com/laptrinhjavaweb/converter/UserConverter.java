@@ -26,19 +26,31 @@ public class UserConverter {
     }
 
     public List<StaffResponseDTO> convertToDtoResponse(List<UserEntity> listUserEntity){
+//        List<StaffResponseDTO> result = new ArrayList<>();
+//        for (UserEntity staffAll : userRepository.getAllStaff()) { // For example: id=1 -> in ra 3 building: b,c,d
+//            int i = 0;
+//            for (UserEntity userList : listUserEntity) {  // 2 tòa nhà b,c
+//                if (staffAll.getId() == userList.getId()) {
+//                   i++;
+//                }
+//            }
+//            StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
+//            if (i > 0) {
+//                listStaff.setChecked("checked");
+//                result.add(listStaff);
+//            }
+//        }
+//        return result;
+
         List<StaffResponseDTO> result = new ArrayList<>();
-        for (UserEntity staffAll : userRepository.getAllStaff()) { // For example: id=1 -> in ra 3 building: b,c,d
-            int i = 0;
-            for (UserEntity userList : listUserEntity) {  // 2 tòa nhà b,c
+        for (UserEntity staffAll : userRepository.getAllStaff()) {
+            StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
+            for (UserEntity userList : listUserEntity) {
                 if (staffAll.getId() == userList.getId()) {
-                   i++;
+                    listStaff.setChecked("checked");
                 }
             }
-            StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
-            if (i > 0) {
-                listStaff.setChecked("checked");
-                result.add(listStaff);
-            }
+            result.add(listStaff);
         }
         return result;
     }

@@ -307,7 +307,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="staffList">
                         <thead>
                         <tr>
                             <th class="center">
@@ -348,17 +348,22 @@
 
                 success: function (response) {
                     // data : chính là cục chứa data của tk staffListDTO
-                    //var arrBuilding  = response;
+                    var arrBuilding  = response;
                     var row = '';
-                    $("#dsnv").empty();
-                    $.each(response.data, function (index, item) {
-                        row += '<tr>';
-                        row += '<td class="text-center"><input type="checkbox" ' + item.checked + '  value=' + item.staffId  + ' id="checkbox_' + item.staffId + '" name="checkStaffs[]" class="check-box-element" /></td>';
-                        row += '<td class="text-center">' + item.fullName + '</td>';
-                        row += '</tr>';
+                    arrBuilding.forEach(function(item) {
+                            row += '<tr>';
+                            row += '<td class="text-center"><input type="checkbox" ' + item.checked + '  value=' + item.staffId  + ' id="checkbox_' + item.staffId + '" name="checkStaffs[]" class="check-box-element" /></td>';
+                            row += '<td class="text-center">' + item.fullName + '</td>';
+                            row += '</tr>';
                     });
-                    //$('#staffList tbody').html(row);
-                    $("#dsnv").append(row);
+                    // $.each(response.data, function (index, item) {
+                    //     row += '<tr>';
+                    //     row += '<td class="text-center"><input type="checkbox" ' + item.checked + '  value=' + item.staffId  + ' id="checkbox_' + item.staffId + '" name="checkStaffs[]" class="check-box-element" /></td>';
+                    //     row += '<td class="text-center">' + item.fullName + '</td>';
+                    //     row += '</tr>';
+                    // });
+                    $('#staffList tbody').html(row);
+                   // $("#dsnv").append(row);
                 },
                 error: function (response) {
                     console.log('faild')
