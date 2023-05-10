@@ -13,7 +13,7 @@ import java.util.Map;
 
 public interface IBuildingService {
     List<BuildingDTO> findAll();
-    BuildingDTO save(BuildingDTO buildingDTO);
+    BuildingDTO createBuilding(BuildingDTO buildingDTO);
     BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
 

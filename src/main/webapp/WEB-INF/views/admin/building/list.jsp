@@ -257,7 +257,7 @@
                             <tr>
                                 <td class="center">
                                     <label class="pos-rel">
-                                        <input type="checkbox" class="ace" name="checkBuildings[]" value="${item.id}">
+                                        <input type="checkbox" class="checkItem" name="checkBuildings[]" value="${item.id}">
                                         <span class="lbl"></span>
                                     </label>
                                 </td>
@@ -428,9 +428,13 @@
     }
 
     // id : selectAll -> checkbox  - building
-    $("#selectAll").click(function () {
-        $("input[name='checkBuildings[]']").pop('checked', $(this).prop('checked'));
-    })
+    // $("#selectAll").click(function () {
+    //   //  $("input[name='checkBuildings[]']").pop('checked', $(this).prop('checked'));
+    //     $("input[name='checkBuildings[]']").pop('checked',true);
+    // })
+    $('#selectAll').change(function() {
+        $('.checkItem').prop('checked', this.checked);
+    });
 
     // id : selectAll2 -> checkbox - staff
     $("#selectAll2").click(function () {

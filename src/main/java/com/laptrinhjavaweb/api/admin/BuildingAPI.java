@@ -30,7 +30,7 @@ public class BuildingAPI {
 
     @PostMapping
     public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
-        return buildingService.save(buildingDTO);
+        return buildingService.createBuilding(buildingDTO);
     }
 
 

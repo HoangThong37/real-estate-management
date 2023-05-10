@@ -48,10 +48,10 @@ public class BuildingService implements IBuildingService {
 
 	@Override
 	@Transactional
-	public BuildingDTO save(BuildingDTO buildingDTO) {
-        BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
+	public BuildingDTO createBuilding(BuildingDTO buildingDTO) {
+        BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
 
-		return buildingConverter.convertToDTO(buildingRepository.save(buildingEntity));
+		return buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
     }
 
 
