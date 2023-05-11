@@ -160,7 +160,7 @@
                             <label class="col-sm-3 control-label no-padding-right"> Loại tòa nhà </label>
                             <div class="col-sm-9">
                                 <c:forEach items="${buildingTypes}" var="item">
-                                    <input class="form-check-input" type="checkbox" name="type"
+                                    <input class="form-check-input" type="checkbox" name="types"
                                            ${item.checked}  value="${item.code}" />
                                     <label class="form-check-label" >
                                             ${item.name}
@@ -249,20 +249,27 @@
     $('#btnEditBuilding').click(function (e) {
         e.preventDefault();
         var data = {};
-        var buildingTypes = [];
+        //var buildingTypes = [];
         var formData = $('#formEdit').serializeArray();
         var id = ${modelBuildingEdit.id} + '';
         if(id != '') {
             data["id"] = id;
         }
         var types = [];
-        $.each(formData, function (index, v) {
-            if (v.name == 'types') {
-                buildingTypes.push(v.value);
+        // $.each(formData, function (index, v) {
+        //     if (v.name == 'types') {
+        //         buildingTypes.push(v.value);
+        //     } else {
+        //         data["" + v.name + ""] = v.value;
+        //     }
+        // });
+        formData.forEach(function(item) {
+            if (item.name == "types") {
+                types.push(item.value);
             } else {
-                data["" + v.name + ""] = v.value;
+                data[item.name] = item.value;
             }
-        });
+        })
         data["types"] = types;
         $.ajax({
             type: "PUT",

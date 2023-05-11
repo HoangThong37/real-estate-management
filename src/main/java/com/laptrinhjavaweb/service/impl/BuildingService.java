@@ -11,6 +11,7 @@ import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 
+import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.repository.custom.impl.BuildingRepositoryImpl;
 import com.laptrinhjavaweb.service.IBuildingService;
 import javassist.NotFoundException;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class BuildingService implements IBuildingService {
 
 	@Autowired
-	private BuildingRepositoryImpl buildingRepoCustom;
+	private BuildingRepositoryCustom buildingRepoCustom;
 	
 	@Autowired
 	private BuildingRepository buildingRepository;
@@ -91,11 +92,14 @@ public class BuildingService implements IBuildingService {
 	@Override
 	@Transactional
 	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
+		//System.out.println("Thay doi cai ten : " + buildingDTO.getName());
+		//System.out.println("Thay doi type : " + buildingDTO.getTypes());
+
 		try {
 			if (buildingDTO.getId() != null) {
-				BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
+				BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO); // trả ra cho dto
 
-			    BuildingDTO  buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
+				BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
 				return buildingDTOAfter;
 			}
 		} catch (Exception e) {

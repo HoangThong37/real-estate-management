@@ -52,9 +52,9 @@ public class BuildingAPI {
     // update building
     @PutMapping
     public BuildingDTO updateBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
-        buildingService.updateBuilding(buildingDTO);
+        BuildingDTO buildingUpdate = buildingService.updateBuilding(buildingDTO);
 
-        return buildingDTO;
+        return buildingUpdate;
     }
 
     // delete building n

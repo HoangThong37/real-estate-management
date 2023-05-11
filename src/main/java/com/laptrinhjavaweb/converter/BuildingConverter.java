@@ -51,17 +51,22 @@ public class BuildingConverter {
     // convert dto -> entity custom
     public BuildingEntity convertToEntityCustom(BuildingDTO dto) {
         BuildingEntity result = modelMapper.map(dto, BuildingEntity.class);
-        // xử lí type tòa nhà
-        String joinStr = "";
+
         if (dto.getTypes() != null) {
-            for (String item : dto.getTypes()) { //tang_tret
-                joinStr += item + ",";
-            }
-            if (joinStr != null && !joinStr.isEmpty() && joinStr.endsWith(",")) {
-                joinStr = joinStr.substring(0, joinStr.length() - 1);
-            }
-            result.setTypes(joinStr);
+            String type = String.join(",", dto.getTypes());
+            result.setTypes(type);
         }
+        // xử lí type tòa nhà
+//        String joinStr = "";
+//        if (dto.getTypes() != null) {
+//            for (String item : dto.getTypes()) { //tang_tret
+//                joinStr += item + ",";
+//            }
+//            if (joinStr != null && !joinStr.isEmpty() && joinStr.endsWith(",")) {
+//                joinStr = joinStr.substring(0, joinStr.length() - 1);
+//            }
+//            result.setTypes(joinStr);
+//        }
 
         // xử lí rentarrea - input: 300,400,500-> string
         Set<RentareaEntity> rentareaEntities = new HashSet<>();
@@ -75,14 +80,12 @@ public class BuildingConverter {
             }
             result.setRentareas(rentareaEntities);
         }
-
         return result;
     }
 
     // convert entity -> dto custom
     public BuildingDTO convertToDTOCustom(BuildingEntity entity) {
         BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
-
         // rent area
         List<String> rentareas = new ArrayList<>();
         for (RentareaEntity itemRentArea : entity.getRentareas()) {
@@ -105,29 +108,5 @@ public class BuildingConverter {
         return result;
     }
 
-    // convert entity -> dto custom
-//    public BuildingDTO convertToDTOCustom1(BuildingEntity entity) {
-//        BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
-//
-//        // rent area
-//        List<String> rentareas = new ArrayList<>();
-//        for (RentareaEntity itemRentArea : entity.getRentareas()) {
-//            rentareas.add(String.valueOf(itemRentArea.getValue()));
-//        }
-//        String rentArea = String.join(",", rentareas);  // tách = dấu phẩy
-//        result.setAreaRent(rentArea);
-//
-//        // types
-//        // db: NGUYEN_CAN, NOI_THAT
-//        if (entity.getTypes() != null) { // entity.getTypes() là string
-//            List<String> types = new ArrayList<>();
-//            String[] arrTypes = entity.getTypes().trim().split(",");  // tách = dấu phẩy
-//            for (String item : arrTypes) {
-//                types.add(item);
-//            }
-//            result.setTypes(types);
-//        }
-//
-//        return result;
-//    }
+
 }
