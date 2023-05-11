@@ -6,6 +6,7 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
+import com.laptrinhjavaweb.dto.response.BuildingTypesResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
@@ -59,7 +60,7 @@ public class BuildingService implements IBuildingService {
 	public BuildingDTO findBuildingById(Long id) {
         if (id != null) {
             BuildingEntity buildingEntity = buildingRepository.findById(id);
-            BuildingDTO buildingDTO = buildingConverter.convertToDTO(buildingEntity);
+            BuildingDTO buildingDTO = buildingConverter.convertToDTOCustom(buildingEntity);
             return buildingDTO;
         }
         return null;
@@ -92,8 +93,10 @@ public class BuildingService implements IBuildingService {
 	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
 		try {
 			if (buildingDTO.getId() != null) {
-				BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-				return buildingConverter.convertToDTO(buildingRepository.save(buildingEntity));
+				BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
+
+			    BuildingDTO  buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
+				return buildingDTOAfter;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

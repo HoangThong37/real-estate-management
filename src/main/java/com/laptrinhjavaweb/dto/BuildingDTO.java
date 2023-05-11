@@ -145,7 +145,6 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.rentPriceDescription = rentPriceDescription;
     }
 
-
     public List<String> getTypes() {
         return types;
     }

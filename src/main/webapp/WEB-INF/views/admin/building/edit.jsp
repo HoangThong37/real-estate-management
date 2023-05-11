@@ -161,7 +161,7 @@
                             <div class="col-sm-9">
                                 <c:forEach items="${buildingTypes}" var="item">
                                     <input class="form-check-input" type="checkbox" name="type"
-                                           ${item.checked}  value="${item.code}">
+                                           ${item.checked}  value="${item.code}" />
                                     <label class="form-check-label" >
                                             ${item.name}
                                     </label>
@@ -203,7 +203,7 @@
                                      <button type="button" class="btn btn-primary" id="btnEditBuilding">Update Tòa Nhà</button>
                                 </c:if>
 
-                                <button type="button" class="btn btn-primary">Huỷ</button>
+                                <button type="button" id="close" class="btn btn-primary">Huỷ</button>
                             </div>
                         </div>
                     </form:form>
@@ -279,6 +279,12 @@
             }
         });
     })
+
+    $("#close").click(function(){
+        window.location.href = '<c:url value="/admin/building-list" />' // thay đổi URL sang trang bạn muốn chuyển đến
+        window.close(); // đóng trang hiện tại
+    });
+
 </script>
 
 </body>
