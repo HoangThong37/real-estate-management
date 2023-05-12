@@ -102,7 +102,7 @@
                         <div class="form-group">
                            <label class="col-sm-3 control-label no-padding-right"> Diện tích thuê </label>
                             <div class="col-sm-9">
-                                <form:input path="areaRent" cssClass="form-control"/>
+                                <form:input path="rentArea" cssClass="form-control"/>
                             </div>
                         </div>
 

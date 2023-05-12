@@ -5,6 +5,7 @@ import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentareaEntity;
 import com.laptrinhjavaweb.enums.DistrictsEnum;
+import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,26 +57,13 @@ public class BuildingConverter {
             String type = String.join(",", dto.getTypes());
             result.setTypes(type);
         }
-        // xử lí type tòa nhà
-//        String joinStr = "";
-//        if (dto.getTypes() != null) {
-//            for (String item : dto.getTypes()) { //tang_tret
-//                joinStr += item + ",";
-//            }
-//            if (joinStr != null && !joinStr.isEmpty() && joinStr.endsWith(",")) {
-//                joinStr = joinStr.substring(0, joinStr.length() - 1);
-//            }
-//            result.setTypes(joinStr);
-//        }
-
-        // xử lí rentarrea - input: 300,400,500-> string
-        Set<RentareaEntity> rentareaEntities = new HashSet<>();
-        if (dto.getAreaRent() != null) {
-           String[] arrAreaRent = dto.getAreaRent().trim().split(","); // tách chuỗi qa dau ','
+        if (!ValidateUtils.checkNullEmpty(dto.getRentArea())) {
+            Set<RentareaEntity> rentareaEntities = new HashSet<>();
+            String[] arrAreaRent = dto.getRentArea().trim().split(","); // tách chuỗi qa dau ','
             for (String item : arrAreaRent) {
                 RentareaEntity rentareaEntity = new RentareaEntity();
                 rentareaEntity.setBuilding(result); //
-                rentareaEntity.setValue(Integer.parseInt(item));
+                rentareaEntity.setValue(ValidateUtils.parseInteger(item));
                 rentareaEntities.add(rentareaEntity);
             }
             result.setRentareas(rentareaEntities);
@@ -86,13 +74,16 @@ public class BuildingConverter {
     // convert entity -> dto custom
     public BuildingDTO convertToDTOCustom(BuildingEntity entity) {
         BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
+
         // rent area
-        List<String> rentareas = new ArrayList<>();
-        for (RentareaEntity itemRentArea : entity.getRentareas()) {
-            rentareas.add(String.valueOf(itemRentArea.getValue()));
+        if (entity.getRentareas() != null) {
+            List<String> rentareas = new ArrayList<>();
+            for (RentareaEntity itemRentArea : entity.getRentareas()) {
+                rentareas.add(String.valueOf(itemRentArea.getValue()));
+            }
+            String rentArea = String.join(",", rentareas);  // tách = dấu phẩy
+            result.setRentArea(rentArea);
         }
-        String rentArea = String.join(",", rentareas);  // tách = dấu phẩy
-        result.setAreaRent(rentArea);
 
         // types
         // db: NGUYEN_CAN, NOI_THAT
@@ -104,9 +95,6 @@ public class BuildingConverter {
             }
             result.setTypes(types);
         }
-
         return result;
     }
-
-
 }

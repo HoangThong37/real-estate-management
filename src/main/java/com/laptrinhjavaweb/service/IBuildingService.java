@@ -17,7 +17,6 @@ public interface IBuildingService {
     BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
 
-
     Long assignmentBuilding(List<Long> userId, Long buildingId);
     void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
     List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);

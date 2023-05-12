@@ -32,7 +32,7 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String payment;
     private String timeRent;
     private String timeDecorator;
-    private String areaRent;
+    private String rentArea;       // diện tích thuê
     private String address;
     private String note;
     private String linkOfBuilding;
@@ -266,12 +266,12 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
         this.timeDecorator = timeDecorator;
     }
 
-    public String getAreaRent() {
-        return areaRent;
+    public String getRentArea() {
+        return rentArea;
     }
 
-    public void setAreaRent(String areaRent) {
-        this.areaRent = areaRent;
+    public void setRentArea(String rentArea) {
+        this.rentArea = rentArea;
     }
 
     public String getAddress() {
