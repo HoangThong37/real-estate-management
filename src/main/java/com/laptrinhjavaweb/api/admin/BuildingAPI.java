@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.api.admin;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.dto.response.ResponseDTO;
@@ -33,19 +34,19 @@ public class BuildingAPI {
         return buildingService.createBuilding(buildingDTO);
     }
 
-
     // api load satff
     @GetMapping("/{id}/staff")
     public List<StaffResponseDTO> loadStaffByBuilding(@PathVariable("id") Long id) {
         return userService.finAllStaffByBuilding(id);
     }
 
-    // giao tòa nhà cho nhân viên quản lí
-    @PostMapping("/{buildingid}/assignment")
-    public Long assignmentBuilding(@RequestBody List<Long> userId,
-                                   @PathVariable("buildingid") Long buildingId) {
-        Long id = buildingService.assignmentBuilding(userId, buildingId);
-        return id;
+    // assigment building to staff
+    // test
+    @PostMapping("/{id}/assignment")
+    public AssignmentBuildingRequest assignmentBuilding(@RequestBody(required = false) AssignmentBuildingRequest assignmentBuilding
+            ,@PathVariable("id") Long buildingId) {
+        buildingService.assignmentBuilding(assignmentBuilding, buildingId);
+        return assignmentBuilding;
     }
 
 

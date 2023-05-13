@@ -14,8 +14,6 @@ public class AssignBuildingEntity extends BaseEntity {
     @JoinColumn(name="user_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private UserEntity user;
 
-
-
     public UserEntity getUser() {
         return user;
     }

@@ -41,7 +41,6 @@ public class BuildingConverter {
                 districtName = item.getDistrictValue();
             }
         }
-
         String address = entity.getStreet() + " - " + entity.getWard() + " - " + districtName;
         BuildingSearchResponse response = modelMapper.map(entity, BuildingSearchResponse.class);
         response.setAddress(address);
@@ -65,6 +64,7 @@ public class BuildingConverter {
                 rentareaEntity.setBuilding(result); //
                 rentareaEntity.setValue(ValidateUtils.parseInteger(item));
                 rentareaEntities.add(rentareaEntity);
+
             }
             result.setRentareas(rentareaEntities);
         }
@@ -76,12 +76,13 @@ public class BuildingConverter {
         BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
 
         // rent area
+        List<String> rentareas = new ArrayList<>();
         if (entity.getRentareas() != null) {
-            List<String> rentareas = new ArrayList<>();
             for (RentareaEntity itemRentArea : entity.getRentareas()) {
                 rentareas.add(String.valueOf(itemRentArea.getValue()));
             }
             String rentArea = String.join(",", rentareas);  // tách = dấu phẩy
+            System.out.println("check xem rentarea : " + rentArea);
             result.setRentArea(rentArea);
         }
 

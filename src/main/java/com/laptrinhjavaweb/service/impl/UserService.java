@@ -46,8 +46,8 @@ public class UserService implements IUserService {
     @Autowired
     private UserConverter userConverter;
 
-    @Autowired
-    private UserRepositoryCustom repositoryCustom;
+    //@Autowired
+    //private UserRepositoryCustom repositoryCustom;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -167,7 +167,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserDTO> getAllStaff() {
         List<UserDTO> result = new ArrayList<>();
-         List<UserEntity> listStaff = repositoryCustom.getAllStaff();
+         List<UserEntity> listStaff = userRepository.getAllStaff();
         for (UserEntity item : listStaff) {
             // convert từ entity qua dto
             UserDTO userDTO  = userConverter.convertToDto(item);

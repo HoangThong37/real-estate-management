@@ -1,10 +1,16 @@
 package com.laptrinhjavaweb.repository.custom.impl;
 
 import com.laptrinhjavaweb.buider.BuildingSearchBuilder;
+import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
+import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +22,12 @@ import java.util.stream.Collectors;
 
 @Repository
 public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private AssignmentBuildingRepository assignmentRepo;
 
     // cách 3: sử dụng builder - common search
     @PersistenceContext
@@ -38,6 +50,8 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             return new ArrayList<>();
         }
     }
+
+
 
     private StringBuilder buildingSqlPart2WithBuilder(BuildingSearchBuilder builder, StringBuilder sql) {
         // rentare from
@@ -105,7 +119,44 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
         return sql;
     }
+
+    @Transactional
+    @Override
+    public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
+        for (UserEntity item : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {
+            int i = 0;
+            for (UserEntity item1 : userEntities) {
+                if (item.getId() == item1.getId()) {
+                    i++;
+                }
+            }
+            if (i == 0) {
+                AssignBuildingEntity assignmentBuildingEntity = assignmentRepo.findByBuildingAndUser(buildingEntity, item);
+                entityManager.remove(assignmentBuildingEntity); // xóa
+            }
+        }
+        for (UserEntity item : userEntities) {
+            int i = 0;
+            for (UserEntity item2 : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {
+                if (item.getId() == item2.getId()) {
+                    i++;
+                }
+            }
+            if (i == 0) {
+                AssignBuildingEntity assignmentBuildingEntity = new AssignBuildingEntity();
+                assignmentBuildingEntity.setBuilding(buildingEntity);
+                assignmentBuildingEntity.setUser(item);
+                entityManager.persist(assignmentBuildingEntity); // thêm mới
+            }
+        }
     }
+                // set vào Assignment ->
+                // list : A,B,C,D,E
+                // tích : a,b     - listStaff
+                // h muốn set thêm c,d - listUserId
+                // c,d,a,b
+                //  != => set vào assigment
+                //  }
+}

@@ -3,35 +3,39 @@ package com.laptrinhjavaweb.service.impl;
 import com.laptrinhjavaweb.buider.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.dto.response.BuildingTypesResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 
+import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.repository.custom.impl.BuildingRepositoryImpl;
 import com.laptrinhjavaweb.service.IBuildingService;
+import com.laptrinhjavaweb.utils.ValidateUtils;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BuildingService implements IBuildingService {
 
-	@Autowired
-	private BuildingRepositoryCustom buildingRepoCustom;
+//	@Autowired
+//	private BuildingRepositoryCustom buildingRepoCustom;
 	
 	@Autowired
 	private BuildingRepository buildingRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private BuildingConverter buildingConverter;
@@ -84,7 +88,7 @@ public class BuildingService implements IBuildingService {
 	public List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest) {
 		List<BuildingSearchResponse> result = new ArrayList<>();
 		BuildingSearchBuilder buildingSearchBuilder = convertParamToBuilder(buildingSearchRequest);
-		List<BuildingEntity> buildingEntities = buildingRepoCustom.findBuilding(buildingSearchBuilder);
+		List<BuildingEntity> buildingEntities = buildingRepository.findBuilding(buildingSearchBuilder);
 		for (BuildingEntity item : buildingEntities) {
 			result.add(buildingConverter.convertEntityToBuildingResponse(item));
 		}
@@ -141,10 +145,18 @@ public class BuildingService implements IBuildingService {
 	}
 
 
+	// test
 	@Override
-	public Long assignmentBuilding(List<Long> userId, Long buildingId) {
-		return null;
+	public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingID) {
+		List<UserEntity> userEntities = new ArrayList<>();
+		for (Integer item : assignmentBuildingRequest.getStaffIds()) {
+			userEntities.add(userRepository.findOnedById(item.longValue()));
+		}
+		BuildingEntity buildingEntity = buildingRepository.findById(buildingID);
+		buildingRepository.assignmentBuilding(userEntities, buildingEntity);
+
 	}
+
 
 	@Override
 	@Transactional

@@ -237,7 +237,7 @@
                         <tr>
                             <th class="center">
                                 <label class="pos-rel">
-                                    <input type="checkbox" id="selectAll" class="ace"/>
+                                    <input type="checkbox" class="checkItem" id="selectAll" class="ace"/>
                                     <span class="lbl"></span>
                                 </label>
                             </th>
@@ -316,7 +316,7 @@
                                     <span class="lbl"></span>
                                 </label>
                             </th>
-                            <th>Full Name</th>
+                            <th class="text-center">Full Name</th>
                         </tr>
                         </thead>
                         <tbody id="dsnv">
@@ -333,12 +333,13 @@
 
     </div>
 </div>
-<script>
+<script> // danh sách nhân viên - bấm vào checkbox - hiển thị all
 
+    var buildingid;
     function assignmentBuilding(value) {
+        buildingid = value;
             // loadStaffAssign(value); // load nhân viên quản lí building
             // function này sẽ call 1 api về từ dưới db - nó sẽ load dsach nv lên -> sử dụng ajax
-            // buildingAssigmentId = value;
             $.ajax({
                 type: "GET",
                 url: "<c:url value='/api/building'/>" + '/' + value + '/staff',
@@ -356,12 +357,7 @@
                             row += '<td class="text-center">' + item.fullName + '</td>';
                             row += '</tr>';
                     });
-                    // $.each(response.data, function (index, item) {
-                    //     row += '<tr>';
-                    //     row += '<td class="text-center"><input type="checkbox" ' + item.checked + '  value=' + item.staffId  + ' id="checkbox_' + item.staffId + '" name="checkStaffs[]" class="check-box-element" /></td>';
-                    //     row += '<td class="text-center">' + item.fullName + '</td>';
-                    //     row += '</tr>';
-                    // });
+
                     $('#staffList tbody').html(row);
                    // $("#dsnv").append(row);
                 },
@@ -373,7 +369,36 @@
         openModalAssignmentBuilding();
     }
 
-        
+     /* Giao Toà Nhà */
+    $("#assignment").click(function (e) {
+        e.preventDefault();
+        var values = [];
+        var data = {};
+        var checkData = $('input[name="checkStaffs[]"]:checked')
+
+        $.each(checkData, function () {
+            values.push($(this).val());
+        });
+
+        data["staffIds"] = values;
+
+        $.ajax({
+            type: "post",
+            url: '<c:url value="/api/building"/>' + '/' + buildingid + '/assignment',
+            data: JSON.stringify(data),
+            dataType: "json",//kieu du lieu tu server tra ve client
+            contentType: "application/json",//kieu du lieu tu client gui ve server
+            success: function (response) {
+                console.log("sucess");
+                window.location.reload();
+            },
+            error: function (response) {
+                alert("fail")
+                console.log(response)
+            }
+        });
+    })
+
     function openModalAssignmentBuilding() {
         $('#assignmentBuildingModal').modal();
     }
@@ -432,21 +457,19 @@
         $("#myModal").modal();
     }
 
-    // id : selectAll -> checkbox  - building
-    // $("#selectAll").click(function () {
-    //   //  $("input[name='checkBuildings[]']").pop('checked', $(this).prop('checked'));
-    //     $("input[name='checkBuildings[]']").pop('checked',true);
-    // })
+
+    // $('#selectAll').change(function() {
+    //     $('.checkItem').prop('checked', this.checked);
+    // });
+
     $('#selectAll').change(function() {
-        $('.checkItem').prop('checked', this.checked);
+        $('input[name="checkBuildings[]"]').prop('checked', this.checked);
     });
 
     // id : selectAll2 -> checkbox - staff
     $("#selectAll2").click(function () {
-        $("input[name='checkStaffs[]']").pop('checked', $(this).prop('checked'));
+        $('input[name="checkStaffs[]"]').prop('checked', this.checked);
     })
-
-
 
 
 </script>
