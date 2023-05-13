@@ -125,6 +125,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @Transactional
     @Override
     public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
+
         for (UserEntity item : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {
             int i = 0;
             for (UserEntity item1 : userEntities) {
@@ -134,12 +135,12 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             }
             if (i == 0) {
                 AssignBuildingEntity assignmentBuildingEntity = assignmentRepo.findByBuildingAndUser(buildingEntity, item);
-                entityManager.remove(assignmentBuildingEntity); // xóa
+                entityManager.remove(assignmentBuildingEntity); // delete
             }
         }
         for (UserEntity item : userEntities) {
             int i = 0;
-            for (UserEntity item2 : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {
+            for (UserEntity item2 : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {  // 0 có cái hì
                 if (item.getId() == item2.getId()) {
                     i++;
                 }
@@ -148,7 +149,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 AssignBuildingEntity assignmentBuildingEntity = new AssignBuildingEntity();
                 assignmentBuildingEntity.setBuilding(buildingEntity);
                 assignmentBuildingEntity.setUser(item);
-                entityManager.persist(assignmentBuildingEntity); // thêm mới
+                entityManager.persist(assignmentBuildingEntity); // add
             }
         }
     }

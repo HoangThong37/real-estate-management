@@ -344,22 +344,23 @@
                 type: "GET",
                 url: "<c:url value='/api/building'/>" + '/' + value + '/staff',
                 //data: JSON.stringify(data),  // data gửi về
-                dataType: "json",            // kiểu dữ liệu gửi từ server
+                dataType: "json",              // kiểu dữ liệu gửi từ server
                 contentType: "application/json",   // gửi từ server
 
                 success: function (response) {
                     // data : chính là cục chứa data của tk staffListDTO
                     var arrBuilding  = response;
                     var row = '';
+                    //$("#dsnv").empty();
                     arrBuilding.forEach(function(item) {
-                            row += '<tr>';
-                            row += '<td class="text-center"><input type="checkbox" ' + item.checked + '  value=' + item.staffId  + ' id="checkbox_' + item.staffId + '" name="checkStaffs[]" class="check-box-element" /></td>';
-                            row += '<td class="text-center">' + item.fullName + '</td>';
-                            row += '</tr>';
+                        var row = '<tr>'
+                                     +  '<td class=text-center>' +
+                                           '<input type="checkbox" ' + item.checked + ' name="checkStaffs[]" value="' + item.id  + '" />'
+                                     +  '</td>'
+                                     +  '<td>'+ item.fullName + '</td>' +
+                                  '</tr>'
+                        $("#dsnv").append(row);
                     });
-
-                    $('#staffList tbody').html(row);
-                   // $("#dsnv").append(row);
                 },
                 error: function (response) {
                     console.log('faild')
@@ -383,10 +384,10 @@
         data["staffIds"] = values;
 
         $.ajax({
-            type: "post",
+            type: "POST",
             url: '<c:url value="/api/building"/>' + '/' + buildingid + '/assignment',
             data: JSON.stringify(data),
-            dataType: "json",//kieu du lieu tu server tra ve client
+            dataType: "json",               //kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
                 console.log("sucess");

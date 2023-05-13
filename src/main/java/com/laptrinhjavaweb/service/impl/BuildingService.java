@@ -2,22 +2,21 @@ package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.buider.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
+import com.laptrinhjavaweb.converter.RentAreaConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
-import com.laptrinhjavaweb.dto.response.BuildingTypesResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 
+import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
-import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
-import com.laptrinhjavaweb.repository.custom.impl.BuildingRepositoryImpl;
 import com.laptrinhjavaweb.service.IBuildingService;
-import com.laptrinhjavaweb.utils.ValidateUtils;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,14 @@ import java.util.*;
 @Service
 public class BuildingService implements IBuildingService {
 
-//	@Autowired
-//	private BuildingRepositoryCustom buildingRepoCustom;
+	@Autowired
+	private RentAreaRepository rentAreaRepository;
+
+	@Autowired
+	private RentAreaService rentAreaService;
+
+	@Autowired
+	private RentAreaConverter rentAreaConverter;
 	
 	@Autowired
 	private BuildingRepository buildingRepository;
@@ -98,16 +103,19 @@ public class BuildingService implements IBuildingService {
 	@Override
 	@Transactional
 	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
-		//System.out.println("Thay doi cai ten : " + buildingDTO.getName());
-		//System.out.println("Thay doi type : " + buildingDTO.getTypes());
-
+		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO); // trả ra cho dto
 		try {
 			if (buildingDTO.getId() != null) {
-				BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO); // trả ra cho dto
-
-				BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
-				return buildingDTOAfter;
+				rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
 			}
+			BuildingEntity buildingEntityAfter = buildingRepository.save(buildingEntity);
+			if (buildingDTO.getRentArea() != null) {
+				List<RentAreaDTO> listRentDTOs = rentAreaConverter.convertRentAreaDto(buildingEntityAfter.getId(), buildingDTO);
+				rentAreaService.saveAllRentAreaByBuilding(listRentDTOs, buildingDTO);
+			}
+
+			BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingEntity);
+			return buildingDTOAfter;
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error building update in service");
@@ -147,6 +155,7 @@ public class BuildingService implements IBuildingService {
 
 	// test
 	@Override
+	@Transactional
 	public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingID) {
 		List<UserEntity> userEntities = new ArrayList<>();
 		for (Integer item : assignmentBuildingRequest.getStaffIds()) {
@@ -156,7 +165,6 @@ public class BuildingService implements IBuildingService {
 		buildingRepository.assignmentBuilding(userEntities, buildingEntity);
 
 	}
-
 
 	@Override
 	@Transactional
