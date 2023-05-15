@@ -18,7 +18,9 @@ import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IBuildingService;
 import javassist.NotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,8 +125,6 @@ public class BuildingService implements IBuildingService {
        return null;
 	}
 
-
-
 	private BuildingSearchBuilder convertParamToBuilder(BuildingSearchRequest buildingSearchRequest) {
 		try {
 			BuildingSearchBuilder result = new BuildingSearchBuilder.Builder()
@@ -152,7 +152,6 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-
 	// test
 	@Override
 	@Transactional
@@ -173,4 +172,23 @@ public class BuildingService implements IBuildingService {
 			buildingRepository.deleteByIdIn(buildingDeleteRequest.getBuildingId());
 		}
 	}
+
+	// paging building
+	@Override
+	public List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearchRequest) {
+		List<BuildingSearchResponse> result = new ArrayList<>();
+		BuildingSearchBuilder buildingSearchBuilder = convertParamToBuilder(buildingSearchRequest);
+		List<BuildingEntity> buildingEntities = buildingRepository.pageBuilding(pageable, buildingSearchBuilder);
+		for (BuildingEntity item : buildingEntities) {
+			result.add(buildingConverter.convertEntityToBuildingResponse(item));
+		}
+		return result;
+	}
+
+	@Override
+	public int getTotalItems() {
+		return (int) buildingRepository.countAllBuilding();
+	}
+
+
 }

@@ -1,19 +1,27 @@
 package com.laptrinhjavaweb.controller.admin;
 
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.BuildingDTO;
+import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
-import com.laptrinhjavaweb.entity.UserEntity;
+
+import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.service.IBuildingTypeService;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.DistrictService;
 import com.laptrinhjavaweb.service.impl.UserService;
+
+import com.laptrinhjavaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -32,15 +40,24 @@ public class BuildingController {
 	private DistrictService districtService;
 
 	@GetMapping("/building-list")
-	public ModelAndView buildingList(@ModelAttribute("modelSearch") BuildingSearchRequest buildingSearchRequest) {
+	public ModelAndView buildingList(HttpServletRequest request,
+									  @ModelAttribute("modelSearch") BuildingSearchRequest buildingSearch) {
 		try {
 			ModelAndView mav = new ModelAndView("admin/building/list");
-			//mav.addObject("buildings", buildingService.getBuildingList(params, types));
-			mav.addObject("buildings", buildingService.findAll(buildingSearchRequest));
-			mav.addObject("staffmaps", userService.getAllStaff());
-			mav.addObject("districts", districtService.getAllDistrict());
-			mav.addObject("buildingTypes", buildingTypeService.getAll());
-			return mav;
+
+			DisplayTagUtils.of(request, buildingSearch);
+			List<BuildingSearchResponse> pageBuilding = buildingService.pageBuilding(
+					new PageRequest(buildingSearch.getPage() - 1, buildingSearch.getMaxPageItems()), buildingSearch);
+
+            buildingSearch.setListResult(pageBuilding);
+            buildingSearch.setTotalItems(buildingService.getTotalItems()); // set tổng số item trong
+			  mav.addObject("buildings", buildingSearch);
+			  mav.addObject("staffmaps", userService.getAllStaff());
+			  mav.addObject("districts", districtService.getAllDistrict());
+			  mav.addObject("buildingTypes", buildingTypeService.getAll());
+			 // mav.addObject("buildings", buildingService.findAll(buildingSearch));
+
+			  return mav;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

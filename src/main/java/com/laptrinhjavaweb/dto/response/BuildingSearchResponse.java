@@ -1,8 +1,9 @@
 package com.laptrinhjavaweb.dto.response;
 
+import com.laptrinhjavaweb.dto.AbstractDTO;
 import com.laptrinhjavaweb.dto.BuildingSearchParent;
 
-public class BuildingSearchResponse extends BuildingSearchParent {
+public class BuildingSearchResponse extends AbstractDTO {
 
     private String name;            // tên sản phẩm
     private String address;         // địa chỉ

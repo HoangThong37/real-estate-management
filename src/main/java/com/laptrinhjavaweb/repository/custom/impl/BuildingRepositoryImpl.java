@@ -9,6 +9,9 @@ import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -146,18 +149,35 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 }
             }
             if (i == 0) {
-                AssignBuildingEntity assignmentBuildingEntity = new AssignBuildingEntity();
-                assignmentBuildingEntity.setBuilding(buildingEntity);
-                assignmentBuildingEntity.setUser(item);
-                entityManager.persist(assignmentBuildingEntity); // add
+                AssignBuildingEntity assignment = new AssignBuildingEntity();
+                assignment.setBuilding(buildingEntity);
+                assignment.setUser(item);
+                entityManager.persist(assignment); // add
             }
         }
     }
-                // set vào Assignment ->
-                // list : A,B,C,D,E
-                // tích : a,b     - listStaff
-                // h muốn set thêm c,d - listUserId
-                // c,d,a,b
-                //  != => set vào assigment
-                //  }
+
+    @Override
+    public List<BuildingEntity> pageBuilding(Pageable pageable, BuildingSearchBuilder builder) {
+        try {
+            StringBuilder sql = new StringBuilder("SELECT * from building as b ");
+            sql = buildingJoinQuerry(builder, sql);
+            sql.append(" where 1 = 1 ");
+            sql = buildingSqlPart1WithBuilder(builder, sql);
+            sql = buildingSqlPart2WithBuilder(builder, sql);
+            sql.append(" LIMIT ").append(pageable.getPageSize()).append("\n")
+                    .append(" OFFSET ").append(pageable.getOffset());
+            //sql.append(" group by b.id");
+            Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
+            List<BuildingEntity> buildingEntities = query.getResultList();
+            return buildingEntities;
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+
 }

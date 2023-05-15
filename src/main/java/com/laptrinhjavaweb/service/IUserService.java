@@ -23,6 +23,8 @@ public interface IUserService {
     void delete(long[] ids);
     //Map<Long, String> getStaffMaps();
     List<UserDTO> getAllStaff();
-
     List<StaffResponseDTO> finAllStaffByBuilding(Long id);
+
+    List<UserDTO> getAllUsers(Pageable pageable);
+    int countTotalItems();
 }

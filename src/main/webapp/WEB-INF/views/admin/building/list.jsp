@@ -229,8 +229,7 @@
 
                 </div>
             </div>
-            <div class="row">
-
+            <%--<div class="row">
                 <div class="col-xs-12">
                     <table id="simple-table" class="table table-striped table-bordered table-hover">
                         <thead>
@@ -291,6 +290,69 @@
                         </tbody>
                     </table>
                 </div><!-- /.span -->
+            </div>--%>
+
+            <%--paging--%>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <display:table name="modelSearch.listResult" cellspacing="0" cellpadding="0"
+                                       requestURI="${buildingListURL}" partialList="true" sort="external"
+                                       size="${modelSearch.totalItems}" defaultsort="2" defaultorder="ascending"
+                                       id="tableList" pagesize="${modelSearch.maxPageItems}"
+                                       export="false"
+                                       class="table table-fcv-ace table-striped table-bordered table-hover dataTable no-footer"
+                                       style="margin: 3em 0 1.5em;">
+                            <display:column title="<fieldset class='form-group'>
+												        <input type='checkbox' id='checkAll' class='check-box-element'>
+												        </fieldset>" class="center select-cell"
+                                            headerClass="center select-cell">
+                                <fieldset>
+                                    <input type="checkbox" name="checkList" value="${tableList.id}"
+                                           id="checkbox_${tableList.id}" class="check-box-element"/>
+                                </fieldset>
+                            </display:column>
+                            <display:column headerClass="text-left" property="name" title="Tên Sản Phẩm"/>
+                            <display:column headerClass="text-left" property="address" title="Địa Chỉ"/>
+                            <display:column headerClass="text-left" property="managerName" title="Tên Quản Lí"/>
+                            <display:column headerClass="text-left" property="managerPhone" title="Số Điện Thoại"/>
+                            <display:column headerClass="text-left" property="floorArea" title="Diện Tích Sàn"/>
+                            <display:column headerClass="text-left" property="rentCost" title="Giá Thuê"/>
+                            <display:column headerClass="text-left" property="serviceFee" title="Phí Dịch Vụ"/>
+
+                            <display:column headerClass="col-actions" title="Thao tác">
+                                <%--<c:if test="${tableList.roleCode != 'ADMIN'}">--%>
+                                    <button class="btn btn-xs btn-info" data-toggle="tooltip"
+                                            title="Giao toà nhà cho nhân viên quản lí" value="${tableList.id}"
+                                            onclick="assignmentBuilding(value)">
+                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn btn-xs btn-dark" data-toggle="tooltip"
+                                            title="Sửa thông tin toà nhà" value="${tableList.id}"
+                                            onclick="editBuilding(value)">
+                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button class="btn btn-xs btn-danger" data-toggle="tooltip"
+                                            title="Xoá toà nhà" value="${tableList.id}"
+                                            onclick="deleteOneBuilding(value)">
+                                        <i class="fa fa-remove" aria-hidden="true"></i>
+                                    </button>
+                                <%--</c:if>--%>
+                                <%--<c:if test="${tableList.roleCode != 'ADMIN'}">
+                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+                                       title="Cập nhật người dùng"
+                                       href='<c:url value="/admin/user-edit-${tableList.id}"/>'>
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </a>
+                                </c:if>
+                                <c:if test="${tableList.roleCode == 'ADMIN'}">
+                                    <p>Không đươc thao tác</p>
+                                </c:if>--%>
+                            </display:column>
+                        </display:table>
+                    </div>
+                </div>
             </div>
         </div><!-- /.page-content -->
     </div>

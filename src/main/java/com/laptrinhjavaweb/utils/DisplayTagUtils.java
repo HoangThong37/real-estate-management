@@ -2,15 +2,16 @@ package com.laptrinhjavaweb.utils;
 
 import com.laptrinhjavaweb.dto.AbstractDTO;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+
 import org.displaytag.tags.TableTagParameters;
 import org.displaytag.util.ParamEncoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.logging.Logger;
 
-public class DisplayTagUtils {
+public class DisplayTagUtils { //  handle số lượng page request
 
-    private static final Logger log = Logger.getLogger(DisplayTagUtils.class);
+    //private static final Logger log = Logger.getLogger(DisplayTagUtils.class);
 
     public static void of(HttpServletRequest request, AbstractDTO dto) {
         if (dto != null) {
@@ -20,7 +21,7 @@ public class DisplayTagUtils {
                 try {
                     page = Integer.valueOf(sPage);
                 } catch (Exception e) {
-                    log.error(e.getMessage());
+                    //log.error(e.getMessage());
                 }
             }
             dto.setPage(page);

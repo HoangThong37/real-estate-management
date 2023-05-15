@@ -125,7 +125,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="table-responsive">
-                                    <display:table name="model.listResult" cellspacing="0" cellpadding="0"
+                                    <display:table name="${model.listResult}" cellspacing="0" cellpadding="0"
                                                    requestURI="${formUrl}" partialList="true" sort="external"
                                                    size="${model.totalItems}" defaultsort="2" defaultorder="ascending"
                                                    id="tableList" pagesize="${model.maxPageItems}"

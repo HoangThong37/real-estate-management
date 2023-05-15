@@ -10,7 +10,6 @@ import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
-import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import com.laptrinhjavaweb.repository.custom.impl.UserRepositoryImpl;
 import com.laptrinhjavaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
@@ -180,6 +179,24 @@ public class UserService implements IUserService {
     public List<StaffResponseDTO> finAllStaffByBuilding(Long id) {
 
         return userConverter.convertToDtoResponse(userRepoCustom.getAllStaffByBuilding(id));
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers(Pageable pageable) {
+        List<UserEntity> userEntities = userRepository.getAllUsers(pageable);
+        List<UserDTO> results = new ArrayList<>();
+        for (UserEntity userEntity : userEntities) {
+            UserDTO userDTO = userConverter.convertToDto(userEntity);
+            userDTO.setRoleCode(userEntity.getRoles().get(0).getCode());
+            results.add(userDTO);
+        }
+        return results;
+    }
+
+    @Override
+    public int countTotalItems() {
+
+        return userRepository.countTotalItem();
     }
 
 }

@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.api.admin;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
+import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.dto.response.ResponseDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
@@ -11,6 +12,7 @@ import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -64,5 +66,14 @@ public class BuildingAPI {
         buildingService.removeBuilding(buildingDeleteRequest);
         return buildingDeleteRequest;
     }
+
+    // page
+    @PostMapping("/page")
+    public List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearch) {
+        // set result list
+        // set total items
+        return buildingService.pageBuilding(pageable, buildingSearch);
+    }
+
 
 }

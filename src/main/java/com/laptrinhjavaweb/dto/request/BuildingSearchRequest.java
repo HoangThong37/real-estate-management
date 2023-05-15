@@ -1,11 +1,12 @@
 package com.laptrinhjavaweb.dto.request;
 
+import com.laptrinhjavaweb.dto.AbstractDTO;
 import com.laptrinhjavaweb.dto.BuildingSearchParent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuildingSearchRequest extends BuildingSearchParent {
+public class BuildingSearchRequest extends AbstractDTO {
 
     private String name;
     private Integer floorArea;
