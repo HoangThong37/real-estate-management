@@ -11,6 +11,4 @@ public interface RentAreaRepository extends RentAreaRepositoryCustom, JpaReposit
         List<RentareaEntity> findByBuilding(BuildingEntity buildingEntity);
         void deleteByBuilding_Id(Long id);
         void deleteByBuilding_IdIn(List<Long> id);
-
-
 }

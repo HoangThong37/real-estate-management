@@ -453,6 +453,7 @@
             var dataArray = $('tbody input[type=checkbox]:checked').map(function () {
                 return $(this).val();
             }).get();
+            //console.log("Result : " + data);
             deleteBuilding(dataArray);
         });
     }

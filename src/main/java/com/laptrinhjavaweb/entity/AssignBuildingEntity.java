@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Table(name = "assignmentbuilding")
 public class AssignBuildingEntity extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name="building_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
+    @ManyToOne()
+    @JoinColumn(name="building_id", nullable=false ) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private BuildingEntity building;
 
     @ManyToOne

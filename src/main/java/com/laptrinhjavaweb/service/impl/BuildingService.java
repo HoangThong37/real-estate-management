@@ -191,9 +191,15 @@ public class BuildingService implements IBuildingService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(long[] ids) {
+		try {
 			for (Long item : ids) {
 				buildingRepository.delete(item);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error delete service");
+		}
 	}
 }

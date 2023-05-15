@@ -13,6 +13,7 @@ import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,16 +62,16 @@ public class BuildingAPI {
     }
 
     // delete building n
-/*    @DeleteMapping
-    public BuildingDeleteRequest deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
-        buildingService.removeBuilding(buildingDeleteRequest);
-        return buildingDeleteRequest;
-    }*/
+//    @DeleteMapping
+//    public ResponseEntity<Void> deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+//        buildingService.removeBuilding(buildingDeleteRequest);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] idList) {
-        if (idList.length > 0) {
-            buildingService.delete(idList);
+    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
+        if (ids.length > 0) {
+            buildingService.delete(ids);
         }
         return ResponseEntity.noContent().build();
     }

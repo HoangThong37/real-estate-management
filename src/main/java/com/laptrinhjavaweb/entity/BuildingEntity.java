@@ -102,7 +102,7 @@ public class BuildingEntity extends BaseEntity {
     private Set<RentareaEntity> rentareas;
 
     // 1 building - n assignmentBuiding
-    @OneToMany(mappedBy="building") // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    @OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
     private Set<AssignBuildingEntity> assignBuildings;
 
 
