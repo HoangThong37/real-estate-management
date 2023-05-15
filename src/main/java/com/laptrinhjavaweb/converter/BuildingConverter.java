@@ -82,7 +82,7 @@ public class BuildingConverter {
                 rentareas.add(String.valueOf(itemRentArea.getValue()));
             }
             String rentArea = String.join(",", rentareas);  // tách = dấu phẩy
-            System.out.println("check xem rentarea : " + rentArea);
+            //System.out.println("check xem rentarea : " + rentArea);
             result.setRentArea(rentArea);
         }
 

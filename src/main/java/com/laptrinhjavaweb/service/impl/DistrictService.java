@@ -34,8 +34,9 @@ public class DistrictService implements IDistrictService {
                 response.setName(item.getDistrictValue());
                 if (buildingDTO.getDistrict() != null && buildingDTO.getDistrict().equals(item.name())) {
                     response.setSelected("selected");
-                    result.add(response);
+                    //result.add(response);
                 }
+                result.add(response);
             }
             return result;
         } catch (Exception e) {

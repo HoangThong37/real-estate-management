@@ -39,9 +39,10 @@
                             <label class="col-sm-3 control-label no-padding-right">Quận</label>
                             <div class="col-sm-2">
                                 <select class="form-control" name="district">
-                                    <option>Chọn quận</option>
+                                    <option selected disabled>Chọn Quận</option>
                                     <c:forEach items="${districts}" var="item">
                                         <option ${item.selected} value="${item.code}">${item.name}</option>
+                                        <%--<option ${item.selected} value="${item.code}">${item.name}</option>--%>
                                     </c:forEach>
                                 </select>
                             </div>
