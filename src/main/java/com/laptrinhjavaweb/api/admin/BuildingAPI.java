@@ -61,10 +61,18 @@ public class BuildingAPI {
     }
 
     // delete building n
-    @DeleteMapping
+/*    @DeleteMapping
     public BuildingDeleteRequest deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
         buildingService.removeBuilding(buildingDeleteRequest);
         return buildingDeleteRequest;
+    }*/
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] idList) {
+        if (idList.length > 0) {
+            buildingService.delete(idList);
+        }
+        return ResponseEntity.noContent().build();
     }
 
     // page

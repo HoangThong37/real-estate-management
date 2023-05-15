@@ -191,7 +191,7 @@
                 <div class="col-xs-12">
                     <div class="pull-right">
                         <button id="xoaBuilding" class="btn btn-white btn-warning btn-bold" data-toggle="tooltip,modal"
-                                title="Xoá Toà Nhà">
+                                title="Xoá Toà Nhà" onclick="warningDelete()">
                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -229,68 +229,6 @@
 
                 </div>
             </div>
-            <%--<div class="row">
-                <div class="col-xs-12">
-                    <table id="simple-table" class="table table-striped table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th class="center">
-                                <label class="pos-rel">
-                                    <input type="checkbox" class="checkItem" id="selectAll" class="ace"/>
-                                    <span class="lbl"></span>
-                                </label>
-                            </th>
-                            <th>Tên Sản Phẩm</th>
-                            <th>Địa Chỉ</th>
-                            <th>Tên Quản Lí</th>
-                            <th>Số Điện Thoại</th>
-                            <th>Diện Tích Sàn</th>
-                            <th>Giá Thuê</th>
-                            <th>Phí Dịch Vụ</th>
-                            <th>Thao Tác</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <c:forEach var="item" items="${buildings}">
-                            <tr>
-                                <td class="center">
-                                    <label class="pos-rel">
-                                        <input type="checkbox" class="checkItem" name="checkBuildings[]" value="${item.id}">
-                                        <span class="lbl"></span>
-                                    </label>
-                                </td>
-                                <td>${item.name}</td>
-                                <td>${item.address}</td>
-                                <td>${item.managerName}</td>
-                                <td>${item.managerPhone}</td>
-                                <td>${item.floorArea}</td>
-                                <td>${item.rentCost}</td>
-                                <td>${item.serviceFee}</td>
-                                <td>
-                                    <button class="btn btn-xs btn-info" data-toggle="tooltip"
-                                            title="Giao toà nhà cho nhân viên quản lí" value="${item.id}"
-                                            onclick="assignmentBuilding(value)">
-                                        <i class="fa fa-fire" aria-hidden="true"></i>
-                                    </button>
-                                    <button class="btn btn-xs btn-dark" data-toggle="tooltip"
-                                            title="Sửa thông tin toà nhà" value="${item.id}"
-                                            onclick="editBuilding(value)">
-                                            <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </button>
-
-                                    <button class="btn btn-xs btn-danger" data-toggle="tooltip"
-                                            title="Xoá toà nhà" value="${item.id}"
-                                            onclick="deleteOneBuilding(value)">
-                                        <i class="fa fa-remove" aria-hidden="true"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div><!-- /.span -->
-            </div>--%>
 
             <%--paging--%>
             <div class="row">
@@ -335,9 +273,11 @@
 
                                     <button class="btn btn-xs btn-danger" data-toggle="tooltip"
                                             title="Xoá toà nhà" value="${tableList.id}"
-                                            onclick="deleteOneBuilding(value)">
+                                            <%--onclick="deleteOneBuilding(value)">--%>
+                                            onclick="warningDeleteOne(value)">
                                         <i class="fa fa-remove" aria-hidden="true"></i>
                                     </button>
+
                                 <%--</c:if>--%>
                                 <%--<c:if test="${tableList.roleCode != 'ADMIN'}">
                                     <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
@@ -472,11 +412,80 @@
         $("#listForm").submit();
     })
 
-    $("#xoaBuilding").click(function (e) {
-        e.preventDefault();
-        $("#myModal").modal();
+
+    // $("#xoaBuilding").click(function (e) {
+    //     e.preventDefault();
+    //     $("#myModal").modal();
+    // })
+
+    function editBuilding(value) {
+        window.location.href = '<c:url value="/admin/building-edit" />' + '?buildingid=' + value;
+    }
+
+    var valueType = ${modelSearch.types} + '';
+    if (valueType != '') {
+        $.each(valueType, function (index, value) {
+            $("#rent[value='" + value + "']").prop('checked', true);
+        });
+    }
+
+    // function deleteOneBuilding(value) {
+    //     //idOne = value;
+    //     //$("#myModal").modal();
+    //     warningDelete();
+    // }
+
+    $('#selectAll').change(function() {
+        $('input[name="checkBuildings[]"]').prop('checked', this.checked);
+    });
+
+    // id : selectAll2 -> checkbox - staff
+    $("#selectAll2").click(function () {
+        $('input[name="checkStaffs[]"]').prop('checked', this.checked);
     })
 
+
+
+ /* update delete new */
+    function warningDelete() {
+        showAlertBeforeDeleteBuilding(function () {
+            event.preventDefault();
+            var dataArray = $('tbody input[type=checkbox]:checked').map(function () {
+                return $(this).val();
+            }).get();
+            deleteBuilding(dataArray);
+        });
+    }
+
+    function warningDeleteOne(data) {
+        showAlertBeforeDeleteBuilding(function () {
+            event.preventDefault();
+            var dataArray  = [];
+            if (data != null) {
+                dataArray.push(data);
+            }
+            deleteBuilding(dataArray);
+        });
+    }
+
+    function deleteBuilding(data) {
+        $.ajax({
+            url: '<c:url value="/api/building"/>',
+            type: 'DELETE',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (res) {
+                window.location.href = "<c:url value='/admin/building-list?message=delete_success'/>";
+            },
+            error: function (res) {
+                console.log(res);
+                window.location.href = "<c:url value='/admin/building-list?message=error_system'/>";
+            }
+        });
+    }
+
+    // delete old
     var idOne;
     $("#btnXoa").click(function (e) {
         e.preventDefault();
@@ -503,38 +512,6 @@
             }
         });
     })
-
-    function editBuilding(value) {
-        window.location.href = '<c:url value="/admin/building-edit" />' + '?buildingid=' + value;
-    }
-
-    var valueType = ${modelSearch.types} + '';
-    if (valueType != '') {
-        $.each(valueType, function (index, value) {
-            $("#rent[value='" + value + "']").prop('checked', true);
-        });
-    }
-
-    function deleteOneBuilding(value) {
-        idOne = value;
-        $("#myModal").modal();
-    }
-
-
-    // $('#selectAll').change(function() {
-    //     $('.checkItem').prop('checked', this.checked);
-    // });
-
-    $('#selectAll').change(function() {
-        $('input[name="checkBuildings[]"]').prop('checked', this.checked);
-    });
-
-    // id : selectAll2 -> checkbox - staff
-    $("#selectAll2").click(function () {
-        $('input[name="checkStaffs[]"]').prop('checked', this.checked);
-    })
-
-
 </script>
 </body>
 </html>

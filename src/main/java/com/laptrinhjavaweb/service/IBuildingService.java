@@ -29,4 +29,5 @@ public interface IBuildingService {
     List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearchRequest);
 
     int getTotalItems();
+    void delete(long[] ids);
 }

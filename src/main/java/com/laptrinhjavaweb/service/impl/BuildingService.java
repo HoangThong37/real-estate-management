@@ -190,5 +190,10 @@ public class BuildingService implements IBuildingService {
 		return (int) buildingRepository.countAllBuilding();
 	}
 
-
+	@Override
+	public void delete(long[] ids) {
+			for (Long item : ids) {
+				buildingRepository.delete(item);
+			}
+	}
 }
