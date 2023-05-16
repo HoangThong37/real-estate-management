@@ -36,7 +36,7 @@
     <ul class="nav nav-list">
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fas fa-users"></i>
+                <i class="menu-icon fa fas fa-building"></i>
                 <span class="menu-text">QL tòa nhà</span>
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -51,6 +51,29 @@
                     <a href='<c:url value='/admin/building-edit'/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Chỉnh sửa tòa nhà
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+        <%--users--%>
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fas fa-users"></i>
+                <span class="menu-text">QL người dùng</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href='<c:url value='/admin/user-list'/>'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        DS người dùng
+                    </a>
+
+                    <a href='<c:url value='/admin/user-edit'/>'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Chỉnh sửa người dùng
                     </a>
                     <b class="arrow"></b>
                 </li>
