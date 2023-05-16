@@ -19,6 +19,6 @@ public interface UserRepository extends UserRepositoryCustom, JpaRepository<User
     List<UserEntity> findByStatusAndRoles_Code(Integer status, String roleCode);
 
     // TEST
-    UserEntity findOnedById(Long id);
+    UserEntity findOneById(Long id);
 
 }

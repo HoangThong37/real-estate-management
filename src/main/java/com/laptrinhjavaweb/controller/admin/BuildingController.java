@@ -15,6 +15,8 @@ import com.laptrinhjavaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,11 +48,12 @@ public class BuildingController {
 			ModelAndView mav = new ModelAndView("admin/building/list");
 
 			DisplayTagUtils.of(request, buildingSearch);
-			List<BuildingSearchResponse> pageBuilding = buildingService.pageBuilding(
-					new PageRequest(buildingSearch.getPage() - 1, buildingSearch.getMaxPageItems()), buildingSearch);
+			Pageable pageable = PageRequest.of(buildingSearch.getPage() - 1, buildingSearch.getMaxPageItems());
+			List<BuildingSearchResponse> pageBuilding = buildingService.pageBuilding(pageable, buildingSearch);
 
             buildingSearch.setListResult(pageBuilding);
             buildingSearch.setTotalItems(buildingService.getTotalItems()); // set tổng số item trong
+
 			  mav.addObject("buildings", buildingSearch);
 			  mav.addObject("staffmaps", userService.getAllStaff());
 			  mav.addObject("districts", districtService.getAllDistrict());

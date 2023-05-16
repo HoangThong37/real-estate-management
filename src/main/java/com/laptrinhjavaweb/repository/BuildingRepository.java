@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BuildingRepository extends BuildingRepositoryCustom, JpaRepository<BuildingEntity, Long> {
-    BuildingEntity findById(Long id);
+
+   // BuildingEntity findById(Long id);
     // void deleteByIdIn(List<Long> ids);
 
     @Query(value="select count(*) from building", nativeQuery = true)

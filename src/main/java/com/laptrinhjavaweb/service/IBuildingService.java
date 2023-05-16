@@ -24,10 +24,11 @@ public interface IBuildingService {
     void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
     List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
     BuildingDTO updateBuilding(BuildingDTO buildingDTO);
-
     // test
     List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearchRequest);
 
     int getTotalItems();
     void delete(long[] ids);
+
+
 }

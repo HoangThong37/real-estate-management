@@ -41,7 +41,8 @@
                     </div>
                     <div class="widget-body">
                         <div class="widget-main">
-                            <form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="get">
+                            <form:form modelAttribute="modelSearch" action="${buildingListURL}" id="listForm" method="GET">
+                            <%--<form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="GET">--%>
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-xs-12 ">

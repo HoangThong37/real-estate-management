@@ -17,7 +17,7 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href='<c:url value="/admin/home" />'>Home</a>
                 </li>
                 <li class="active">Chi tiết tòa nhà</li>
             </ul><!-- /.breadcrumb -->
@@ -26,7 +26,7 @@
         <div class="page-content">
             <div class="row">
                 <div class="col-xs-12">
-                    <form:form commandName="modelBuildingEdit" cssClass="form-horizontal" id="formEdit" method="get">
+                    <form:form modelAttribute="modelBuildingEdit" cssClass="form-horizontal" id="formEdit" method="get">
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Tên tòa nhà </label>
@@ -195,6 +195,30 @@
                             </div>
                         </div>
 
+                        <%--update image--%>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Hình đại diện</label>
+                            <input class="col-sm-3 no-padding-right" type="file" id="uploadImage"/>
+                            <div class="col-sm-9">
+                                <c:if test="${not empty model.image}">
+                                    <c:set var="imagePath" value="/repository${model.image}"/>
+                                    <img src="${imagePath}" id="viewImage" width="200px" height="200px" style="margin-top: 50px">
+                                </c:if>
+                                <c:if test="${empty model.image}">
+                                    <img src="/admin/image/default.png" id="viewImage" width="200px" height="200px">
+                                </c:if>
+                            </div>
+                        </div>
+
+                       <%-- <div class="form-group">
+                            <div class="col-xs-9 col-xs-push-3">
+                                <input type="button" class="btn btn-md btn-primary"
+                                       value="${valueBtn}" id="submitBtn"/>
+                                <input type="button" class="btn btn-md btn-warning"
+                                       value="Huỷ" id="cancelBtn"/>
+                                <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
+                            </div>
+                        </div>--%>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"></label>
@@ -296,7 +320,41 @@
         window.close(); // đóng trang hiện tại
     });
 
-</script>
 
+    var imageBase64 = '';
+    var imageName = '';
+    $.each(formData, function (i, e) {
+        if ('' !== e.value && null != e.value) {
+            data['' + e.name + ''] = e.value;
+        }
+
+        if ('' !== imageBase64) {
+            data['imageBase64'] = imageBase64;
+            data['imageName'] = imageName;
+        }
+    });
+
+    $('#uploadImage').change(function (event) {
+        var reader = new FileReader();
+        var file = $(this)[0].files[0];
+        reader.onload = function(e){
+            imageBase64 = e.target.result;
+            imageName = file.name; // ten hinh khong dau, khoang cach. vd: a-b-c
+        };
+        reader.readAsDataURL(file);
+        openImage(this, "viewImage");
+    });
+
+    function openImage(input, imageView) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#' +imageView).attr('src', reader.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>
 </body>
 </html>

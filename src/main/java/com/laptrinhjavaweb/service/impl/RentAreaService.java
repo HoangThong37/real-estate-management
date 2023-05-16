@@ -40,7 +40,8 @@ public class RentAreaService implements IRentAreaService {
             listRents.add(rentareaEntity);
         }
         if (buildingDTO.getId() != null) {
-            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId());
+            //BuildingEntity buildingEntity = buildingRepository.findOne(buildingDTO.getId());
+            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
             rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
         } else {
             rentAreaRepository.saveAllByBuilding(listRents, buildingConverter.convertToEntity(buildingDTO));

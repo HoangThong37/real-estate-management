@@ -91,6 +91,9 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "managername")
     private String managerName;
 
@@ -352,5 +355,13 @@ public class BuildingEntity extends BaseEntity {
 
     public void setManagerPhone(Integer managerPhone) {
         this.managerPhone = managerPhone;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

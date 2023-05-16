@@ -5,7 +5,6 @@ import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.service.IUserService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserAPI {
 
-    private Logger LOGGER = Logger.getLogger(UserAPI.class);
+    // private Logger LOGGER = Logger.getLogger(UserAPI.class);
 
     @Autowired
     private IUserService userService;
@@ -35,7 +34,7 @@ public class UserAPI {
             userService.updatePassword(id, passwordDTO);
             return ResponseEntity.ok(SystemConstant.UPDATE_SUCCESS);
         } catch (MyException e) {
-            LOGGER.error(e.getMessage());
+           // LOGGER.error(e.getMessage());
             return ResponseEntity.ok(e.getMessage());
         }
     }

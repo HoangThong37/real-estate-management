@@ -62,11 +62,11 @@ public class BuildingAPI {
     }
 
     // delete building n
-//    @DeleteMapping
-//    public ResponseEntity<Void> deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
-//        buildingService.removeBuilding(buildingDeleteRequest);
-//        return ResponseEntity.noContent().build();
-//    }
+    /*@DeleteMapping
+    public ResponseEntity<Void> deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+        buildingService.removeBuilding(buildingDeleteRequest);
+        return ResponseEntity.noContent().build();
+    }*/
 
     @DeleteMapping
     public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody

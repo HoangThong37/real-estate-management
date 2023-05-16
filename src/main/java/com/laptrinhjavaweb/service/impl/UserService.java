@@ -10,7 +10,6 @@ import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
-import com.laptrinhjavaweb.repository.custom.impl.UserRepositoryImpl;
 import com.laptrinhjavaweb.service.IUserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -88,7 +85,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO findUserById(long id) {
-        UserEntity entity = userRepository.findOne(id);
+        UserEntity entity = userRepository.findOneById(id);
         List<RoleEntity> roles = entity.getRoles();
         UserDTO dto = userConverter.convertToDto(entity);
         roles.forEach(item -> {
@@ -112,7 +109,7 @@ public class UserService implements IUserService {
     @Transactional
     public UserDTO update(Long id, UserDTO updateUser) {
         RoleEntity role = roleRepository.findOneByCode(updateUser.getRoleCode());
-        UserEntity oldUser = userRepository.findOne(id);
+        UserEntity oldUser = userRepository.findOneById(id);
         UserEntity userEntity = userConverter.convertToEntity(updateUser);
         userEntity.setUserName(oldUser.getUserName());
         userEntity.setStatus(oldUser.getStatus());
@@ -124,7 +121,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public void updatePassword(long id, PasswordDTO passwordDTO) throws MyException {
-        UserEntity user = userRepository.findOne(id);
+        UserEntity user = userRepository.findOneById(id);
         if (passwordEncoder.matches(passwordDTO.getOldPassword(), user.getPassword())
                 && passwordDTO.getNewPassword().equals(passwordDTO.getConfirmPassword())) {
             user.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
@@ -137,7 +134,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserDTO resetPassword(long id) {
-        UserEntity userEntity = userRepository.findOne(id);
+        UserEntity userEntity = userRepository.findOneById(id);
         userEntity.setPassword(passwordEncoder.encode(SystemConstant.PASSWORD_DEFAULT));
         return userConverter.convertToDto(userRepository.save(userEntity));
     }
@@ -154,7 +151,7 @@ public class UserService implements IUserService {
     @Transactional
     public void delete(long[] ids) {
         for (Long item : ids) {
-            UserEntity userEntity = userRepository.findOne(item);
+            UserEntity userEntity = userRepository.findOneById(item);
             userEntity.setStatus(0);
             userRepository.save(userEntity);
         }

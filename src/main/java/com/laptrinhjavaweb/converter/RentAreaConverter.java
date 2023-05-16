@@ -31,14 +31,17 @@ public class RentAreaConverter {
     // convert dto -> entity
     public RentareaEntity convertToEntity(RentAreaDTO dto) {
         RentareaEntity result = modelMapper.map(dto, RentareaEntity.class);
-        result.setBuilding(buildingRepository.findById(dto.getBuildingid()));
+        //result.setBuilding(buildingRepository.findOne(dto.getBuildingid()));
+        result.setBuilding(buildingRepository.findById(dto.getBuildingid()).get());
         return result;
     }
 
     public List<RentAreaDTO> convertRentAreaDto(Long buildingIdAfter,BuildingDTO buildingDTO) {
         List<RentAreaDTO> result = new ArrayList<>();
 
-        BuildingDTO buildingDTORentArea  = buildingConverter.convertToDTOCustom(buildingRepository.findById(buildingDTO.getId()));
+        //BuildingDTO buildingDTORentArea  = buildingConverter.convertToDTOCustom(buildingRepository.findOne(buildingDTO.getId()));
+         BuildingDTO buildingDTORentArea  = buildingConverter.convertToDTOCustom(buildingRepository.findById(buildingDTO.getId()).get());
+
         if (buildingDTORentArea.getRentArea().equals(buildingDTO.getRentArea())) {
             return new ArrayList<>();
         }

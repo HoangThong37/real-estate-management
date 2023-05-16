@@ -2,16 +2,13 @@ package com.laptrinhjavaweb.utils;
 
 import com.laptrinhjavaweb.dto.AbstractDTO;
 import org.apache.commons.lang.StringUtils;
-
 import org.displaytag.tags.TableTagParameters;
 import org.displaytag.util.ParamEncoder;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.logging.Logger;
 
-public class DisplayTagUtils { //  handle số lượng page request
+public class DisplayTagUtils {
 
-    //private static final Logger log = Logger.getLogger(DisplayTagUtils.class);
+   // private static final Logger log =  Logger.getLogger(DisplayTagUtils.class);
 
     public static void of(HttpServletRequest request, AbstractDTO dto) {
         if (dto != null) {
