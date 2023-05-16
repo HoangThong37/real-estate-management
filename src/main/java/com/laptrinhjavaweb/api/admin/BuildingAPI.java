@@ -68,9 +68,17 @@ public class BuildingAPI {
         return ResponseEntity.noContent().build();
     }*/
 
+//    @DeleteMapping
+////    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
+////        if (ids.length > 0) {
+////            buildingService.delete(ids);
+////        }
+////        return ResponseEntity.noContent().build();
+////    }
+
     @DeleteMapping
-    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
-        if (ids.length > 0) {
+    public ResponseEntity<Void> deleteBuildings(@RequestBody List<Long> ids) { // @RequestBody
+        if (ids.size() != 0) {
             buildingService.delete(ids);
         }
         return ResponseEntity.noContent().build();

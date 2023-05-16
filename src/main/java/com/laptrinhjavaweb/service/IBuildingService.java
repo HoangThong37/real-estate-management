@@ -21,14 +21,16 @@ public interface IBuildingService {
 
     void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId);
     //void assignmentBuilding(List<Long> listUserId, Long buildingId);
-    void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
     List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
     BuildingDTO updateBuilding(BuildingDTO buildingDTO);
+
     // test
     List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearchRequest);
 
     int getTotalItems();
-    void delete(long[] ids);
+    //void delete(long[] ids);
+    void delete(List<Long> buildingIds) throws NotFoundException;
+    void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
 
 
 }

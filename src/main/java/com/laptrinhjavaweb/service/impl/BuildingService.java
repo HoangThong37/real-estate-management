@@ -177,17 +177,22 @@ public class BuildingService implements IBuildingService {
 		return (int) buildingRepository.countAllBuilding();
 	}
 
+	// update
 	@Override
 	@Transactional
-	public void delete(long[] ids) {
+	public void delete(List<Long> buildingIds) {
 		try {
-			for (Long item : ids) {
-				//buildingRepository.delete(item);
-				buildingRepository.deleteById(item);
+			if (!buildingIds.isEmpty()) {
+				Long count = buildingRepository.countByIdIn(buildingIds);
+
+				if (count != buildingIds.size()) {
+					throw new NotFoundException("Building not found!");
+				}
+				// remove buildings
+				buildingRepository.deleteByIdIn(buildingIds);
 			}
-		} catch (Exception e) {
+		} catch (NotFoundException e) {
 			e.printStackTrace();
-			System.out.println("Error delete service");
 		}
 	}
 
@@ -234,4 +239,18 @@ public class BuildingService implements IBuildingService {
 			buildingEntity.setImage(path);
 		}
 	}
+
+/*	@Override
+	@Transactional
+	public void delete(long[] ids) {
+		try {
+			for (Long item : ids) {
+				//buildingRepository.delete(item);
+				buildingRepository.deleteById(item);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error delete service");
+		}
+	}*/
 }

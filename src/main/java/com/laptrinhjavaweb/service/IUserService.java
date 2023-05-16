@@ -21,6 +21,7 @@ public interface IUserService {
     UserDTO resetPassword(long id);
     UserDTO updateProfileOfUser(String id, UserDTO userDTO);
     void delete(long[] ids);
+    //void delete(List<Long> buildingIds);
     //Map<Long, String> getStaffMaps();
     List<UserDTO> getAllStaff();
     List<StaffResponseDTO> finAllStaffByBuilding(Long id);
