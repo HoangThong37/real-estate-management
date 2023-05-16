@@ -34,9 +34,6 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserRepositoryImpl userRepoCustom;
-
-    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -178,7 +175,7 @@ public class UserService implements IUserService {
     @Override
     public List<StaffResponseDTO> finAllStaffByBuilding(Long id) {
 
-        return userConverter.convertToDtoResponse(userRepoCustom.getAllStaffByBuilding(id));
+        return userConverter.convertToDtoResponse(userRepository.getAllStaffByBuilding(id));
     }
 
     @Override

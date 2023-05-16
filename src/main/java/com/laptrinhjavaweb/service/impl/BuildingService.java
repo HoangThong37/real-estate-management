@@ -63,12 +63,16 @@ public class BuildingService implements IBuildingService {
 	@Transactional
 	public BuildingDTO createBuilding(BuildingDTO buildingDTO) {
 		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
+		BuildingEntity saveBuilding = buildingRepository.save(buildingEntity);
+
+//		if (buildingDTO.getRentArea() != null) {
+//			List<RentAreaDTO> listRentDTOs = rentAreaConverter.convertRentAreaDto(saveBuilding.getId(), buildingDTO);
+//			rentAreaService.saveAllRentAreaByBuilding(listRentDTOs, buildingDTO);
+//		}
 
 		BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
-
 		return buildingDTOAfter;
     }
-
 
 	@Override
 	public BuildingDTO findBuildingById(Long id) {

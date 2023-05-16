@@ -11,7 +11,7 @@ public class BuildingSearchResponse extends AbstractDTO {
     private Integer managerPhone;   // số điện thoại
     private String floorArea;       // diện tích sàn
     private String emptyArea;       // diện tích trống
-    private String rentCost;        // giá thuê
+    private Integer rentPrice;     // giá thuê
     private String serviceFee;      // phí dịch vụ
     private String brokerageFee;    // phí môi giới
 
@@ -63,12 +63,12 @@ public class BuildingSearchResponse extends AbstractDTO {
         this.emptyArea = emptyArea;
     }
 
-    public String getRentCost() {
-        return rentCost;
+    public Integer getRentPrice() {
+        return rentPrice;
     }
 
-    public void setRentCost(String rentCost) {
-        this.rentCost = rentCost;
+    public void setRentPrice(Integer rentPrice) {
+        this.rentPrice = rentPrice;
     }
 
     public String getServiceFee() {

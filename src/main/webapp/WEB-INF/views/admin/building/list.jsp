@@ -143,7 +143,6 @@
                                         <div class="col-md-4">
                                             <label><b>Tên Quản Lí</b></label>
                                             <form:input path="managerName" cssClass="form-control"/>
-
                                         </div>
 
                                         <div class="col-md-4">
@@ -255,7 +254,7 @@
                             <display:column headerClass="text-left" property="managerName" title="Tên Quản Lí"/>
                             <display:column headerClass="text-left" property="managerPhone" title="Số Điện Thoại"/>
                             <display:column headerClass="text-left" property="floorArea" title="Diện Tích Sàn"/>
-                            <display:column headerClass="text-left" property="rentCost" title="Giá Thuê"/>
+                            <display:column headerClass="text-left" property="rentPrice" title="Giá Thuê"/>
                             <display:column headerClass="text-left" property="serviceFee" title="Phí Dịch Vụ"/>
 
                             <display:column headerClass="col-actions" title="Thao tác">
@@ -353,7 +352,7 @@
                     // data : chính là cục chứa data của tk staffListDTO
                     var arrBuilding  = response;
                     var row = '';
-                    //$("#dsnv").empty();
+                    $("#dsnv").empty();
                     arrBuilding.forEach(function(item) {
                         var row = '<tr>'
                                      +  '<td class=text-center>' +

@@ -35,13 +35,18 @@ public class BuildingConverter {
     public BuildingSearchResponse convertEntityToBuildingResponse(BuildingEntity entity) {
         String districtName = "";
         String codeDistrict = entity.getDistrict();  // QUAN_1
-
-        for (DistrictsEnum item : DistrictsEnum.values()) {
-            if (codeDistrict.equals(item.name())) {
-                districtName = item.getDistrictValue();
+        if (codeDistrict != null) {
+            for (DistrictsEnum item : DistrictsEnum.values()) {
+                if (codeDistrict.equals(item.name())) {
+                    districtName = item.getDistrictValue();
+                }
             }
         }
-        String address = entity.getStreet() + " - " + entity.getWard() + " - " + districtName;
+        String address = entity.getStreet() + "-" + entity.getWard() + "-" + districtName;
+        String checkAddres = "--";
+        if (checkAddres.equals(address)) {
+            address = "The current address has not been add";
+        }
         BuildingSearchResponse response = modelMapper.map(entity, BuildingSearchResponse.class);
         response.setAddress(address);
         return response;
@@ -58,7 +63,7 @@ public class BuildingConverter {
         }
         if (!ValidateUtils.checkNullEmpty(dto.getRentArea())) {
             Set<RentareaEntity> rentareaEntities = new HashSet<>();
-            String[] arrAreaRent = dto.getRentArea().trim().split(","); // tách chuỗi qa dau ','
+            String[] arrAreaRent = dto.getRentArea().replaceAll(" ", "").trim().split(","); // tách chuỗi qa dau ','
             for (String item : arrAreaRent) {
                 RentareaEntity rentareaEntity = new RentareaEntity();
                 rentareaEntity.setBuilding(result); //

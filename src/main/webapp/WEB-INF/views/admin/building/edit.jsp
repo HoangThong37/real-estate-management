@@ -118,7 +118,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Gía thuê </label>
                             <div class="col-sm-9">
-                                <form:input path="rentPrice" cssClass="form-control"/>
+                                <input type="number" class="form-control" name="rentPrice"
+                                       value="${modelBuildingEdit.rentPrice}" />
                             </div>
                         </div>
 
@@ -132,7 +133,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Phí dịch vụ </label>
                             <div class="col-sm-9">
-                                <form:input path="rentPrice" cssClass="form-control"/>
+                                <form:input path="serviceFee" cssClass="form-control"/>
                             </div>
                         </div>
 
@@ -146,7 +147,9 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Tiền điện </label>
                             <div class="col-sm-9">
-                                <form:input path="electricityFee" cssClass="form-control"/>
+
+                                <input type="number" class="form-control" name="electricityFee"
+                                       value="${modelBuildingEdit.electricityFee}" />
                             </div>
                         </div>
 

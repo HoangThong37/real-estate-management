@@ -45,7 +45,7 @@ public class UserConverter {
         List<StaffResponseDTO> result = new ArrayList<>();
         for (UserEntity staffAll : userRepository.getAllStaff()) {
             StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
-            for (UserEntity userList : listUserEntity) {
+            for (UserEntity userList : listUserEntity) {//   : thong,k,s,h
                 if (staffAll.getId() == userList.getId()) {
                     listStaff.setChecked("checked");
                 }
