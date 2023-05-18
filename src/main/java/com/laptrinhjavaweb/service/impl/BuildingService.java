@@ -12,6 +12,7 @@ import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
+import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 
 import com.laptrinhjavaweb.repository.RentAreaRepository;
@@ -47,6 +48,9 @@ public class BuildingService implements IBuildingService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private AssignmentBuildingRepository assignmentRepo;
+
+	@Autowired
 	private BuildingConverter buildingConverter;
 
 	@Autowired
@@ -56,28 +60,51 @@ public class BuildingService implements IBuildingService {
 	public List<BuildingDTO> findAll() {
 		List<BuildingDTO> result = new ArrayList<>();
 		List<BuildingEntity> buildingEntities = buildingRepository.findAll();
-		for(BuildingEntity item : buildingEntities) {
+		for (BuildingEntity item : buildingEntities) {
 			BuildingDTO buildingDTO = buildingConverter.convertToDTO(item);
 			result.add(buildingDTO);
 		}
 		return result;
 	}
 
-	@Override
+/*	@Override
 	@Transactional
 	public BuildingDTO createBuilding(BuildingDTO buildingDTO) {
 		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
-		BuildingEntity saveBuilding = buildingRepository.save(buildingEntity);
+		BuildingEntity building = buildingRepository.save(buildingEntity);
 
-//		if (buildingDTO.getRentArea() != null) {
-//			List<RentAreaDTO> listRentDTOs = rentAreaConverter.convertRentAreaDto(saveBuilding.getId(), buildingDTO);
-//			rentAreaService.saveAllRentAreaByBuilding(listRentDTOs, buildingDTO);
-//		}
-
-		BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
+		if (buildingDTO.getRentArea() != null) {
+			List<RentAreaDTO> listRentAreaDTO = rentAreaConverter.convertToRentArea(buildingEntity.getId(), buildingDTO);
+			rentAreaService.saveAllRentArea(listRentAreaDTO, building);
+		}
+		BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(building);
 		return buildingDTOAfter;
-	}
+	}*/
 
+	@Override
+	@Transactional
+	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
+		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO); // trả ra cho dto
+		BuildingEntity building = buildingRepository.save(buildingEntity);
+
+		try {
+			if (buildingDTO.getId() != null) {
+				rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
+			}
+			if (buildingDTO.getRentArea() != null) {
+				List<RentAreaDTO> listRentAreaDTO = rentAreaConverter.convertToRentArea(building.getId(), buildingDTO);
+				rentAreaService.saveAllRentArea(listRentAreaDTO, building);
+			}
+			//buildingEntity.setImage(foundBuilding.getImage());
+			//saveThumbnail(buildingDTO, buildingEntity);
+			BuildingDTO buildingdto = buildingConverter.convertToDTOCustom(building);
+			return buildingdto;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error building update in service");
+		}
+		return null;
+	}
 	@Override
 	public BuildingDTO findBuildingById(Long id) {
 		if (id != null) {
@@ -196,49 +223,20 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-	@Override
-	@Transactional
-	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
-		Long buildingId = buildingDTO.getId();
-		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO); // trả ra cho dto
-
-		try {
-			if (buildingId != null) {
-				rentAreaRepository.deleteByBuilding_Id(buildingId);
-				//BuildingEntity foundBuilding = buildingRepository.findOne(buildingId);
-				BuildingEntity foundBuilding = buildingRepository.findById(buildingId)
-						.orElseThrow(() -> new NotFoundException("Building not found!"));
-				buildingEntity.setImage(foundBuilding.getImage());
-			}
-			saveThumbnail(buildingDTO, buildingEntity);
-
-			//BuildingEntity buildingEntityAfter = buildingRepository.save(buildingEntity);
-			if (buildingDTO.getRentArea() != null) {
-				List<RentAreaDTO> listRentDTOs = rentAreaConverter.convertRentAreaDto(buildingId, buildingDTO);
-				rentAreaService.saveAllRentAreaByBuilding(listRentDTOs, buildingDTO);
-			}
-			return buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error building update in service");
-		}
-		return null;
-	}
-
-	private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
-		String path = "/building/" + buildingDTO.getImageName();
-		if (null != buildingDTO.getImageBase64()) {
-			if (null != buildingEntity.getImage()) {
-				if (!path.equals(buildingEntity.getImage())) {
-					File file = new File("C://home/office" + buildingEntity.getImage());
-					file.delete();
-				}
-			}
-			byte[] bytes = Base64.decodeBase64(buildingDTO.getImageBase64().getBytes());
-            uploadFileUtils.writeOrUpdate(path, bytes);
-			buildingEntity.setImage(path);
-		}
-	}
+//	private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
+//		String path = "/building/" + buildingDTO.getImageName();
+//		if (null != buildingDTO.getImageBase64()) {
+//			if (null != buildingEntity.getImage()) {
+//				if (!path.equals(buildingEntity.getImage())) {
+//					File file = new File("C://home/office" + buildingEntity.getImage());
+//					file.delete();
+//				}
+//			}
+//			byte[] bytes = Base64.decodeBase64(buildingDTO.getImageBase64().getBytes());
+//			uploadFileUtils.writeOrUpdate(path, bytes);
+//			buildingEntity.setImage(path);
+//		}
+//	}
 
 /*	@Override
 	@Transactional
@@ -253,4 +251,21 @@ public class BuildingService implements IBuildingService {
 			System.out.println("Error delete service");
 		}
 	}*/
+
+//trong update
+//			if (buildingDTO.getId() != null) {
+//				rentAreaRepository.deleteByBuilding_Id(buildingId);
+//
+//				BuildingEntity foundBuilding = buildingRepository.findById(buildingId)
+//						.orElseThrow(() -> new NotFoundException("Building not found!"));
+//				buildingEntity.setImage(foundBuilding.getImage());
+//			}
+//			saveThumbnail(buildingDTO, buildingEntity);
+//
+//			if (buildingDTO.getRentArea() != null) {
+//				List<RentAreaDTO> listRentDTOs = rentAreaConverter.convertRentAreaDto(buildingId, buildingDTO);
+//				rentAreaService.saveAllRentAreaByBuilding(listRentDTOs, buildingDTO);
+//			}
+//			return buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
+
 }

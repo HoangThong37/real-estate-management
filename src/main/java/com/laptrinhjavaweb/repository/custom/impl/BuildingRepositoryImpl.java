@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.lang.management.GarbageCollectorMXBean;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,38 +126,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         return sql;
     }
 
-    @Transactional
-    @Override
-    public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
-
-        for (UserEntity item : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {
-            int i = 0;
-            for (UserEntity item1 : userEntities) {
-                if (item.getId() == item1.getId()) {
-                    i++;
-                }
-            }
-            if (i == 0) {
-                AssignBuildingEntity assignmentBuildingEntity = assignmentRepo.findByBuildingAndUser(buildingEntity, item);
-                entityManager.remove(assignmentBuildingEntity); // delete
-            }
-        }
-        for (UserEntity item : userEntities) {
-            int i = 0;
-            for (UserEntity item2 : userRepository.getAllStaffByBuilding(buildingEntity.getId())) {  // 0 có cái hì
-                if (item.getId() == item2.getId()) {
-                    i++;
-                }
-            }
-            if (i == 0) {
-                AssignBuildingEntity assignment = new AssignBuildingEntity();
-                assignment.setBuilding(buildingEntity);
-                assignment.setUser(item);
-                entityManager.persist(assignment); // add
-            }
-        }
-    }
-
     @Override
     public List<BuildingEntity> pageBuilding(Pageable pageable, BuildingSearchBuilder builder) {
         try {
@@ -176,6 +145,40 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    @Transactional
+    @Override
+    public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
+
+        List<AssignBuildingEntity> getAllStaffByBuilding  = assignmentRepo.findUsersByBuilding(buildingEntity);
+
+        for (AssignBuildingEntity item : getAllStaffByBuilding) {
+            int i = 0;
+            for (UserEntity item1 : userEntities) {
+                if (item.getUser().getId() == item1.getId()) {
+                    i++;
+                }
+            }
+            if (i == 0) {
+                AssignBuildingEntity assignmentBuildingEntity = assignmentRepo.findByBuildingAndUser(buildingEntity, item.getUser());
+                entityManager.remove(assignmentBuildingEntity); // delete
+            }
+        }
+        for (UserEntity item : userEntities) {
+            int i = 0;
+            for (AssignBuildingEntity item2 : getAllStaffByBuilding) {  // 0 có cái hì
+                if (item.getId() == item2.getUser().getId()) {
+                    i++;
+                }
+            }
+            if (i == 0) {
+                AssignBuildingEntity assignment = new AssignBuildingEntity();
+                assignment.setBuilding(buildingEntity);
+                assignment.setUser(item);
+                entityManager.persist(assignment); // add
+            }
         }
     }
 

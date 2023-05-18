@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -32,10 +33,10 @@ public class BuildingAPI {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+/*    @PostMapping
     public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
         return buildingService.createBuilding(buildingDTO);
-    }
+    }*/
 
     // api load satff
     @GetMapping("/{id}/staff")
@@ -68,13 +69,13 @@ public class BuildingAPI {
         return ResponseEntity.noContent().build();
     }*/
 
-//    @DeleteMapping
-////    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
-////        if (ids.length > 0) {
-////            buildingService.delete(ids);
-////        }
-////        return ResponseEntity.noContent().build();
-////    }
+   /*    @DeleteMapping
+    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
+        if (ids.length > 0) {
+            buildingService.delete(ids);
+        }
+        return ResponseEntity.noContent().build();
+    }*/
 
     @DeleteMapping
     public ResponseEntity<Void> deleteBuildings(@RequestBody List<Long> ids) { // @RequestBody

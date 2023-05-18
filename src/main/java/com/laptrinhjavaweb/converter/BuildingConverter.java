@@ -79,7 +79,6 @@ public class BuildingConverter {
     // convert entity -> dto custom
     public BuildingDTO convertToDTOCustom(BuildingEntity entity) {
         BuildingDTO result = modelMapper.map(entity, BuildingDTO.class);
-
         // rent area
         List<String> rentareas = new ArrayList<>();
         if (entity.getRentareas() != null) {
@@ -87,7 +86,6 @@ public class BuildingConverter {
                 rentareas.add(String.valueOf(itemRentArea.getValue()));
             }
             String rentArea = String.join(",", rentareas);  // tách = dấu phẩy
-            //System.out.println("check xem rentarea : " + rentArea);
             result.setRentArea(rentArea);
         }
 

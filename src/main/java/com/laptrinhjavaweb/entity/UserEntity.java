@@ -127,6 +127,4 @@ public class UserEntity extends BaseEntity {
         this.customers = customers;
     }
 
-
-
 }

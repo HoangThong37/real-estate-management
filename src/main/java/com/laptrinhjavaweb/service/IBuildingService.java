@@ -15,7 +15,6 @@ import java.util.Map;
 
 public interface IBuildingService {
     List<BuildingDTO> findAll();
-    BuildingDTO createBuilding(BuildingDTO buildingDTO);
     BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
 
@@ -26,11 +25,14 @@ public interface IBuildingService {
 
     // test
     List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearchRequest);
-
     int getTotalItems();
     //void delete(long[] ids);
     void delete(List<Long> buildingIds) throws NotFoundException;
     void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
+
+    //BuildingDTO createBuilding(BuildingDTO buildingDTO);
+
+
 
 
 }

@@ -1,10 +1,14 @@
 package com.laptrinhjavaweb.repository;
 
+import com.laptrinhjavaweb.entity.AssignBuildingEntity;
+import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -20,5 +24,7 @@ public interface UserRepository extends UserRepositoryCustom, JpaRepository<User
 
     // TEST
     UserEntity findOneById(Long id);
+
+
 
 }

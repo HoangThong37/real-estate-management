@@ -5,9 +5,13 @@ import com.laptrinhjavaweb.converter.UserConverter;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
+import com.laptrinhjavaweb.entity.AssignBuildingEntity;
+import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
+import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
+import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IUserService;
@@ -29,6 +33,12 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BuildingRepository buildingRepository;
+
+    @Autowired
+    private AssignmentBuildingRepository assignmentRepo;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -61,7 +71,7 @@ public class UserService implements IUserService {
             UserDTO userDTO = userConverter.convertToDto(userEntity);
             userDTO.setRoleCode(userEntity.getRoles().get(0).getCode());
             result.add(userDTO);
-    }
+        }
         return result;
     }
 
@@ -162,7 +172,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserDTO> getAllStaff() {
         List<UserDTO> result = new ArrayList<>();
-         List<UserEntity> listStaff = userRepository.getAllStaff();
+        List<UserEntity> listStaff = userRepository.getAllStaff();
         for (UserEntity item : listStaff) {
             // convert từ entity qua dto
             UserDTO userDTO  = userConverter.convertToDto(item);
@@ -173,9 +183,12 @@ public class UserService implements IUserService {
 
     @Override
     public List<StaffResponseDTO> finAllStaffByBuilding(Long id) {
+         BuildingEntity buildingEntity = buildingRepository.findById(id).get();
+         List<AssignBuildingEntity> assignBuildingEntities = assignmentRepo.findUsersByBuilding(buildingEntity);
 
-        return userConverter.convertToDtoResponse(userRepository.getAllStaffByBuilding(id));
+         return userConverter.convertToDtoResponse(assignBuildingEntities);
     }
+
 
     @Override
     public List<UserDTO> getAllUsers(Pageable pageable) {

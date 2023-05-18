@@ -32,22 +32,39 @@ public class RentAreaService implements IRentAreaService {
     private BuildingRepository buildingRepository;
 
     @Override
-    public void saveAllRentAreaByBuilding(List<RentAreaDTO> listRentArea, BuildingDTO buildingDTO) {
-        List<RentareaEntity> listRents = new ArrayList<>();
-
-        for(RentAreaDTO item : listRentArea) {
-            RentareaEntity rentareaEntity  = rentAreaConverter.convertToEntity(item);
-            listRents.add(rentareaEntity);
-        }
-        if (buildingDTO.getId() != null) {
-            //BuildingEntity buildingEntity = buildingRepository.findOne(buildingDTO.getId());
-            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
-            rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
-        } else {
-            rentAreaRepository.saveAllByBuilding(listRents, buildingConverter.convertToEntity(buildingDTO));
+    public void saveAllRentArea(List<RentAreaDTO> listRentAreaDTO, BuildingEntity buildingEntity) {
+        // convert dto -> entity -> save
+        List<RentareaEntity> listRentAreaEntity = new ArrayList<>();
+        for (RentAreaDTO item : listRentAreaDTO) {
+            RentareaEntity rentareaEntity = rentAreaConverter.convertToEntity(item);
+            listRentAreaEntity.add(rentareaEntity);
         }
 
+        BuildingEntity building = buildingRepository.findById(buildingEntity.getId()).get();
+        rentAreaRepository.saveRentAreas(listRentAreaEntity, building);
     }
-
-
 }
+//    @Override
+//    public void saveAllRentAreaByBuilding(List<RentAreaDTO> listRentArea, BuildingDTO buildingDTO) {
+//        List<RentareaEntity> listRents = new ArrayList<>();
+//
+//        for(RentAreaDTO item : listRentArea) {
+//            RentareaEntity rentareaEntity  = rentAreaConverter.convertToEntity(item); // đây
+//            listRents.add(rentareaEntity);
+//        }
+//        BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
+//        rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
+//
+//        if (buildingDTO.getId() != null) {
+//            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
+//            rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
+//        }
+//        else {
+//            BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
+//            rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
+//        }
+
+
+
+
+

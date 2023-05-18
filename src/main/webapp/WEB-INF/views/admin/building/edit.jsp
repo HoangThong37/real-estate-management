@@ -153,12 +153,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right"> Phí dịch vụ </label>
-                            <div class="col-sm-9">
-                                <form:input path="serviceFee" cssClass="form-control"/>
-                            </div>
-                        </div>
+                        <%--<div class="form-group">--%>
+                            <%--<label class="col-sm-3 control-label no-padding-right"> Phí dịch vụ </label>--%>
+                            <%--<div class="col-sm-9">--%>
+                                <%--<form:input path="serviceFee" cssClass="form-control"/>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right"> Loại tòa nhà </label>
@@ -205,7 +205,7 @@
                                     <img src="${imagePath}" id="viewImage" width="200px" height="200px" style="margin-top: 50px">
                                 </c:if>
                                 <c:if test="${empty model.image}">
-                                    <img src="/admin/image/default.png" id="viewImage" width="200px" height="200px">
+                                    <%--<img src="/admin/image/default.png" id="viewImage" width="200px" height="200px">--%>
                                 </c:if>
                             </div>
                         </div>
@@ -224,11 +224,11 @@
                             <label class="col-sm-3 control-label no-padding-right"></label>
                             <div class="col-sm-9 text-center">
                                 <c:if test="${modelBuildingEdit.id == null}" >
-                                     <button type="button" class="btn btn-primary" id="btnAddBuilding">Thêm Tòa Nhà</button>
+                                    <button type="button" class="btn btn-primary" id="btnEditBuilding">Thêm Tòa Nhà</button>
                                 </c:if>
 
                                 <c:if test="${modelBuildingEdit.id != null}" >
-                                     <button type="button" class="btn btn-primary" id="btnEditBuilding">Update Tòa Nhà</button>
+                                    <button type="button" class="btn btn-primary" id="btnEditBuilding">Update Tòa Nhà</button>
                                 </c:if>
 
                                 <button type="button" id="close" class="btn btn-primary">Huỷ</button>
@@ -242,7 +242,7 @@
 </div><!-- /.main-content -->
 
 <script>
-    $('#btnAddBuilding').click(function (e) {
+/*    $('#btnAddBuilding').click(function (e) {
         e.preventDefault();
         var data = {};
         var formData = $('#formEdit').serializeArray();
@@ -271,7 +271,7 @@
                 console.log(response)
             }
         });
-    })
+    })*/
 
 
     $('#btnEditBuilding').click(function (e) {
@@ -323,7 +323,7 @@
 
     var imageBase64 = '';
     var imageName = '';
-    $.each(formData, function (i, e) {
+    /*$.each(formData, function (i, e) {
         if ('' !== e.value && null != e.value) {
             data['' + e.name + ''] = e.value;
         }
@@ -332,7 +332,7 @@
             data['imageBase64'] = imageBase64;
             data['imageName'] = imageName;
         }
-    });
+    });*/
 
     $('#uploadImage').change(function (event) {
         var reader = new FileReader();

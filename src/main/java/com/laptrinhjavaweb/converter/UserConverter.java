@@ -2,7 +2,9 @@ package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
+import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
+import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.impl.UserRepositoryImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,35 +20,20 @@ public class UserConverter {
     private ModelMapper modelMapper;
 
     @Autowired
-    private UserRepositoryImpl userRepository;
+    private UserRepository userRepository;
 
     public UserDTO convertToDto (UserEntity entity){
         UserDTO result = modelMapper.map(entity, UserDTO.class);
         return result;
     }
 
-    public List<StaffResponseDTO> convertToDtoResponse(List<UserEntity> listUserEntity){
-//        List<StaffResponseDTO> result = new ArrayList<>();
-//        for (UserEntity staffAll : userRepository.getAllStaff()) { // For example: id=1 -> in ra 3 building: b,c,d
-//            int i = 0;
-//            for (UserEntity userList : listUserEntity) {  // 2 tòa nhà b,c
-//                if (staffAll.getId() == userList.getId()) {
-//                   i++;
-//                }
-//            }
-//            StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
-//            if (i > 0) {
-//                listStaff.setChecked("checked");
-//                result.add(listStaff);
-//            }
-//        }
-//        return result;
-
+    public List<StaffResponseDTO> convertToDtoResponse(List<AssignBuildingEntity> listAssignUser){
         List<StaffResponseDTO> result = new ArrayList<>();
         for (UserEntity staffAll : userRepository.getAllStaff()) {
             StaffResponseDTO listStaff = modelMapper.map(staffAll, StaffResponseDTO.class);
-            for (UserEntity userList : listUserEntity) {//   : thong,k,s,h
-                if (staffAll.getId() == userList.getId()) {
+
+            for (AssignBuildingEntity userList : listAssignUser) {//  list staff quản lí building x
+                if (staffAll.getId() == userList.getUser().getId()) {
                     listStaff.setChecked("checked");
                 }
             }
