@@ -101,13 +101,14 @@ public class BuildingEntity extends BaseEntity {
     private Integer managerPhone;
 
     // 1 building - n rentarea
-    @OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    //@OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    @OneToMany(mappedBy="building")
     private Set<RentareaEntity> rentareas;
 
     // 1 building - n assignmentBuiding
-    @OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    //@OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
+    @OneToMany(mappedBy="building")
     private Set<AssignBuildingEntity> assignBuildings;
-
 
     public Set<RentareaEntity> getRentareas() {
         return rentareas;

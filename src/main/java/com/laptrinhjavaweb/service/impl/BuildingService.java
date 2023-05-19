@@ -9,7 +9,9 @@ import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
+import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.RentareaEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
@@ -25,8 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.apache.tomcat.util.codec.binary.Base64;
-import java.io.File;
+
+import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Service
@@ -208,7 +210,19 @@ public class BuildingService implements IBuildingService {
 	@Override
 	@Transactional
 	public void delete(List<Long> buildingIds) {
-		try {
+		for (Long item : buildingIds) {
+	     	BuildingEntity buildingDelete = buildingRepository.findById(item).get();
+
+			if (buildingDelete.getRentareas().size() > 0) {
+					rentAreaRepository.deleteByBuilding_Id(buildingDelete.getId());
+			}
+			if (buildingDelete.getAssignBuildings().size() > 0) {
+					assignmentRepo.deleteByBuilding_Id(buildingDelete.getId());
+			}
+			buildingRepository.deleteById(buildingDelete.getId());
+		}
+
+/*		try {
 			if (!buildingIds.isEmpty()) {
 				Long count = buildingRepository.countByIdIn(buildingIds);
 
@@ -220,7 +234,7 @@ public class BuildingService implements IBuildingService {
 			}
 		} catch (NotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 //	private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
@@ -238,19 +252,7 @@ public class BuildingService implements IBuildingService {
 //		}
 //	}
 
-/*	@Override
-	@Transactional
-	public void delete(long[] ids) {
-		try {
-			for (Long item : ids) {
-				//buildingRepository.delete(item);
-				buildingRepository.deleteById(item);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error delete service");
-		}
-	}*/
+
 
 //trong update
 //			if (buildingDTO.getId() != null) {

@@ -33,6 +33,4 @@ public interface IBuildingService {
     //BuildingDTO createBuilding(BuildingDTO buildingDTO);
 
 
-
-
 }

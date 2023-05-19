@@ -10,8 +10,8 @@ import java.util.List;
 public interface AssignmentBuildingRepository extends JpaRepository<AssignBuildingEntity, Long> {
 
     AssignBuildingEntity findByBuildingAndUser(BuildingEntity building, UserEntity user);
-    //List<AssignBuildingEntity> findAllUserByBuilding(BuildingEntity building);
-
      List<AssignBuildingEntity> findUsersByBuilding(BuildingEntity building);
 
+     void deleteByBuilding_IdIn(List<Long> id);
+    void deleteByBuilding_Id(Long id);
 }

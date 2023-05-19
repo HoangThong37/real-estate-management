@@ -56,7 +56,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     }
 
 
-
     private StringBuilder buildingSqlPart2WithBuilder(BuildingSearchBuilder builder, StringBuilder sql) {
         // rentare from
         if (ValidateUtils.isValid(builder.getRentAreaFrom())) {
@@ -151,7 +150,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @Transactional
     @Override
     public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
-
         List<AssignBuildingEntity> getAllStaffByBuilding  = assignmentRepo.findUsersByBuilding(buildingEntity);
 
         for (AssignBuildingEntity item : getAllStaffByBuilding) {
@@ -181,6 +179,4 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             }
         }
     }
-
-
 }
