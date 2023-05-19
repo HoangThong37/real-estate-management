@@ -17,21 +17,24 @@ public class CustomerEntity extends BaseEntity {
     private String email;
 
     // giao tòa nhà cho nv
-    @OneToMany
-    @JoinColumn(name = "customer_id")
-    private List<AssignCustomerEntity> customers;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "assignmentcustomer",
+            joinColumns = @JoinColumn(name = "customerid"),
+            inverseJoinColumns = @JoinColumn(name = "staffid"))
+    private List<UserEntity> userEntities;
 
     // 1 - n transaction
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
     @JoinColumn(name = "customer_id")
     private List<TransactionEntity> transactions;
 
-    public List<AssignCustomerEntity> getCustomers() {
-        return customers;
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
     }
 
-    public void setCustomers(List<AssignCustomerEntity> customers) {
-        this.customers = customers;
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
 
     public List<TransactionEntity> getTransactions() {

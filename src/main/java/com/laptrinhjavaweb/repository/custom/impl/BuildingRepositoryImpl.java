@@ -1,16 +1,11 @@
 package com.laptrinhjavaweb.repository.custom.impl;
 
 import com.laptrinhjavaweb.buider.BuildingSearchBuilder;
-import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.entity.UserEntity;
-import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +25,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private AssignmentBuildingRepository assignmentRepo;
 
     // cách 3: sử dụng builder - common search
     @PersistenceContext
@@ -147,7 +140,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
     }
 
-    @Transactional
+/*    @Transactional
     @Override
     public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
         List<AssignBuildingEntity> getAllStaffByBuilding  = assignmentRepo.findUsersByBuilding(buildingEntity);
@@ -178,5 +171,5 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 entityManager.persist(assignment); // add
             }
         }
-    }
+    }*/
 }

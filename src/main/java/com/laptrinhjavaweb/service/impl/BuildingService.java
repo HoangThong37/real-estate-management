@@ -5,31 +5,23 @@ import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.converter.RentAreaConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
-import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
-import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.entity.RentareaEntity;
 import org.apache.tomcat.util.codec.binary.Base64;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
-import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.BuildingRepository;
-
 import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.utils.UploadFileUtils;
 import javassist.NotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.PersistenceContext;
 import java.io.File;
 import java.util.*;
 
@@ -50,9 +42,6 @@ public class BuildingService implements IBuildingService {
 
 	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
-	private AssignmentBuildingRepository assignmentRepo;
 
 	@Autowired
 	private BuildingConverter buildingConverter;
@@ -175,14 +164,45 @@ public class BuildingService implements IBuildingService {
 	// test
 	@Override
 	@Transactional
-	public void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingID) {
-		List<UserEntity> userEntities = new ArrayList<>();
-		for (Integer item : assignmentBuildingRequest.getStaffIds()) {
-			userEntities.add(userRepository.findOneById(item.longValue()));
+	public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
+
+		try {
+			List<UserEntity> listUser = new ArrayList<>();
+			for (Long item : staffIds) {
+				listUser.add(userRepository.findById(item).get());
+			}
+			BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
+			if (buildingEntity != null) {
+				buildingEntity.setUserEntities(listUser);
+			}
+			buildingRepository.save(buildingEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
-		//BuildingEntity buildingEntity = buildingRepository.findOne(buildingID);
-		buildingRepository.assignmentBuilding(userEntities, buildingEntity);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//		List<UserEntity> userEntities = new ArrayList<>();
+//		for (Integer item : staffIds) {
+//			userEntities.add(userRepository.findOneById(item.longValue()));
+//		}
+//		BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
+//		buildingEntity.setUserEntities(userEntities);
+
+//		buildingRepository.assignmentBuilding(userEntities, buildingEntity);
 
 	}
 

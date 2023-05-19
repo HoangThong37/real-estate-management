@@ -29,17 +29,12 @@ public class UserEntity extends BaseEntity {
     @Column(name = "phone", unique = true)
     private String phone;
 
-    // 1 user - n assignBuilding
-    @OneToMany(mappedBy="user") //
-    private Set<AssignBuildingEntity> buildings;
+    @ManyToMany(mappedBy = "userEntities")
+    private List<BuildingEntity> buildingEntities;
 
-    // 1 user - n assignCustomer
-    @OneToMany(mappedBy="user")
-    private List<AssignCustomerEntity> customers;
-
-    // 1 user - n role
-//    @OneToMany(mappedBy="user") //
-//    private Set<UserRoleEntity> userRoles;
+    // user - customer
+    @ManyToMany(mappedBy = "userEntities")
+    private List<CustomerEntity> customerEntities;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
@@ -47,13 +42,21 @@ public class UserEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false))
     private List<RoleEntity> roles = new ArrayList<>();
 
-//    @ElementCollection()
-//    List<RoleEntity> roles = new ArrayList<>();
-//    public List<RoleEntity> getRoles() {
-//        return roles;
-//    }
-//
+    public List<BuildingEntity> getBuildingEntities() {
+        return buildingEntities;
+    }
 
+    public void setBuildingEntities(List<BuildingEntity> buildingEntities) {
+        this.buildingEntities = buildingEntities;
+    }
+
+    public List<CustomerEntity> getCustomerEntities() {
+        return customerEntities;
+    }
+
+    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
+        this.customerEntities = customerEntities;
+    }
 
     public List<RoleEntity> getRoles() {
         return roles;
@@ -110,21 +113,4 @@ public class UserEntity extends BaseEntity {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
-    public Set<AssignBuildingEntity> getBuildings() {
-        return buildings;
-    }
-
-    public void setBuildings(Set<AssignBuildingEntity> buildings) {
-        this.buildings = buildings;
-    }
-
-    public List<AssignCustomerEntity> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<AssignCustomerEntity> customers) {
-        this.customers = customers;
-    }
-
 }

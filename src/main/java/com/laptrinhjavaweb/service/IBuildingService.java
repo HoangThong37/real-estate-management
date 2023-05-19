@@ -2,7 +2,6 @@ package com.laptrinhjavaweb.service;
 
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.request.AssignmentBuildingRequest;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
@@ -18,7 +17,7 @@ public interface IBuildingService {
     BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
 
-    void assignmentBuilding(AssignmentBuildingRequest assignmentBuildingRequest, Long buildingId);
+    void assignmentBuilding(List<Long> staffIds, Long buildingId);
     //void assignmentBuilding(List<Long> listUserId, Long buildingId);
     List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
     BuildingDTO updateBuilding(BuildingDTO buildingDTO);

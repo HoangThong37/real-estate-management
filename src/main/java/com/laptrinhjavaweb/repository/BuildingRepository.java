@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface BuildingRepository extends BuildingRepositoryCustom, JpaRepository<BuildingEntity, Long> {
 
-   // BuildingEntity findById(Long id);
-
     @Query(value="select count(*) from building", nativeQuery = true)
     long countAllBuilding();
 

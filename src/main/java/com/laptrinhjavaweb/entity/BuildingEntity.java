@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -104,9 +105,12 @@ public class BuildingEntity extends BaseEntity {
     @OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
     private Set<RentareaEntity> rentareas;
 
-    // 1 building - n assignmentBuiding
-    @OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
-    private Set<AssignBuildingEntity> assignBuildings;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "assignmentbuilding",
+            joinColumns = @JoinColumn(name = "buildingid"),
+            inverseJoinColumns = @JoinColumn(name = "staffid"))
+    private List<UserEntity> userEntities;
 
     public Set<RentareaEntity> getRentareas() {
         return rentareas;
@@ -116,13 +120,15 @@ public class BuildingEntity extends BaseEntity {
         this.rentareas = rentareas;
     }
 
-    public Set<AssignBuildingEntity> getAssignBuildings() {
-        return assignBuildings;
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
     }
 
-    public void setAssignBuildings(Set<AssignBuildingEntity> assignBuildings) {
-        this.assignBuildings = assignBuildings;
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
+
+
 
     public String getName() {
         return name;

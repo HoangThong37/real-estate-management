@@ -5,12 +5,10 @@ import com.laptrinhjavaweb.converter.UserConverter;
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
-import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
-import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
 import com.laptrinhjavaweb.repository.BuildingRepository;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
@@ -37,8 +35,8 @@ public class UserService implements IUserService {
     @Autowired
     private BuildingRepository buildingRepository;
 
-    @Autowired
-    private AssignmentBuildingRepository assignmentRepo;
+//    @Autowired
+//    private AssignmentBuildingRepository assignmentRepo;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -182,11 +180,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<StaffResponseDTO> finAllStaffByBuilding(Long id) {
-         BuildingEntity buildingEntity = buildingRepository.findById(id).get();
-         List<AssignBuildingEntity> assignBuildingEntities = assignmentRepo.findUsersByBuilding(buildingEntity);
+    public List<StaffResponseDTO> finAllStaffByBuilding(Long buildingid) {
+        BuildingEntity buildingEntity = buildingRepository.findById(buildingid).get();
 
-         return userConverter.convertToDtoResponse(assignBuildingEntities);
+        List<UserEntity> userEntities = userRepository.getAllStaffByBuilding(buildingEntity.getId());
+
+        return userConverter.convertToStaffResponse(userEntities);
+//         BuildingEntity buildingEntity = buildingRepository.findById(id).get();
+//         List<AssignBuildingEntity> assignBuildingEntities = assignmentRepo.findUsersByBuilding(buildingEntity);
+//         return userConverter.convertToDtoResponse(assignBuildingEntities);
     }
 
 
