@@ -12,6 +12,7 @@ import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.entity.AssignBuildingEntity;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentareaEntity;
+import org.apache.tomcat.util.codec.binary.Base64;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.AssignmentBuildingRepository;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceContext;
+import java.io.File;
 import java.util.*;
 
 @Service
@@ -97,8 +99,11 @@ public class BuildingService implements IBuildingService {
 				List<RentAreaDTO> listRentAreaDTO = rentAreaConverter.convertToRentArea(building.getId(), buildingDTO);
 				rentAreaService.saveAllRentArea(listRentAreaDTO, building);
 			}
-			//buildingEntity.setImage(foundBuilding.getImage());
-			//saveThumbnail(buildingDTO, buildingEntity);
+            BuildingEntity foundBuilding = buildingRepository.findById(buildingEntity.getId()).get();
+
+			buildingEntity.setImage(foundBuilding.getImage());
+			saveThumbnail(buildingDTO, buildingEntity);   // save thumbnail
+
 			BuildingDTO buildingdto = buildingConverter.convertToDTOCustom(building);
 			return buildingdto;
 		} catch (Exception e) {
@@ -210,19 +215,7 @@ public class BuildingService implements IBuildingService {
 	@Override
 	@Transactional
 	public void delete(List<Long> buildingIds) {
-		for (Long item : buildingIds) {
-	     	BuildingEntity buildingDelete = buildingRepository.findById(item).get();
-
-			if (buildingDelete.getRentareas().size() > 0) {
-					rentAreaRepository.deleteByBuilding_Id(buildingDelete.getId());
-			}
-			if (buildingDelete.getAssignBuildings().size() > 0) {
-					assignmentRepo.deleteByBuilding_Id(buildingDelete.getId());
-			}
-			buildingRepository.deleteById(buildingDelete.getId());
-		}
-
-/*		try {
+	    try {
 			if (!buildingIds.isEmpty()) {
 				Long count = buildingRepository.countByIdIn(buildingIds);
 
@@ -234,40 +227,38 @@ public class BuildingService implements IBuildingService {
 			}
 		} catch (NotFoundException e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
-//	private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
-//		String path = "/building/" + buildingDTO.getImageName();
-//		if (null != buildingDTO.getImageBase64()) {
-//			if (null != buildingEntity.getImage()) {
-//				if (!path.equals(buildingEntity.getImage())) {
-//					File file = new File("C://home/office" + buildingEntity.getImage());
-//					file.delete();
-//				}
-//			}
-//			byte[] bytes = Base64.decodeBase64(buildingDTO.getImageBase64().getBytes());
-//			uploadFileUtils.writeOrUpdate(path, bytes);
-//			buildingEntity.setImage(path);
-//		}
-//	}
+    private void saveThumbnail(BuildingDTO buildingDTO, BuildingEntity buildingEntity) {
+        String path = "/building/" + buildingDTO.getImageName();
+        if (null != buildingDTO.getImageBase64()) {
+            if (null != buildingEntity.getImage()) {
+                if (!path.equals(buildingEntity.getImage())) {
+                    File file = new File("C:/checkfile/version1" + buildingEntity.getImage());
+                    file.delete();
+                }
+            }
+            byte[] bytes = Base64.decodeBase64(buildingDTO.getImageBase64().getBytes());
+            uploadFileUtils.writeOrUpdate(path, bytes);
+            buildingEntity.setImage(path);
+        }
+    }
+
+//	delete no cascade
+/*	for (Long item : buildingIds) {
+        BuildingEntity buildingDelete = buildingRepository.findById(item).get();
+
+        if (buildingDelete.getRentareas().size() > 0) {
+            rentAreaRepository.deleteByBuilding_Id(buildingDelete.getId());
+        }
+        if (buildingDelete.getAssignBuildings().size() > 0) {
+            assignmentRepo.deleteByBuilding_Id(buildingDelete.getId());
+        }
+        buildingRepository.deleteById(buildingDelete.getId());
+    }*/
 
 
 
-//trong update
-//			if (buildingDTO.getId() != null) {
-//				rentAreaRepository.deleteByBuilding_Id(buildingId);
-//
-//				BuildingEntity foundBuilding = buildingRepository.findById(buildingId)
-//						.orElseThrow(() -> new NotFoundException("Building not found!"));
-//				buildingEntity.setImage(foundBuilding.getImage());
-//			}
-//			saveThumbnail(buildingDTO, buildingEntity);
-//
-//			if (buildingDTO.getRentArea() != null) {
-//				List<RentAreaDTO> listRentDTOs = rentAreaConverter.convertRentAreaDto(buildingId, buildingDTO);
-//				rentAreaService.saveAllRentAreaByBuilding(listRentDTOs, buildingDTO);
-//			}
-//			return buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity));
 
 }

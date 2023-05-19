@@ -200,12 +200,12 @@
                             <label class="col-sm-3 control-label no-padding-right">Hình đại diện</label>
                             <input class="col-sm-3 no-padding-right" type="file" id="uploadImage"/>
                             <div class="col-sm-9">
-                                <c:if test="${not empty model.image}">
-                                    <c:set var="imagePath" value="/repository${model.image}"/>
+                                <c:if test="${not empty modelBuildingEdit.image}">
+                                    <c:set var="imagePath" value="/repository${modelBuildingEdit.image}"/>
                                     <img src="${imagePath}" id="viewImage" width="200px" height="200px" style="margin-top: 50px">
                                 </c:if>
-                                <c:if test="${empty model.image}">
-                                    <%--<img src="/admin/image/default.png" id="viewImage" width="200px" height="200px">--%>
+                                <c:if test="${empty modelBuildingEdit.image}">
+                                    <img src="/img/default_img.jpg" id="viewImage" width="200px" height="200px">
                                 </c:if>
                             </div>
                         </div>
@@ -230,7 +230,6 @@
                                 <c:if test="${modelBuildingEdit.id != null}" >
                                     <button type="button" class="btn btn-primary" id="btnEditBuilding">Update Tòa Nhà</button>
                                 </c:if>
-
                                 <button type="button" id="close" class="btn btn-primary">Huỷ</button>
                             </div>
                         </div>
@@ -320,10 +319,10 @@
         window.close(); // đóng trang hiện tại
     });
 
-
     var imageBase64 = '';
     var imageName = '';
-    /*$.each(formData, function (i, e) {
+
+    $.each(formData, function (i, e) {
         if ('' !== e.value && null != e.value) {
             data['' + e.name + ''] = e.value;
         }
@@ -332,7 +331,7 @@
             data['imageBase64'] = imageBase64;
             data['imageName'] = imageName;
         }
-    });*/
+    });
 
     $('#uploadImage').change(function (event) {
         var reader = new FileReader();

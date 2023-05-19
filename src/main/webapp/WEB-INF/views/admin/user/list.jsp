@@ -16,7 +16,7 @@
 
 <body>
 <div class="main-content">
-    <form:form commandName="model" action="${formUrl}" id="listForm" method="GET">
+    <form:form modelAttribute="model" action="${formUrl}" id="listForm" method="GET">
         <div class="main-content-inner">
             <div class="breadcrumbs" id="breadcrumbs">
                 <script type="text/javascript">

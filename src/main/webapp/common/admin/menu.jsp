@@ -59,7 +59,7 @@
         <%--users--%>
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fas fa-users"></i>
+                <i class="menu-icon fa fa-user"></i>
                 <span class="menu-text">QL người dùng</span>
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -74,6 +74,29 @@
                     <a href='<c:url value='/admin/user-edit'/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Chỉnh sửa người dùng
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+        <%--customer--%>
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fas fa-users"></i>
+                <span class="menu-text">QL khách hàng</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href='<c:url value='/admin/user-list'/>'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        DS khách hàng
+                    </a>
+
+                    <a href='<c:url value='/admin/user-edit'/>'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        Chỉnh sửa khách hàng
                     </a>
                     <b class="arrow"></b>
                 </li>

@@ -33,7 +33,7 @@
                                 ${messageResponse}
                         </div>
                     </c:if>
-                    <form:form id="formEdit" class="form-horizontal" commandName="model">
+                    <form:form id="formEdit" class="form-horizontal" modelAttribute="model">
                     <div id="profile">
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right">Vai trò</label>

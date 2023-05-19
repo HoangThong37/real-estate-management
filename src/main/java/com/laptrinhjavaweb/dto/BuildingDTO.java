@@ -41,11 +41,9 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private Integer managerPhone;
     private String managerName;
 
-    private String image;
-
-    private String imageBase64;
-
-    private String imageName;
+    private String image;    // field map entity
+    private String imageBase64; // xử lí ảnh
+    private String imageName;   // name image
 
     public String getImageBase64() {
         if (imageBase64 != null) {
