@@ -3,6 +3,7 @@ import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.entity.RentareaEntity;
 import com.laptrinhjavaweb.repository.BuildingRepository;
+import com.laptrinhjavaweb.utils.ValidateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -86,13 +87,15 @@ public class RentAreaConverter {
 
         String[] stringRentArea = buildingDTO.getRentArea() != null
                            ? buildingDTO.getRentArea().trim().split(",") : null;
-
-        for(String item : stringRentArea) {
-            RentAreaDTO rentAreaDTO = new RentAreaDTO();
-            rentAreaDTO.setValue(Integer.parseInt(item));
-            rentAreaDTO.setBuildingid(idBuilding);
-            listRentArea.add(rentAreaDTO);
+        if (!ValidateUtils.isValid(stringRentArea)) {
+            for(String item : stringRentArea) {
+                RentAreaDTO rentAreaDTO = new RentAreaDTO();
+                rentAreaDTO.setValue(Integer.parseInt(item));
+                rentAreaDTO.setBuildingid(idBuilding);
+                listRentArea.add(rentAreaDTO);
+            }
         }
+
         //  123,345 rent area
        return listRentArea;
     }

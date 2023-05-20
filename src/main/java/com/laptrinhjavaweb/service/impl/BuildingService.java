@@ -81,19 +81,21 @@ public class BuildingService implements IBuildingService {
 		BuildingEntity building = buildingRepository.save(buildingEntity);
 
 		try {
-			if (buildingDTO.getId() != null) {
-				rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
-			}
+//			if (buildingDTO.getId() != null) {
+//				rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
+//			}
 			if (buildingDTO.getRentArea() != null) {
 				List<RentAreaDTO> listRentAreaDTO = rentAreaConverter.convertToRentArea(building.getId(), buildingDTO);
 				rentAreaService.saveAllRentArea(listRentAreaDTO, building);
 			}
-            BuildingEntity foundBuilding = buildingRepository.findById(buildingEntity.getId()).get();
-
-			buildingEntity.setImage(foundBuilding.getImage());
+			if (buildingDTO.getId() != null) {
+				BuildingEntity foundBuilding = buildingRepository.findById(buildingDTO.getId())
+						.orElseThrow(() -> new NotFoundException("Building not found!"));
+				buildingEntity.setImage(foundBuilding.getImage());
+			}
 			saveThumbnail(buildingDTO, buildingEntity);   // save thumbnail
 
-			BuildingDTO buildingdto = buildingConverter.convertToDTOCustom(building);
+			BuildingDTO buildingdto = buildingConverter.convertToDTOCustom(buildingEntity); // sửa
 			return buildingdto;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -262,8 +264,4 @@ public class BuildingService implements IBuildingService {
         }
         buildingRepository.deleteById(buildingDelete.getId());
     }*/
-
-
-
-
 }

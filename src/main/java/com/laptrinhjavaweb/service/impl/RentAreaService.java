@@ -34,11 +34,13 @@ public class RentAreaService implements IRentAreaService {
     @Override
     public void saveAllRentArea(List<RentAreaDTO> listRentAreaDTO, BuildingEntity buildingEntity) {
         // convert dto -> entity -> save
+
         List<RentareaEntity> listRentAreaEntity = new ArrayList<>();
-        for (RentAreaDTO item : listRentAreaDTO) {
-            RentareaEntity rentareaEntity = rentAreaConverter.convertToEntity(item);
-            listRentAreaEntity.add(rentareaEntity);
-        }
+
+            for (RentAreaDTO item : listRentAreaDTO) {
+                RentareaEntity rentareaEntity = rentAreaConverter.convertToEntity(item);
+                listRentAreaEntity.add(rentareaEntity);
+            }
 
         BuildingEntity building = buildingRepository.findById(buildingEntity.getId()).get();
         rentAreaRepository.saveRentAreas(listRentAreaEntity, building);
