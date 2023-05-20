@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -101,9 +102,9 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "managerphone")
     private Integer managerPhone;
 
-    // 1 building - n rentarea
-    @OneToMany(mappedBy="building", cascade = {CascadeType.MERGE,CascadeType.REMOVE}) // chú ý bien cart này duoc khai báo trong Class Item bên duoi. Chúng phai giong y chang nhau cái tên
-    private Set<RentareaEntity> rentareas;
+    // 1 building - n rentarea  CascadeType.PERSIST,CascadeType.MERGE
+    @OneToMany(mappedBy="building", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Set<RentareaEntity> rentareas = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -120,6 +121,8 @@ public class BuildingEntity extends BaseEntity {
         this.rentareas = rentareas;
     }
 
+
+
     public List<UserEntity> getUserEntities() {
         return userEntities;
     }
@@ -127,8 +130,6 @@ public class BuildingEntity extends BaseEntity {
     public void setUserEntities(List<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }
-
-
 
     public String getName() {
         return name;

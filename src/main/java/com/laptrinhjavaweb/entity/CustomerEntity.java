@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,9 @@ public class CustomerEntity extends BaseEntity {
     private List<UserEntity> userEntities;
 
     // 1 - n transaction
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "customer_id")
-    private List<TransactionEntity> transactions;
+    private List<TransactionEntity> transactions = new ArrayList<>();
 
     public List<UserEntity> getUserEntities() {
         return userEntities;

@@ -3,16 +3,13 @@ package com.laptrinhjavaweb.api.admin;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
-import com.laptrinhjavaweb.dto.response.ResponseDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
-import com.laptrinhjavaweb.exception.BuildingNotFoundException;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -62,28 +59,7 @@ public class BuildingAPI {
     // page
     @PostMapping("/page")
     public List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearch) {
-        // set result list
-        // set total items
         return buildingService.pageBuilding(pageable, buildingSearch);
     }
 
-    // delete building n
-    /*@DeleteMapping
-    public ResponseEntity<Void> deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
-        buildingService.removeBuilding(buildingDeleteRequest);
-        return ResponseEntity.noContent().build();
-    }*/
-
-   /*    @DeleteMapping
-    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
-        if (ids.length > 0) {
-            buildingService.delete(ids);
-        }
-        return ResponseEntity.noContent().build();
-    }*/
-
-   /*    @PostMapping
-    public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
-        return buildingService.createBuilding(buildingDTO);
-    }*/
 }

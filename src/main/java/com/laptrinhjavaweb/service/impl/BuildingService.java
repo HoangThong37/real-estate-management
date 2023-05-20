@@ -28,14 +28,14 @@ import java.util.*;
 @Service
 public class BuildingService implements IBuildingService {
 
-	@Autowired
+/*	@Autowired
 	private RentAreaRepository rentAreaRepository;
 
 	@Autowired
 	private RentAreaService rentAreaService;
 
 	@Autowired
-	private RentAreaConverter rentAreaConverter;
+	private RentAreaConverter rentAreaConverter;*/
 
 	@Autowired
 	private BuildingRepository buildingRepository;
@@ -60,43 +60,18 @@ public class BuildingService implements IBuildingService {
 		return result;
 	}
 
-/*	@Override
-	@Transactional
-	public BuildingDTO createBuilding(BuildingDTO buildingDTO) {
-		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
-		BuildingEntity building = buildingRepository.save(buildingEntity);
-
-		if (buildingDTO.getRentArea() != null) {
-			List<RentAreaDTO> listRentAreaDTO = rentAreaConverter.convertToRentArea(buildingEntity.getId(), buildingDTO);
-			rentAreaService.saveAllRentArea(listRentAreaDTO, building);
-		}
-		BuildingDTO buildingDTOAfter = buildingConverter.convertToDTOCustom(building);
-		return buildingDTOAfter;
-	}*/
-
 	@Override
 	@Transactional
 	public BuildingDTO updateBuilding(BuildingDTO buildingDTO) {
 		BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO); // trả ra cho dto
-		BuildingEntity building = buildingRepository.save(buildingEntity);
-
 		try {
-//			if (buildingDTO.getId() != null) {
-//				rentAreaRepository.deleteByBuilding_Id(buildingDTO.getId());
-//			}
-			if (buildingDTO.getRentArea() != null) {
-				List<RentAreaDTO> listRentAreaDTO = rentAreaConverter.convertToRentArea(building.getId(), buildingDTO);
-				rentAreaService.saveAllRentArea(listRentAreaDTO, building);
-			}
 			if (buildingDTO.getId() != null) {
 				BuildingEntity foundBuilding = buildingRepository.findById(buildingDTO.getId())
 						.orElseThrow(() -> new NotFoundException("Building not found!"));
 				buildingEntity.setImage(foundBuilding.getImage());
 			}
 			saveThumbnail(buildingDTO, buildingEntity);   // save thumbnail
-
-			BuildingDTO buildingdto = buildingConverter.convertToDTOCustom(buildingEntity); // sửa
-			return buildingdto;
+			return buildingConverter.convertToDTOCustom(buildingRepository.save(buildingEntity)); // sửa
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error building update in service");
@@ -107,7 +82,6 @@ public class BuildingService implements IBuildingService {
 	public BuildingDTO findBuildingById(Long id) {
 		if (id != null) {
 			BuildingEntity buildingEntity = buildingRepository.findById(id).get();
-			//BuildingEntity buildingEntity = buildingRepository.findOne(id);
 			BuildingDTO buildingDTO = buildingConverter.convertToDTOCustom(buildingEntity);
 			return buildingDTO;
 		}
@@ -122,7 +96,6 @@ public class BuildingService implements IBuildingService {
 		}
 		return buildingTypes;
 	}
-
 
 
 	@Override
