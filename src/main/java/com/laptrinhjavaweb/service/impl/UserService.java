@@ -166,7 +166,6 @@ public class UserService implements IUserService {
     }
 
 
-
     @Override
     public List<UserDTO> getAllStaff() {
         List<UserDTO> result = new ArrayList<>();
@@ -182,9 +181,7 @@ public class UserService implements IUserService {
     @Override
     public List<StaffResponseDTO> finAllStaffByBuilding(Long buildingid) {
         BuildingEntity buildingEntity = buildingRepository.findById(buildingid).get();
-
         List<UserEntity> userEntities = userRepository.getAllStaffByBuilding(buildingEntity.getId());
-
         return userConverter.convertToStaffResponse(userEntities);
 //         BuildingEntity buildingEntity = buildingRepository.findById(id).get();
 //         List<AssignBuildingEntity> assignBuildingEntities = assignmentRepo.findUsersByBuilding(buildingEntity);
@@ -206,7 +203,6 @@ public class UserService implements IUserService {
 
     @Override
     public int countTotalItems() {
-
         return userRepository.countTotalItem();
     }
 

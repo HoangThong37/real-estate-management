@@ -180,21 +180,6 @@ public class BuildingService implements IBuildingService {
 			e.printStackTrace();
 		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //		List<UserEntity> userEntities = new ArrayList<>();
 //		for (Integer item : staffIds) {
 //			userEntities.add(userRepository.findOneById(item.longValue()));

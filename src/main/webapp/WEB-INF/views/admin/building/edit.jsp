@@ -198,7 +198,7 @@
                         <%--update image--%>
                         <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right">Hình đại diện</label>
-                            <input class="col-sm-3 no-padding-right" type="file" id="uploadImage"/>
+                            <input class="col-sm-3 no-padding-right" type="file" value="${modelBuildingEdit.image}" id="uploadImage"/>
                             <div class="col-sm-9">
                                 <c:if test="${not empty modelBuildingEdit.image}">
                                     <c:set var="imagePath" value="/repository${modelBuildingEdit.image}"/>
@@ -232,6 +232,7 @@
                                 </c:if>
                                 <button type="button" id="close" class="btn btn-primary">Huỷ</button>
                             </div>
+                            <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
                         </div>
                     </form:form>
                 </div>
@@ -241,63 +242,40 @@
 </div><!-- /.main-content -->
 
 <script>
-/*    $('#btnAddBuilding').click(function (e) {
-        e.preventDefault();
-        var data = {};
-        var formData = $('#formEdit').serializeArray();
-        var buildingTypes = [];
 
-        $.each(formData, function (index, v) {
-            if (v.name == 'types') {
-                buildingTypes.push(v.value);
-            } else {
-                data["" + v.name + ""] = v.value;
-            }
-        });
-        data["types"] = buildingTypes;
-
-        $.ajax({
-            type: "POST",
-            url: '<c:url value="/api/building"/>',
-            data: JSON.stringify(data),
-            dataType: "json",               // kiểu dữ liệu server gửi cho client
-            contentType: "application/json",//kieu du lieu tu client gui ve server
-            success: function (response) {
-                window.location.href = '<c:url value="/admin/building-list" />'
-            },
-            error: function (response) {
-                alert("fail")
-                console.log(response)
-            }
-        });
-    })*/
-
+     var imageBase64 = '';
+     var imageName = '';
 
     $('#btnEditBuilding').click(function (e) {
         e.preventDefault();
         var data = {};
-        //var buildingTypes = [];
         var formData = $('#formEdit').serializeArray();
         var id = ${modelBuildingEdit.id} + '';
         if(id != '') {
             data["id"] = id;
         }
         var types = [];
-        // $.each(formData, function (index, v) {
-        //     if (v.name == 'types') {
-        //         buildingTypes.push(v.value);
-        //     } else {
-        //         data["" + v.name + ""] = v.value;
-        //     }
-        // });
-        formData.forEach(function(item) {
+
+        formData.forEach(function(item, e) {
             if (item.name == "types") {
                 types.push(item.value);
-            } else {
+            } else if (item.name != "types") {
                 data[item.name] = item.value;
             }
-        })
+            // image
+            if ('' !== e.value && null != e.value) {
+                data['' + e.name + ''] = e.value;
+            }
+            if ('' !== imageBase64) {
+                data['imageBase64'] = imageBase64;
+                data['imageName'] = imageName;
+            }
+        });
+
+        var buildingId = data['id'];
         data["types"] = types;
+        $('#loading_image').show();
+
         $.ajax({
             type: "PUT",
             url: '<c:url value="/api/building"/>',
@@ -305,9 +283,11 @@
             dataType: "json",               // kiểu dữ liệu server gửi cho client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
+                $('#loading_image').hide();
                 window.location.href = '<c:url value="/admin/building-list" />'
             },
             error: function (response) {
+                $('#loading_image').hide();
                 alert("error : fail")
                 console.log(response)
             }
@@ -319,19 +299,6 @@
         window.close(); // đóng trang hiện tại
     });
 
-    var imageBase64 = '';
-    var imageName = '';
-
-    $.each(formData, function (i, e) {
-        if ('' !== e.value && null != e.value) {
-            data['' + e.name + ''] = e.value;
-        }
-
-        if ('' !== imageBase64) {
-            data['imageBase64'] = imageBase64;
-            data['imageName'] = imageName;
-        }
-    });
 
     $('#uploadImage').change(function (event) {
         var reader = new FileReader();
@@ -353,7 +320,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
 </script>
 </body>
 </html>

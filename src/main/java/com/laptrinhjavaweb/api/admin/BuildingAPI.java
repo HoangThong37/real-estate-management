@@ -26,11 +26,6 @@ public class BuildingAPI {
     @Autowired
     private UserService userService;
 
-/*    @PostMapping
-    public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
-        return buildingService.createBuilding(buildingDTO);
-    }*/
-
     // api load satff
     @GetMapping("/{id}/staff")
     public List<StaffResponseDTO> loadStaffByBuilding(@PathVariable("id") Long id) {
@@ -55,20 +50,6 @@ public class BuildingAPI {
         return buildingUpdate;
     }
 
-    // delete building n
-    /*@DeleteMapping
-    public ResponseEntity<Void> deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
-        buildingService.removeBuilding(buildingDeleteRequest);
-        return ResponseEntity.noContent().build();
-    }*/
-
-   /*    @DeleteMapping
-    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
-        if (ids.length > 0) {
-            buildingService.delete(ids);
-        }
-        return ResponseEntity.noContent().build();
-    }*/
 
     @DeleteMapping
     public ResponseEntity<Void> deleteBuildings(@RequestBody List<Long> ids) { // @RequestBody
@@ -86,5 +67,23 @@ public class BuildingAPI {
         return buildingService.pageBuilding(pageable, buildingSearch);
     }
 
+    // delete building n
+    /*@DeleteMapping
+    public ResponseEntity<Void> deleteBuilding(@RequestBody BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException {
+        buildingService.removeBuilding(buildingDeleteRequest);
+        return ResponseEntity.noContent().build();
+    }*/
 
+   /*    @DeleteMapping
+    public ResponseEntity<Void> deleteBuildings(@RequestBody long[] ids) { // @RequestBody
+        if (ids.length > 0) {
+            buildingService.delete(ids);
+        }
+        return ResponseEntity.noContent().build();
+    }*/
+
+   /*    @PostMapping
+    public BuildingDTO createBuilding(@RequestBody(required = false) BuildingDTO buildingDTO) {
+        return buildingService.createBuilding(buildingDTO);
+    }*/
 }
