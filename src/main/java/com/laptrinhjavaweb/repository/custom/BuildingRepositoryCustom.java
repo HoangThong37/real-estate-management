@@ -11,10 +11,6 @@ public interface BuildingRepositoryCustom {
     // sử dụng buider
     List<BuildingEntity> findBuilding(BuildingSearchBuilder builder);
 
-    //void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity);
-
-    //void assignmentBuilding(List<AssignBuildingEntity> userEntities, BuildingEntity buildingEntity);
-
     List<BuildingEntity> pageBuilding(Pageable pageable, BuildingSearchBuilder builder);
 
 }

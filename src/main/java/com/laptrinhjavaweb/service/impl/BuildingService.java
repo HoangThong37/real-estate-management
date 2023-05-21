@@ -155,15 +155,6 @@ public class BuildingService implements IBuildingService {
 			e.printStackTrace();
 		}
 
-//		List<UserEntity> userEntities = new ArrayList<>();
-//		for (Integer item : staffIds) {
-//			userEntities.add(userRepository.findOneById(item.longValue()));
-//		}
-//		BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
-//		buildingEntity.setUserEntities(userEntities);
-
-//		buildingRepository.assignmentBuilding(userEntities, buildingEntity);
-
 	}
 
 	@Override

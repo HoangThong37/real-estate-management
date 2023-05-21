@@ -128,7 +128,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             sql = buildingSqlPart2WithBuilder(builder, sql);
             sql.append(" LIMIT ").append(pageable.getPageSize()).append("\n")
                     .append(" OFFSET ").append(pageable.getOffset());
-            //sql.append(" group by b.id");
             Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
             List<BuildingEntity> buildingEntities = query.getResultList();
             return buildingEntities;
@@ -140,36 +139,5 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         }
     }
 
-/*    @Transactional
-    @Override
-    public void assignmentBuilding(List<UserEntity> userEntities, BuildingEntity buildingEntity) {
-        List<AssignBuildingEntity> getAllStaffByBuilding  = assignmentRepo.findUsersByBuilding(buildingEntity);
 
-        for (AssignBuildingEntity item : getAllStaffByBuilding) {
-            int i = 0;
-            for (UserEntity item1 : userEntities) {
-                if (item.getUser().getId() == item1.getId()) {
-                    i++;
-                }
-            }
-            if (i == 0) {
-                AssignBuildingEntity assignmentBuildingEntity = assignmentRepo.findByBuildingAndUser(buildingEntity, item.getUser());
-                entityManager.remove(assignmentBuildingEntity); // delete
-            }
-        }
-        for (UserEntity item : userEntities) {
-            int i = 0;
-            for (AssignBuildingEntity item2 : getAllStaffByBuilding) {  // 0 có cái hì
-                if (item.getId() == item2.getUser().getId()) {
-                    i++;
-                }
-            }
-            if (i == 0) {
-                AssignBuildingEntity assignment = new AssignBuildingEntity();
-                assignment.setBuilding(buildingEntity);
-                assignment.setUser(item);
-                entityManager.persist(assignment); // add
-            }
-        }
-    }*/
 }

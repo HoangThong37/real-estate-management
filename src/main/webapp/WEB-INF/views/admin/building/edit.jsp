@@ -231,8 +231,8 @@
                                     <button type="button" class="btn btn-primary" id="btnEditBuilding">Update Tòa Nhà</button>
                                 </c:if>
                                 <button type="button" id="close" class="btn btn-primary">Huỷ</button>
+                                <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
                             </div>
-                            <img src="/img/loading.gif" style="display: none; height: 100px" id="loading_image">
                         </div>
                     </form:form>
                 </div>

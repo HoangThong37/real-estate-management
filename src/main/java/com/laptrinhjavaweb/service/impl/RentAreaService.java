@@ -46,25 +46,7 @@ public class RentAreaService implements IRentAreaService {
         rentAreaRepository.saveRentAreas(listRentAreaEntity, building);
     }
 }
-//    @Override
-//    public void saveAllRentAreaByBuilding(List<RentAreaDTO> listRentArea, BuildingDTO buildingDTO) {
-//        List<RentareaEntity> listRents = new ArrayList<>();
-//
-//        for(RentAreaDTO item : listRentArea) {
-//            RentareaEntity rentareaEntity  = rentAreaConverter.convertToEntity(item); // đây
-//            listRents.add(rentareaEntity);
-//        }
-//        BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
-//        rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
-//
-//        if (buildingDTO.getId() != null) {
-//            BuildingEntity buildingEntity = buildingRepository.findById(buildingDTO.getId()).get();
-//            rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
-//        }
-//        else {
-//            BuildingEntity buildingEntity = buildingConverter.convertToEntityCustom(buildingDTO);
-//            rentAreaRepository.saveAllByBuilding(listRents, buildingEntity);
-//        }
+
 
 
 

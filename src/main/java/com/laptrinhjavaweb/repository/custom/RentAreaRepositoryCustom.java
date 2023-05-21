@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface RentAreaRepositoryCustom  {
 
-    //void saveAllByBuilding(List<RentareaEntity> listRentArea, BuildingEntity buildingEntity);
-
     List<RentareaEntity> findByRentArea(Long id);
 
     void saveRentAreas(List<RentareaEntity> listRentAreaEntity, BuildingEntity buildingEntity);
