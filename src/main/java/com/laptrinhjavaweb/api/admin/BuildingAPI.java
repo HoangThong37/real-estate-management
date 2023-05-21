@@ -6,7 +6,6 @@ import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.service.impl.BuildingService;
 import com.laptrinhjavaweb.service.impl.UserService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +31,10 @@ public class BuildingAPI {
     // assigment building to staff
     // test
     @PostMapping("/{id}/assignment")
-    public List<Long> assignmentBuilding(@RequestBody(required = false)  List<Long> staffIds
+    public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffIds
                                         ,@PathVariable("id") Long buildingId) {
         buildingService.assignmentBuilding(staffIds, buildingId);
-        return staffIds;
+        return buildingId;
     }
 
 

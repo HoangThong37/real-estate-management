@@ -62,7 +62,7 @@ public class BuildingConverter {
             result.setTypes(type);
         }
         if (!ValidateUtils.checkNullEmpty(dto.getRentArea())) {
-            Set<RentareaEntity> rentareaEntities = new HashSet<>();
+            List<RentareaEntity> rentareaEntities = new ArrayList<>();
             String[] arrAreaRent = dto.getRentArea().replaceAll(" ", "").trim().split(","); // tách chuỗi qa dau ','
             for (String item : arrAreaRent) {
                 RentareaEntity rentareaEntity = new RentareaEntity();

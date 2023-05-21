@@ -136,25 +136,17 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-	// test
 	@Override
 	@Transactional
 	public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
-
 		try {
-			List<UserEntity> listUser = new ArrayList<>();
-			for (Long item : staffIds) {
-				listUser.add(userRepository.findById(item).get());
-			}
 			BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
-			if (buildingEntity != null) {
-				buildingEntity.setUserEntities(listUser);
-			}
+			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(staffIds)));
 			buildingRepository.save(buildingEntity);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("Error assignmentBuilding service");
 		}
-
 	}
 
 	@Override

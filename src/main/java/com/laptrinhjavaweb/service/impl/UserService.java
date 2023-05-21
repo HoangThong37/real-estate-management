@@ -183,9 +183,7 @@ public class UserService implements IUserService {
         BuildingEntity buildingEntity = buildingRepository.findById(buildingid).get();
         List<UserEntity> userEntities = userRepository.getAllStaffByBuilding(buildingEntity.getId());
         return userConverter.convertToStaffResponse(userEntities);
-//         BuildingEntity buildingEntity = buildingRepository.findById(id).get();
-//         List<AssignBuildingEntity> assignBuildingEntities = assignmentRepo.findUsersByBuilding(buildingEntity);
-//         return userConverter.convertToDtoResponse(assignBuildingEntities);
+
     }
 
 

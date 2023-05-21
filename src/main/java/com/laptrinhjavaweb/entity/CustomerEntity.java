@@ -23,7 +23,7 @@ public class CustomerEntity extends BaseEntity {
             name = "assignmentcustomer",
             joinColumns = @JoinColumn(name = "customerid"),
             inverseJoinColumns = @JoinColumn(name = "staffid"))
-    private List<UserEntity> userEntities;
+    private List<UserEntity> userEntities = new ArrayList<>();
 
     // 1 - n transaction
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
@@ -69,4 +69,5 @@ public class CustomerEntity extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

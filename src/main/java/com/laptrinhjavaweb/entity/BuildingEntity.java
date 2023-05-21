@@ -1,7 +1,11 @@
 package com.laptrinhjavaweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -104,30 +108,29 @@ public class BuildingEntity extends BaseEntity {
 
     // 1 building - n rentarea  CascadeType.PERSIST,CascadeType.MERGE
     @OneToMany(mappedBy="building", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private Set<RentareaEntity> rentareas = new HashSet<>();
+    private List<RentareaEntity> rentareas = new ArrayList<>();
 
+    //@JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid"),
-            inverseJoinColumns = @JoinColumn(name = "staffid"))
-    private List<UserEntity> userEntities;
+            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+    private Set<UserEntity> userEntities = new HashSet<>();
 
-    public Set<RentareaEntity> getRentareas() {
+    public List<RentareaEntity> getRentareas() {
         return rentareas;
     }
 
-    public void setRentareas(Set<RentareaEntity> rentareas) {
+    public void setRentareas(List<RentareaEntity> rentareas) {
         this.rentareas = rentareas;
     }
 
-
-
-    public List<UserEntity> getUserEntities() {
+    public Set<UserEntity> getUserEntities() {
         return userEntities;
     }
 
-    public void setUserEntities(List<UserEntity> userEntities) {
+    public void setUserEntities(Set<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }
 

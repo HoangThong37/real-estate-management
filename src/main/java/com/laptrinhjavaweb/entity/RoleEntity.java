@@ -18,7 +18,7 @@ public class RoleEntity extends BaseEntity {
     private String code;
 
     @ManyToMany(mappedBy = "roles")
-    private List<UserEntity> users = new ArrayList<>();
+    private List<UserEntity> users;
 
 
     public String getName() {

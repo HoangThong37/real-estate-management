@@ -9,7 +9,7 @@ public class RentareaEntity extends BaseEntity {
     @Column(name = "value")
     private Integer value;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="building_id", nullable=false) //cart_id chính là truong khoá phu trong table Item liên k?t v?i khóa chính trong table Cart
     private BuildingEntity building;
 
@@ -28,4 +28,6 @@ public class RentareaEntity extends BaseEntity {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+
 }
