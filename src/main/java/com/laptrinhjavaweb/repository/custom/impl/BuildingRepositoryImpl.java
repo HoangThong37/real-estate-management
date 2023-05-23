@@ -129,8 +129,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             sql.append(" LIMIT ").append(pageable.getPageSize()).append("\n")
                     .append(" OFFSET ").append(pageable.getOffset());
             Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
-            List<BuildingEntity> buildingEntities = query.getResultList();
-            return buildingEntities;
+            // List<BuildingEntity> buildingEntities = query.getResultList();
+
+            return query.getResultList();
 
         }
         catch (Exception e) {

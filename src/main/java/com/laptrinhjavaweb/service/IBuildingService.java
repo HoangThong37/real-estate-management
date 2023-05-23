@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.service;
 
 
+import com.laptrinhjavaweb.dto.AssignmentDTO;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
@@ -17,7 +18,7 @@ public interface IBuildingService {
     BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
 
-    void assignmentBuilding(List<Long> staffIds, Long buildingId);
+    //void assignmentBuilding(List<Long> staffIds, Long buildingId) throws NotFoundException;
     //void assignmentBuilding(List<Long> listUserId, Long buildingId);
     List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
     BuildingDTO updateBuilding(BuildingDTO buildingDTO);
@@ -29,7 +30,6 @@ public interface IBuildingService {
     void delete(List<Long> buildingIds) throws NotFoundException;
     void removeBuilding(BuildingDeleteRequest buildingDeleteRequest) throws NotFoundException;
 
-    //BuildingDTO createBuilding(BuildingDTO buildingDTO);
-
+    void assignmentBuilding(AssignmentDTO assignmentDTO) throws NotFoundException;
 
 }

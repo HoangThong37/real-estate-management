@@ -121,8 +121,6 @@ public class BuildingSearchBuilder {
         private Integer staffID;
         private List<String> types;
 
-
-
         public Builder setName(String name) {
             this.name = name;
             return this;
@@ -146,8 +144,6 @@ public class BuildingSearchBuilder {
             this.ward = ward;
             return this;
         }
-
-
 
         public Builder setStreet(String street) {
             this.street = street;
@@ -223,8 +219,6 @@ public class BuildingSearchBuilder {
             this.staffID = staffID;
             return this;
         }
-
-
 
         public Builder setTypes(List<String> types) {
             this.types = types;

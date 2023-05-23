@@ -2,18 +2,15 @@ package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.buider.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
-import com.laptrinhjavaweb.converter.RentAreaConverter;
+import com.laptrinhjavaweb.dto.AssignmentDTO;
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.RentAreaDTO;
 import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import org.apache.tomcat.util.codec.binary.Base64;
-import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
-import com.laptrinhjavaweb.repository.RentAreaRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.utils.UploadFileUtils;
@@ -28,14 +25,6 @@ import java.util.*;
 @Service
 public class BuildingService implements IBuildingService {
 
-/*	@Autowired
-	private RentAreaRepository rentAreaRepository;
-
-	@Autowired
-	private RentAreaService rentAreaService;
-
-	@Autowired
-	private RentAreaConverter rentAreaConverter;*/
 
 	@Autowired
 	private BuildingRepository buildingRepository;
@@ -136,12 +125,25 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-	@Override
+/*	@Override
 	@Transactional
 	public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
 		try {
 			BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
 			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(staffIds)));
+			buildingRepository.save(buildingEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error assignmentBuilding service");
+		}
+	}*/
+
+	@Override
+	@Transactional
+	public void assignmentBuilding(AssignmentDTO assignmentDTO) {
+		try {
+			BuildingEntity buildingEntity = buildingRepository.findById(assignmentDTO.getBuildingid()).get();
+			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(assignmentDTO.getStaffIds())));
 			buildingRepository.save(buildingEntity);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,4 +222,6 @@ public class BuildingService implements IBuildingService {
         }
         buildingRepository.deleteById(buildingDelete.getId());
     }*/
+
+
 }

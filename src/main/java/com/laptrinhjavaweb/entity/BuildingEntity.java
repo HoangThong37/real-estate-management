@@ -1,7 +1,5 @@
 package com.laptrinhjavaweb.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.Entity;
 import javax.persistence.*;
 
@@ -114,8 +112,8 @@ public class BuildingEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "assignmentbuilding",
-            joinColumns = @JoinColumn(name = "buildingid", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
+            joinColumns = @JoinColumn(name = "building_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false))
     private Set<UserEntity> userEntities = new HashSet<>();
 
     public List<RentareaEntity> getRentareas() {

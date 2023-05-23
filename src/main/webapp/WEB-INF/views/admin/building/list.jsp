@@ -382,17 +382,18 @@
         $.each(checkData, function () {
             values.push($(this).val());
         });
-
         data["staffIds"] = values;
+        data["buildingid"] = buildingid;
 
         $.ajax({
             type: "POST",
-            url: '<c:url value="/api/building"/>' + '/' + buildingid + '/assignment',
+            /*url: '<c:url value="/api/building"/>' + '/' + buildingid + '/assignment',*/
+            url: '<c:url value="/api/building/assignment"/>',
             data: JSON.stringify(data),
             dataType: "json",               //kieu du lieu tu server tra ve client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
-                console.log("sucess");
+                console.log("success");
                 window.location.reload();
             },
             error: function (response) {
@@ -401,6 +402,7 @@
             }
         });
     })
+
 
     function openModalAssignmentBuilding() {
         $('#assignmentBuildingModal').modal();
