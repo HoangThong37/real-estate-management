@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BuildingTypeServiceImpl implements IBuildingTypeService {
+public class BuildingTypeService implements IBuildingTypeService {
 
     @Override
     public List<BuildingTypesResponse> getAll() {

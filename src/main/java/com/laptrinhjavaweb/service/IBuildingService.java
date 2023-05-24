@@ -18,8 +18,6 @@ public interface IBuildingService {
     BuildingDTO findBuildingById(Long id);
     Map<String, String> getBuildingTypes();
 
-    //void assignmentBuilding(List<Long> staffIds, Long buildingId) throws NotFoundException;
-    //void assignmentBuilding(List<Long> listUserId, Long buildingId);
     List<BuildingSearchResponse> findAll(BuildingSearchRequest buildingSearchRequest);
     BuildingDTO updateBuilding(BuildingDTO buildingDTO);
 

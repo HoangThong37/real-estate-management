@@ -172,8 +172,8 @@ public class UserService implements IUserService {
         List<UserEntity> listStaff = userRepository.getAllStaff();
         for (UserEntity item : listStaff) {
             // convert từ entity qua dto
-            UserDTO userDTO  = userConverter.convertToDto(item);
-            result.add(userDTO);
+            //UserDTO userDTO  = userConverter.convertToDto(item);
+            result.add(userConverter.convertToDto(item));
         }
         return result;
     }

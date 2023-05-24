@@ -2,6 +2,8 @@ package com.laptrinhjavaweb.service;
 
 import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.dto.request.CustomerRequest;
+import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.exception.MyException;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,4 @@ public interface IUserService {
 
     List<UserDTO> getAllUsers(Pageable pageable);
     int countTotalItems();
-
-
 }

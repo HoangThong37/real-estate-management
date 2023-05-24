@@ -21,8 +21,8 @@ public class CustomerEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "assignmentcustomer",
-            joinColumns = @JoinColumn(name = "customerid"),
-            inverseJoinColumns = @JoinColumn(name = "staffid"))
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "staff_id"))
     private List<UserEntity> userEntities = new ArrayList<>();
 
     // 1 - n transaction

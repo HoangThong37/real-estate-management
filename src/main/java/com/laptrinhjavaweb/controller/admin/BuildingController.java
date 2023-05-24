@@ -1,8 +1,6 @@
 package com.laptrinhjavaweb.controller.admin;
 
-import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -54,13 +51,13 @@ public class BuildingController {
             buildingSearch.setListResult(pageBuilding);
             buildingSearch.setTotalItems(buildingService.getTotalItems()); // set tổng số item trong
 
-			  mav.addObject("buildings", buildingSearch);
-			  mav.addObject("staffmaps", userService.getAllStaff());
-			  mav.addObject("districts", districtService.getAllDistrict());
-			  mav.addObject("buildingTypes", buildingTypeService.getAll());
+			mav.addObject("buildings", buildingSearch);
+			mav.addObject("staffmaps", userService.getAllStaff());
+			mav.addObject("districts", districtService.getAllDistrict());
+			mav.addObject("buildingTypes", buildingTypeService.getAll());
 			 // mav.addObject("buildings", buildingService.findAll(buildingSearch));
 
-			  return mav;
+			return mav;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
