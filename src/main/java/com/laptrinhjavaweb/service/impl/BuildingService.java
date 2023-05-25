@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.buider.BuildingSearchBuilder;
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.AssignmentDTO;
 import com.laptrinhjavaweb.dto.BuildingDTO;
@@ -125,31 +126,35 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-/*	@Override
-	@Transactional
-	public void assignmentBuilding(List<Long> staffIds, Long buildingID) {
-		try {
-			BuildingEntity buildingEntity = buildingRepository.findById(buildingID).get();
-			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(staffIds)));
-			buildingRepository.save(buildingEntity);
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error assignmentBuilding service");
-		}
-	}*/
-
 	@Override
 	@Transactional
 	public void assignmentBuilding(AssignmentDTO assignmentDTO) {
+		// apply Java8
 		try {
-			BuildingEntity buildingEntity = buildingRepository.findById(assignmentDTO.getBuildingid()).get();
-			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(assignmentDTO.getStaffIds())));
+			BuildingEntity buildingEntity =  Optional.ofNullable(buildingRepository.findById(assignmentDTO.getBuildingid()).get())
+					                                 .orElseThrow(() -> new NotFoundException(SystemConstant.BUILDING_NF));
+
+			buildingEntity.setUserEntities(Optional.ofNullable(userRepository.findAllById(assignmentDTO.getStaffIds()))
+					                               .orElseThrow(() -> new NotFoundException(SystemConstant.BUILDING_NF)));
 			buildingRepository.save(buildingEntity);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error assignmentBuilding service");
 		}
 	}
+
+//	@Override
+//	@Transactional
+//	public void assignmentBuilding(AssignmentDTO assignmentDTO) {
+//		try {
+//			BuildingEntity buildingEntity = buildingRepository.findById(assignmentDTO.getBuildingid()).get();
+//			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(assignmentDTO.getStaffIds())));
+//			buildingRepository.save(buildingEntity);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("Error assignmentBuilding service");
+//		}
+//	}
 
 	@Override
 	@Transactional

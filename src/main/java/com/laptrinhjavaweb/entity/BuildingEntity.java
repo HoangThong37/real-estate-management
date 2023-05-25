@@ -114,7 +114,7 @@ public class BuildingEntity extends BaseEntity {
             name = "assignmentbuilding",
             joinColumns = @JoinColumn(name = "building_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false))
-    private Set<UserEntity> userEntities = new HashSet<>();
+    private List<UserEntity> userEntities = new ArrayList<>();
 
     public List<RentareaEntity> getRentareas() {
         return rentareas;
@@ -124,11 +124,11 @@ public class BuildingEntity extends BaseEntity {
         this.rentareas = rentareas;
     }
 
-    public Set<UserEntity> getUserEntities() {
+    public List<UserEntity> getUserEntities() {
         return userEntities;
     }
 
-    public void setUserEntities(Set<UserEntity> userEntities) {
+    public void setUserEntities(List<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }
 
