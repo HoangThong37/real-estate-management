@@ -35,7 +35,7 @@ CREATE TABLE `assignmentbuilding` (
   KEY `FKlqpeagdt67kd8ltn0sj1ls18m` (`user_id`),
   CONSTRAINT `FKlqpeagdt67kd8ltn0sj1ls18m` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKqjjmovo3nsqr6euq8uoe5otuu` FOREIGN KEY (`building_id`) REFERENCES `building` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `assignmentbuilding` (
 
 LOCK TABLES `assignmentbuilding` WRITE;
 /*!40000 ALTER TABLE `assignmentbuilding` DISABLE KEYS */;
-INSERT INTO `assignmentbuilding` VALUES (1,2,1,NULL,NULL,NULL,NULL),(2,2,3,NULL,NULL,NULL,NULL),(3,3,1,NULL,NULL,NULL,NULL),(4,3,4,NULL,NULL,NULL,NULL);
+INSERT INTO `assignmentbuilding` VALUES (1,2,1,NULL,NULL,NULL,NULL),(2,2,3,NULL,NULL,NULL,NULL),(3,3,1,NULL,NULL,NULL,NULL),(4,3,4,NULL,NULL,NULL,NULL),(5,4,35,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `assignmentbuilding` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `assignmentcustomer` (
   KEY `FKddb9krn420f0a25bnjl89hsn4` (`staff_id`),
   CONSTRAINT `FKddb9krn420f0a25bnjl89hsn4` FOREIGN KEY (`staff_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKmf86hibduemj3x45h7kmsglut` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,6 +77,7 @@ CREATE TABLE `assignmentcustomer` (
 
 LOCK TABLES `assignmentcustomer` WRITE;
 /*!40000 ALTER TABLE `assignmentcustomer` DISABLE KEYS */;
+INSERT INTO `assignmentcustomer` VALUES (2,2,1,NULL,NULL,NULL,NULL),(3,4,1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `assignmentcustomer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,6 +123,7 @@ CREATE TABLE `building` (
   `modifiedby` varchar(255) DEFAULT NULL,
   `managername` varchar(255) DEFAULT NULL,
   `managerphone` int(11) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -132,7 +134,7 @@ CREATE TABLE `building` (
 
 LOCK TABLES `building` WRITE;
 /*!40000 ALTER TABLE `building` DISABLE KEYS */;
-INSERT INTO `building` VALUES (1,'Nam Thong Building Tower','59 phan xích long','Phường 2','QUAN_1','',2,500,'','',15,'15 triệu/m2','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NGUYEN_CAN,NOI_THAT','',NULL,NULL,NULL,NULL,'2023-05-08 19:04:50',NULL,'nguyenvana',NULL,NULL),(2,'ACM Tower','96 cao thắng','Phường 4','QUAN_2',NULL,2,650,NULL,NULL,18,'18 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Kelvin Nguyễn',356984215),(3,'Alpha 2 Building Tower','153 nguyễn đình chiểu','Phường 6','QUAN_1',NULL,1,200,NULL,NULL,20,'20 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Trấn Thành',98657524),(4,'IDD 1 Building','111 Lý Chính Thắng','Phường 7','QUAN_4',NULL,1,200,NULL,NULL,12,'12 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET,NGUYEN_CAN,NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Boyka',15478535),(5,'thong test project','nguyen tan','nam trung','Chọn quận','',10,670,'','',13,'13 triệu/m2','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET','',NULL,NULL,NULL,NULL,'2023-05-09 14:28:38',NULL,'nguyenvana','',NULL),(6,'Thăng Long Tower','145 nguyễn trãi','Phường 3','QUAN_3',NULL,3,400,NULL,NULL,17,'18 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT,NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Thầy Huấn',36547821),(32,'Nam Minh Building Tower','59 phan xích long','Phường 3','QUAN_1','',2,500,'','',15,'15 triệu/m2','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET,NGUYEN_CAN,NOI_THAT','',NULL,NULL,NULL,'2023-05-08 18:15:01','2023-05-08 18:15:01','nguyenvana','nguyenvana',NULL,NULL),(33,'test new building','231 truong chinh','nguyen chinh','QUAN_4','ssss',3,299,'','',NULL,'','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,'','TANG_TRET,NGUYEN_CAN','',NULL,NULL,NULL,'2023-05-08 19:21:59','2023-05-08 19:21:59','nguyenvana','nguyenvana',NULL,NULL),(34,'test0905','nguyen kim','Phường 122','QUAN_2','test ket cau',3,300,'dong nam','vip',NULL,'','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT','ok nhé',NULL,NULL,NULL,'2023-05-09 12:31:21','2023-05-09 12:31:21','nguyenvana','nguyenvana','Thầy giáo Ba',988777666),(35,'test checked','B','a','QUAN_2','',3,222,'','',NULL,'','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT,NGUYEN_CAN','',NULL,NULL,NULL,NULL,'2023-05-09 15:07:18',NULL,'nguyenvana','Thong',12345);
+INSERT INTO `building` VALUES (1,'Nam Thong Building Tower','59 phan xích long','Phường 2','QUAN_1','',2,500,'','',15,'15 triệu/m2','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NGUYEN_CAN,NOI_THAT','',NULL,NULL,NULL,NULL,'2023-05-08 19:04:50',NULL,'nguyenvana',NULL,NULL,NULL),(2,'ACM Tower','96 cao thắng','Phường 4','QUAN_2',NULL,2,650,NULL,NULL,18,'18 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Kelvin Nguyễn',356984215,NULL),(3,'Alpha 2 Building Tower','153 nguyễn đình chiểu','Phường 6','QUAN_1',NULL,1,200,NULL,NULL,20,'20 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Trấn Thành',98657524,NULL),(4,'IDD 1 Building','111 Lý Chính Thắng','Phường 7','QUAN_4',NULL,1,200,NULL,NULL,12,'12 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET,NGUYEN_CAN,NOI_THAT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Boyka',15478535,NULL),(5,'thong test project','nguyen tan','nam trung','Chọn quận','',10,670,'','',13,'13 triệu/m2','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET','',NULL,NULL,NULL,NULL,'2023-05-09 14:28:38',NULL,'nguyenvana','',NULL,NULL),(6,'Thăng Long Tower','145 nguyễn trãi','Phường 3','QUAN_3',NULL,3,400,NULL,NULL,17,'18 triệu/m2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT,NGUYEN_CAN',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Thầy Huấn',36547821,NULL),(32,'Nam Minh Building Tower','59 phan xích long','Phường 3','QUAN_1','',2,500,'','',15,'15 triệu/m2','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'TANG_TRET,NGUYEN_CAN,NOI_THAT','',NULL,NULL,NULL,'2023-05-08 18:15:01','2023-05-08 18:15:01','nguyenvana','nguyenvana',NULL,NULL,NULL),(33,'test new building','231 truong chinh','nguyen chinh','QUAN_4','ssss',3,299,'','',NULL,'','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,'','TANG_TRET,NGUYEN_CAN','',NULL,NULL,NULL,'2023-05-08 19:21:59','2023-05-08 19:21:59','nguyenvana','nguyenvana',NULL,NULL,NULL),(34,'test0905','nguyen kim','Phường 122','QUAN_2','test ket cau',3,300,'dong nam','vip',NULL,'','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT','ok nhé',NULL,NULL,NULL,'2023-05-09 12:31:21','2023-05-09 12:31:21','nguyenvana','nguyenvana','Thầy giáo Ba',988777666,NULL),(35,'test checked','B','a','QUAN_2','',3,222,'','',NULL,'','',NULL,NULL,'',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'NOI_THAT,NGUYEN_CAN','',NULL,NULL,NULL,NULL,'2023-05-23 22:36:38',NULL,'nguyenvana','Thong',12345,NULL);
 /*!40000 ALTER TABLE `building` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,8 +154,11 @@ CREATE TABLE `customer` (
   `modifieddate` datetime DEFAULT NULL,
   `createdby` varchar(255) DEFAULT NULL,
   `modifiedby` varchar(255) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `requirement` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,6 +167,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (1,'hoangtrrunga','12345 6','thonghihi@gmail.com',NULL,'2023-05-25 15:21:03',NULL,'nguyenvana',NULL,NULL,NULL),(2,'thong đz','46374999','ngueeyen@gmail.com',NULL,'2023-05-25 16:02:02',NULL,'nguyenvana','ggge','ffffe','hie');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,4 +342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-09 15:11:53
+-- Dump completed on 2023-05-25 16:03:09
