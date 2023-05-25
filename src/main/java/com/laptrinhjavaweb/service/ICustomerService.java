@@ -27,9 +27,7 @@ public interface ICustomerService {
 
     CustomerDTO save(CustomerDTO customer);
 
-    void delete(long[] idList);
-
-    List<StaffResponseDTO> finAllStaffByCustomer(Long id);
+    void delete(List<Long> idList);
 
     void assignmentCustomer(AssignmentDTO assignmentDTO);
 

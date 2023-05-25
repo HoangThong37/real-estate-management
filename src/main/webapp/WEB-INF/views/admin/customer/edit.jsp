@@ -97,33 +97,34 @@
         e.preventDefault();
         var data = {};
         var formData = $('#formEdit').serializeArray();
-        var id = ${modelBuildingEdit.id} + '';
+        var id = ${customerEdit.id} + '';
         if(id != '') {
             data["id"] = id;
         }
-        var customerId = data['id'];
-        $.ajax({
+       $.each(formData, function (i, v) {
+           data["" + v.name + ""] = v.value;
+       });
+
+       $.ajax({
             type: "POST",
             url: '${formUrl}',
             data: JSON.stringify(data),
             dataType: "json",               // kiểu dữ liệu server gửi cho client
             contentType: "application/json",//kieu du lieu tu client gui ve server
             success: function (response) {
-                window.location.href = '<c:url value="/admin/building-list" />'
+                window.location.href = '<c:url value="/admin/customer-list" />'
             },
             error: function (response) {
                 alert("error : fail")
                 console.log(response)
             }
-        });
+       });
     })
 
     $("#close").click(function(){
         window.location.href = '<c:url value="/admin/customer-list" />' // thay đổi URL sang trang bạn muốn chuyển đến
         window.close(); // đóng trang hiện tại
     });
-
-
 
 </script>
 </body>

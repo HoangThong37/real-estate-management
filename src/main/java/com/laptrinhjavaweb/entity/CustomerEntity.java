@@ -17,6 +17,17 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "company")
+    private String company;
+
+    @Column(name = "requirement")
+    private String requirement;
+
+    @Column(name = "note")
+    private String note;
+
+
+
     // giao tòa nhà cho nv
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -28,7 +39,32 @@ public class CustomerEntity extends BaseEntity {
     // 1 - n transaction
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "customer_id")
-    private List<TransactionEntity> transactions = new ArrayList<>();
+    private List<TransactionEntity> transactionEntities = new ArrayList<>();
+
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public List<UserEntity> getUserEntities() {
         return userEntities;
@@ -38,12 +74,12 @@ public class CustomerEntity extends BaseEntity {
         this.userEntities = userEntities;
     }
 
-    public List<TransactionEntity> getTransactions() {
-        return transactions;
+    public List<TransactionEntity> getTransactionEntities() {
+        return transactionEntities;
     }
 
-    public void setTransactions(List<TransactionEntity> transactions) {
-        this.transactions = transactions;
+    public void setTransactionEntities(List<TransactionEntity> transactionEntities) {
+        this.transactionEntities = transactionEntities;
     }
 
     public String getFullName() {

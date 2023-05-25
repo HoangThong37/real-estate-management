@@ -36,7 +36,7 @@ public class UserEntity extends BaseEntity {
 
     // user - customer
     @ManyToMany(mappedBy = "userEntities")
-    private List<CustomerEntity> customerEntities;
+    private List<CustomerEntity> customer;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
@@ -52,12 +52,12 @@ public class UserEntity extends BaseEntity {
         this.buildingEntities = buildingEntities;
     }
 
-    public List<CustomerEntity> getCustomerEntities() {
-        return customerEntities;
+    public List<CustomerEntity> getCustomer() {
+        return customer;
     }
 
-    public void setCustomerEntities(List<CustomerEntity> customerEntities) {
-        this.customerEntities = customerEntities;
+    public void setCustomer(List<CustomerEntity> customer) {
+        this.customer = customer;
     }
 
     public List<RoleEntity> getRoles() {

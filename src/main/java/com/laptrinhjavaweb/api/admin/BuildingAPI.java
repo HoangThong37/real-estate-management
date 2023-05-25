@@ -29,13 +29,6 @@ public class BuildingAPI {
         return userService.finAllStaffByBuilding(id);
     }
 
-    // assigment building to staff
-/*    @PostMapping("/{id}/assignment")
-    public Long assignmentBuilding(@RequestBody(required = false) List<Long> staffIds
-                                        ,@PathVariable("id") Long buildingId) {
-        buildingService.assignmentBuilding(staffIds, buildingId);
-        return buildingId;
-    }*/
 
     @PostMapping("/assignment")
     public Long assignmentBuilding(@RequestBody(required = false) AssignmentDTO assignmentDTO) {

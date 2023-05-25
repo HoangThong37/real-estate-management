@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.repository;
 
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.CustomerEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.custom.UserRepositoryCustom;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,10 @@ public interface UserRepository extends UserRepositoryCustom, JpaRepository<User
     // getAllStaffByBuilding
     //List<UserEntity> findUserEntitiesByBuildingEntities(BuildingEntity buildingEntity);
     List<UserEntity> findByBuildingEntities(BuildingEntity buildingEntity);
+
+    List<UserEntity> findByCustomer_Id(Long id);
+
+
 
 
 

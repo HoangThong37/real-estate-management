@@ -101,6 +101,25 @@
                 }
             });
         }
+
+        function showAlertBeforeDeleteCustomer(callback) {
+            swal({
+                title: "Xác nhận xóa",
+                text: "Bạn có chắc chắn xóa những customer đã chọn",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy bỏ",
+                confirmButtonClass: "btn btn-success",
+                cancelButtonClass: "btn btn-danger"
+            }).then(function (res) {
+                if(res.value){
+                    callback();
+                }else if(res.dismiss == 'cancel'){
+                    console.log('cancel');
+                }
+            });
+        }
 	</script>
 </body>
 </html>

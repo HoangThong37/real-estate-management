@@ -6,7 +6,7 @@ public class CustomerResponse extends AbstractDTO {
 
     private String fullName;        // tên kh
     private String staffName;       // nv quản lí
-    private String phone;          // phone staff
+    private String phone;           // phone staff
     private String email;           // email
     private String requirement;
     private String status;          // tình trạng

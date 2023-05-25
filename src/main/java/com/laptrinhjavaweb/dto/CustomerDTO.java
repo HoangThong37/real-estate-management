@@ -1,5 +1,7 @@
 package com.laptrinhjavaweb.dto;
 
+import java.util.List;
+
 public class CustomerDTO extends AbstractDTO {
 
     private String fullName;
@@ -8,7 +10,8 @@ public class CustomerDTO extends AbstractDTO {
     private String note;
     private String requirement;
     private String company;
-
+    private List<UserDTO> userDTOS;
+   // private List<Transaction> userDTOS;
 
     public String getFullName() {
         return fullName;

@@ -272,7 +272,7 @@
             }
         });
 
-        var buildingId = data['id'];
+        //var buildingId = data['id'];
         data["types"] = types;
         $('#loading_image').show();
 

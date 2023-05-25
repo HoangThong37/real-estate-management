@@ -30,4 +30,6 @@ public interface IUserService {
 
     List<UserDTO> getAllUsers(Pageable pageable);
     int countTotalItems();
+
+    List<StaffResponseDTO> finAllStaffByCustomer(Long id);
 }

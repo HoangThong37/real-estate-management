@@ -42,7 +42,6 @@
                     <div class="widget-body">
                         <div class="widget-main">
                             <form:form modelAttribute="customerSearch" action="${customerListUrl}" id="listForm" method="GET">
-                            <%--<form:form commandName="modelSearch" action="${buildingListURL}" id="listForm" method="GET">--%>
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-xs-12 ">
@@ -106,7 +105,7 @@
                     <div class="pull-right">
                         <button class="btn btn-white btn-info btn-bold" data-toggle="tooltip"
                                 title="Thêm khách hàng"
-                                onclick="window.location.href='<c:url value="/admin/customer-list"/>'">
+                                onclick="window.location.href='<c:url value="/admin/customer-edit"/>'">
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -140,7 +139,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="table-responsive">
-                        <display:table name="modelSearch.listResult" cellspacing="0" cellpadding="0"
+                        <display:table name="customerSearch.listResult" cellspacing="0" cellpadding="0"
                                        requestURI="${customerListUrl}" partialList="true" sort="external"
                                        size="${customerSearch.totalItems}" defaultsort="2" defaultorder="ascending"
                                        id="tableList" pagesize="${customerSearch.maxPageItems}"
@@ -183,31 +182,17 @@
                                         onclick="warningDeleteOne(value)">
                                     <i class="fa fa-remove" aria-hidden="true"></i>
                                 </button>
-
-                                <%--</c:if>--%>
-                                <%--<c:if test="${tableList.roleCode != 'ADMIN'}">
-                                    <a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-                                       title="Cập nhật người dùng"
-                                       href='<c:url value="/admin/user-edit-${tableList.id}"/>'>
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                    </a>
-                                </c:if>
-                                <c:if test="${tableList.roleCode == 'ADMIN'}">
-                                    <p>Không đươc thao tác</p>
-                                </c:if>--%>
                             </display:column>
                         </display:table>
                     </div>
                 </div>
             </div>
-
-
         </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-content -->
 <!-- Modal -->
 
-<div id="assignmentBuildingModal" class="modal fade" role="dialog">
+<div id="assignmentCustomerModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -236,32 +221,28 @@
                 </form>
             </div>
             <div class="modal-footer">'
-                <button type="button" id="assignment" class="btn btn-default" data-dismiss="modal">Giao Toà Nhà</button>
+                <button type="button" id="assignment" class="btn btn-default" data-dismiss="modal">Giao khách hàng</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 <script> // danh sách nhân viên - bấm vào checkbox - hiển thị all
-/*
-    var buildingid;
-    function assignmentBuilding(value) {
-        buildingid = value;
-            // loadStaffAssign(value); // load nhân viên quản lí building
-            // function này sẽ call 1 api về từ dưới db - nó sẽ load dsach nv lên -> sử dụng ajax
+
+    var customerId;
+    function assignmentCustomer(value) {
+        customerId = value;
             $.ajax({
                 type: "GET",
-                url: "<c:url value='/api/building'/>" + '/' + value + '/staff',
-                //data: JSON.stringify(data),  // data gửi về
-                dataType: "json",              // kiểu dữ liệu gửi từ server
+                url: "<c:url value='/api/customer'/>" + '/' + value + '/staff',
+                dataType: "json",                  // kiểu dữ liệu gửi từ server
                 contentType: "application/json",   // gửi từ server
 
                 success: function (response) {
-                    // data : chính là cục chứa data của tk staffListDTO
-                    var arrBuilding  = response;
+                    var arrCustomer  = response;
                     var row = '';
                     $("#dsnv").empty();
-                    arrBuilding.forEach(function(item) {
+                    arrCustomer.forEach(function(item) {
                         var row = '<tr>'
                                      +  '<td class=text-center>' +
                                            '<input type="checkbox" ' + item.checked + ' name="checkStaffs[]" value="' + item.id  + '" />'
@@ -276,10 +257,10 @@
                     console.log(response)
                 }
             });
-        openModalAssignmentBuilding();
+        openModalAssignmentCustomer();
     }
 
-     /!* Giao Toà Nhà *!/
+     /!* Giao Khách hàng *!/
     $("#assignment").click(function (e) {
         e.preventDefault();
         var values = [];
@@ -290,15 +271,14 @@
             values.push($(this).val());
         });
         data["staffIds"] = values;
-        data["buildingid"] = buildingid;
+        data["customerId"] = customerId;
 
         $.ajax({
             type: "POST",
-            /!*url: '<c:url value="/api/building"/>' + '/' + buildingid + '/assignment',*!/
-            url: '<c:url value="/api/building/assignment"/>',
+            url: '<c:url value="/api/customer/assignment"/>',
             data: JSON.stringify(data),
-            dataType: "json",               //kieu du lieu tu server tra ve client
-            contentType: "application/json",//kieu du lieu tu client gui ve server
+            dataType: "json",
+            contentType: "application/json",
             success: function (response) {
                 console.log("success");
                 window.location.reload();
@@ -311,8 +291,8 @@
     })
 
 
-    function openModalAssignmentBuilding() {
-        $('#assignmentBuildingModal').modal();
+    function openModalAssignmentCustomer() {
+        $('#assignmentCustomerModal').modal();
     }
 
 
@@ -322,13 +302,8 @@
     })
 
 
-    // $("#xoaBuilding").click(function (e) {
-    //     e.preventDefault();
-    //     $("#myModal").modal();
-    // })
-
-    function editBuilding(value) {
-        window.location.href = '<c:url value="/admin/building-edit" />' + '?buildingid=' + value;
+    function editCustomer(value) {
+        window.location.href = '<c:url value="/admin/customer-edit" />' + '?customerId=' + value;
     }
 
     var valueType = ${modelSearch.types} + '';
@@ -338,15 +313,10 @@
         });
     }
 
-    // function deleteOneBuilding(value) {
-    //     //idOne = value;
-    //     //$("#myModal").modal();
-    //     warningDelete();
-    // }
 
-    $('#selectAll').change(function() {
+/*    $('#selectAll').change(function() {
         $('input[name="checkBuildings[]"]').prop('checked', this.checked);
-    });
+    });*/
 
     // id : selectAll2 -> checkbox - staff
     $("#selectAll2").click(function () {
@@ -354,31 +324,28 @@
     })
 
 
-
- /!* update delete new *!/
     function warningDelete() {
-        showAlertBeforeDeleteBuilding(function () {
+        showAlertBeforeDeleteCustomer(function () {
             event.preventDefault();
             var dataArray = $('tbody input[type=checkbox]:checked').map(function () {
                 return $(this).val();
             }).get();
-            //console.log("Result : " + data);
-            deleteBuilding(dataArray);
+            deleteCustomer(dataArray);
         });
     }
 
     function warningDeleteOne(data) {
-        showAlertBeforeDeleteBuilding(function () {
+        showAlertBeforeDeleteCustomer(function () {
             event.preventDefault();
             var dataArray  = [];
             if (data != null) {
                 dataArray.push(data);
             }
-            deleteBuilding(dataArray);
+            deleteCustomer(dataArray);
         });
     }
 
-    function deleteBuilding(data) {
+    function deleteCustomer(data) {
         $.ajax({
             url: '<c:url value="/api/building"/>',
             type: 'DELETE',
@@ -394,34 +361,6 @@
             }
         });
     }
-
-    // delete old
-    var idOne;
-    $("#btnXoa").click(function (e) {
-        e.preventDefault();
-        var values = [];
-        if (idOne != null)
-            values.push(idOne);
-        $.each($("input[name='checkBuildings[]']:checked"), function () {
-            values.push($(this).val());
-        });
-        var data = {};
-        data["buildingId"] = values;
-        $.ajax({
-            type: "DELETE",
-            url: '<c:url value="/api/building"/>',
-            data:JSON.stringify(data),
-            dataType: "json",//kieu du lieu tu server tra ve client
-            contentType: "application/json",//kieu du lieu tu client gui ve server
-            success: function (response) {
-                window.location.reload();
-            },
-            error: function (response) {
-                alert("fail")
-                console.log(response)
-            }
-        });
-    })*/
 </script>
 </body>
 </html>

@@ -6,10 +6,12 @@ import com.laptrinhjavaweb.dto.PasswordDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.CustomerEntity;
 import com.laptrinhjavaweb.entity.RoleEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.BuildingRepository;
+import com.laptrinhjavaweb.repository.CustomerRepository;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IUserService;
@@ -35,8 +37,8 @@ public class UserService implements IUserService {
     @Autowired
     private BuildingRepository buildingRepository;
 
-//    @Autowired
-//    private AssignmentBuildingRepository assignmentRepo;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -204,4 +206,10 @@ public class UserService implements IUserService {
         return userRepository.countTotalItem();
     }
 
+    @Override
+    public List<StaffResponseDTO> finAllStaffByCustomer(Long id) {
+        CustomerEntity customerEntity = customerRepository.findById(id).get();
+        List<UserEntity> listUser = userRepository.findByCustomer_Id(customerEntity.getId());
+        return userConverter.convertToStaffResponse(listUser);
+    }
 }
