@@ -29,7 +29,7 @@ public interface ICustomerService {
 
     void delete(List<Long> idList);
 
-    void assignmentCustomer(AssignmentDTO assignmentDTO);
+    void assignmentCustomer(AssignmentDTO assignmentDTO) throws NotFoundException;
 
     CustomerDTO findById(Long id);
 }

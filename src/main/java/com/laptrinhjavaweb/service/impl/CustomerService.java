@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.buider.CustomerSearchBuilder;
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.converter.CustomerConverter;
 import com.laptrinhjavaweb.dto.AssignmentDTO;
 import com.laptrinhjavaweb.dto.CustomerDTO;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -102,14 +104,23 @@ public class CustomerService implements ICustomerService {
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		}
+	}
 
+	@Override
+	// sử dụng java 8
+	public void assignmentCustomer(AssignmentDTO assignmentDTO) throws NotFoundException {
+		CustomerEntity customer = Optional.ofNullable(customerRepository.findById(assignmentDTO.getCustomerId()).get())
+				                          .orElseThrow(() -> new NotFoundException(SystemConstant.CUSTOMER_NF));
 
+		customer.setUserEntities(Optional.ofNullable(userRepository.findAllById(assignmentDTO.getStaffIds()))
+				                 .orElseThrow(() -> new NotFoundException(SystemConstant.CUSTOMER_NF)));
+		customerRepository.save(customer);
 	}
 
 	// Sử dụng java 7 - task: giao khách hàng cho nhân viên quản lí
-	@Override
+	// test ok !
+/*	@Override
 	public void assignmentCustomer(AssignmentDTO assignmentDTO)  {
-
 		try {
 			if (assignmentDTO.getCustomerId() != null) {
 				CustomerEntity customerEntity = customerRepository.findById(assignmentDTO.getCustomerId()).get();
@@ -120,7 +131,7 @@ public class CustomerService implements ICustomerService {
 			e.printStackTrace();
 			System.out.println("Error assignmentBuilding service");
 		}
-	}
+	}*/
 
 	@Override
 	public CustomerDTO findById(Long id) {

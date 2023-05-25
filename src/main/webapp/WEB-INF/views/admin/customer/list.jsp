@@ -347,17 +347,17 @@
 
     function deleteCustomer(data) {
         $.ajax({
-            url: '<c:url value="/api/building"/>',
+            url: '<c:url value="/api/customer"/>',
             type: 'DELETE',
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function (res) {
-                window.location.href = "<c:url value='/admin/building-list?message=delete_success'/>";
+                window.location.href = "<c:url value='/admin/customer-list?message=delete_success'/>";
             },
             error: function (res) {
                 console.log(res);
-                window.location.href = "<c:url value='/admin/building-list?message=error_system'/>";
+                window.location.href = "<c:url value='/admin/customer-list?message=error_system'/>";
             }
         });
     }

@@ -40,7 +40,6 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
     private String avatar;
     private Integer managerPhone;
     private String managerName;
-
     private String image;    // field map entity
     private String imageBase64; // xử lí ảnh
     private String imageName;   // name image
