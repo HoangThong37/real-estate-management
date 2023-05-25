@@ -5,7 +5,7 @@
 <c:url var="formUrl" value="/api/customer"/>
 <html>
 <head>
-    <title>Chỉnh sửa người dùng</title>
+    <title>CHI TIẾT KHÁCH HÀNG</title>
 </head>
 <body>
 <div class="main-content">
@@ -28,7 +28,6 @@
             <div class="row">
                 <div class="col-xs-12">
                     <form:form modelAttribute="customerEdit" action="${customerEditURL}" cssClass="form-horizontal" id="formEdit" method="get">
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label no-padding-right"> Tên đầy đủ </label>
                             <div class="col-sm-8">
@@ -87,12 +86,49 @@
                     </form:form>
                 </div>
             </div><!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <c:forEach var="item" items="${customerEdit.transactionTypes}">
+                        <div class="row">
+                            <div>
+                                <div>
+                                    <h4>${item.transactionName}</h4>
+                                </div>
+                                <button class="btn btn-white btn-info btn-bold"
+                                        data-toggle="tooltip"
+                                        title="Thêm giao dịch" onclick="btnAddTransaction(value)">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Ngày tạo</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                    </thead>
+                                    <c:forEach var="val" items="${item.transactions}">
+                                        <tbody>
+                                        <tr>
+                                            <td>${val.createDate}</td>
+                                            <td>${val.note}</td>
+                                        </tr>
+                                        </tbody>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
         </div> <!--page-content -->
     </div>
 </div><!-- /.main-content -->
 
-<script>
 
+<script>
    $('#btnEditCustomer').click(function (e) {
         e.preventDefault();
         var data = {};

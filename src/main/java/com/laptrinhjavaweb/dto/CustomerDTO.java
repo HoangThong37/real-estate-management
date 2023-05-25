@@ -1,5 +1,8 @@
 package com.laptrinhjavaweb.dto;
 
+import com.laptrinhjavaweb.dto.response.TransactionTypesResponse;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDTO extends AbstractDTO {
@@ -11,7 +14,16 @@ public class CustomerDTO extends AbstractDTO {
     private String requirement;
     private String company;
     private List<UserDTO> userDTOS;
-   // private List<Transaction> userDTOS;
+
+    private List<TransactionTypesResponse> transactionTypes = new ArrayList<>();  // khách hàng có nhiều giao dịch
+
+    public List<TransactionTypesResponse> getTransactionTypes() {
+        return transactionTypes;
+    }
+
+    public void setTransactionTypes(List<TransactionTypesResponse> transactionTypes) {
+        this.transactionTypes = transactionTypes;
+    }
 
     public String getFullName() {
         return fullName;

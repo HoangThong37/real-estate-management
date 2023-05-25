@@ -94,7 +94,7 @@
                         DS khách hàng
                     </a>
 
-                    <a href='<c:url value='/admin/user-edit'/>'>
+                    <a href='<c:url value='/admin/customer-edit'/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Chỉnh sửa khách hàng
                     </a>
