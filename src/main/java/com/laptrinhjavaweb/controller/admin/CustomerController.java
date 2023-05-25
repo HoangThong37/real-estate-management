@@ -1,5 +1,6 @@
 package com.laptrinhjavaweb.controller.admin;
 
+import com.laptrinhjavaweb.dto.CustomerDTO;
 import com.laptrinhjavaweb.dto.request.CustomerRequest;
 import com.laptrinhjavaweb.dto.response.CustomerResponse;
 import com.laptrinhjavaweb.service.ICustomerService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class CustomerController {
     private IUserService userService;
 
     @GetMapping("/customer-list")
-    public ModelAndView buildingList(HttpServletRequest request,
+    public ModelAndView customerList(HttpServletRequest request,
                                      @ModelAttribute("customerSearch") CustomerRequest customerRequest) {
         try {
             ModelAndView mav = new ModelAndView("admin/customer/list");
@@ -46,5 +48,19 @@ public class CustomerController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping("/customer-edit")
+    public ModelAndView customerEdit(@RequestParam(name = "customerId", required = false) Long customerId) {
+        ModelAndView mav = new ModelAndView("admin/customer/edit");
+
+        if (customerId == null) {
+            mav.addObject("customerEdit", new CustomerDTO());
+            mav.addObject("staffs", userService.getAllStaff());  // userService.getAllStaff()
+        } else { // id
+            mav.addObject("customerEdit", customerService.findCustomerById(customerId));
+            mav.addObject("staffs", userService.getAllStaff());  // userService.getAllSta
+        }
+        return mav;
     }
 }

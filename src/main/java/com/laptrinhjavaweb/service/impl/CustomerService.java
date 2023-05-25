@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.service.impl;
 
 import com.laptrinhjavaweb.buider.CustomerSearchBuilder;
 import com.laptrinhjavaweb.converter.CustomerConverter;
+import com.laptrinhjavaweb.dto.CustomerDTO;
 import com.laptrinhjavaweb.dto.request.CustomerRequest;
 import com.laptrinhjavaweb.dto.response.CustomerResponse;
 import com.laptrinhjavaweb.entity.CustomerEntity;
@@ -51,5 +52,15 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public int getTotalItems() {
 		return customerRepository.countAllByCustomer();
+	}
+
+	@Override
+	public CustomerDTO findCustomerById(Long id) {
+		if (id != null) {
+			CustomerEntity customerEntity = customerRepository.findById(id).get();
+
+			return customerConverter.convertToDto(customerEntity);
+	     }
+	     return null;
 	}
 }
