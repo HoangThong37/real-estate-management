@@ -82,8 +82,8 @@ public class CustomerService implements ICustomerService {
 			customerEntity.setUserEntities(customerId.getUserEntities());
 			customerEntity.setTransactionEntities(customerId.getTransactionEntities());
 		}
-
-		return customerConverter.convertToDto(customerRepository.save(customerEntity));
+		CustomerEntity entity = customerRepository.save(customerEntity);
+		return customerConverter.convertToDto(entity);
 	}
 
 	@Override
@@ -144,4 +144,5 @@ public class CustomerService implements ICustomerService {
 		}
 		return result;
 	}
+
 }

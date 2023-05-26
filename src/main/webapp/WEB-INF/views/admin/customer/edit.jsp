@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="customerEditURL" value="/admin/customer-edit"/>
+<c:url var="formUrl" value="/api/customer"/>
 <c:url var="customerApiTrans" value="/api/customer/transaction" />
 
 <html>
@@ -139,10 +140,12 @@
                                         </thead>
                                         <tbody>
                                             <c:forEach var="value" items="${findTransactionByCustomer}">
-                                                <tr>
-                                                   <td>${value.createdDate}</td>
-                                                   <td>${value.note}</td>
-                                                </tr>
+                                                <c:if test="${item.key == value.code}" >
+                                                    <tr>
+                                                        <td>${value.createdDate}</td>
+                                                        <td>${value.note}</td>
+                                                    </tr>
+                                                </c:if>
                                             </c:forEach>
                                         </tbody>
                                         <tfoot>
@@ -188,7 +191,6 @@
             }
         });
     }
-
 
    $('#btnEditCustomer').click(function (e) {
         e.preventDefault();

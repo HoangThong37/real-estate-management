@@ -13,8 +13,7 @@ public class CustomerDTO extends AbstractDTO {
     private String note;
     private String requirement;
     private String company;
-    private List<UserDTO> userDTOS;
-
+    // private List<UserDTO> userDTOS;
     private List<TransactionTypesResponse> transactionTypes = new ArrayList<>();  // khách hàng có nhiều giao dịch
 
     public List<TransactionTypesResponse> getTransactionTypes() {

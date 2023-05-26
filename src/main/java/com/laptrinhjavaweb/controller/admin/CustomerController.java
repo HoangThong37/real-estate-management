@@ -62,8 +62,8 @@ public class CustomerController {
             mav.addObject("customerEdit", new CustomerDTO());
             mav.addObject("staffs", userService.getAllStaff());  // userService.getAllStaff()
             mav.addObject("transactionMap", customerService.transactions());
-            mav.addObject("findTransactionByCustomer", transactionService.findAllTransaction());
-        } else { // id
+            //mav.addObject("findTransactionByCustomer", transactionService.findAllTransaction());
+        } else {
             mav.addObject("customerEdit", customerService.findCustomerById(customerId));
             mav.addObject("staffs", userService.getAllStaff());  // userService.getAllSta
             mav.addObject("transactionMap", customerService.transactions());

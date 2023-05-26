@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -23,6 +23,7 @@ public class TransactionService implements ITransactionService {
 	@Autowired
 	private TransactionConverter transactionConverter;
 
+	// apply java 8
 	@Override
 	@Transactional
 	public TransactionDTO save(TransactionDTO transactionDTO) throws NotFoundException {
@@ -30,7 +31,32 @@ public class TransactionService implements ITransactionService {
         if (transaction != null) {
         	transactionRepo.save(transaction);
 		}
-		return  transactionConverter.convertToDTO(transaction);
+		return transactionConverter.convertToDTO2(transaction);
+	}
+
+    @Override
+	public List<TransactionDTO> findTransactionByCustomer(Long customerId) {
+		List<TransactionEntity> listTransaction = transactionRepo.findByCustomer_Id(customerId);
+		return listTransaction.stream()
+				              .map(transactionConverter::convertToDTO)
+				              .collect(Collectors.toList());
+	}
+
+	@Override
+	public List<TransactionDTO> findAllTransaction() {
+		return transactionRepo.findAll().stream()
+				.map(transactionConverter::convertToDTO)
+				.collect(Collectors.toList());
+	}
+
+/*	@Override
+	public List<TransactionDTO> findAllTransaction() {
+		 List<TransactionDTO> transactionDTOS = new ArrayList<>();
+		 List<TransactionEntity> transactions = transactionRepo.findAll();
+		 for (TransactionEntity item : transactions) {
+			 transactionDTOS.add(transactionConverter.convertToDTO(item));
+		 }
+		return transactionDTOS;
 	}
 
 	@Override
@@ -44,15 +70,7 @@ public class TransactionService implements ITransactionService {
 		}
 		return transactionDTO;
 	}
+*/
 
-	@Override
-	public List<TransactionDTO> findAllTransaction() {
-		 List<TransactionDTO> transactionDTOS = new ArrayList<>();
-		 List<TransactionEntity> transactions = transactionRepo.findAll();
-		 for (TransactionEntity item : transactions) {
-			 transactionDTOS.add(transactionConverter.convertToDTO(item));
-		 }
-		return transactionDTOS;
-	}
 
 }

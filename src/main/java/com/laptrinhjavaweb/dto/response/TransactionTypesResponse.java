@@ -8,9 +8,9 @@ import java.util.List;
 public class TransactionTypesResponse extends AbstractDTO {
 
     private String code;
-    private String transactionName;
-
+    private String transactionName; // tên giao dịch
     private List<TransactionResponse> transactions = new ArrayList<>(); // loại giao dịch
+
 
     public List<TransactionResponse> getTransactions() {
         return transactions;
