@@ -13,6 +13,7 @@ import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import javassist.NotFoundException;
 import org.springframework.data.domain.Pageable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,4 +33,8 @@ public interface ICustomerService {
     void assignmentCustomer(AssignmentDTO assignmentDTO) throws NotFoundException;
 
     CustomerDTO findById(Long id);
+
+    Map<String, String> transactions();
+
+
 }

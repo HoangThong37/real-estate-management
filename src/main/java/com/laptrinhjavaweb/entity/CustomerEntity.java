@@ -26,8 +26,6 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "note")
     private String note;
 
-
-
     // giao tòa nhà cho nv
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -37,9 +35,13 @@ public class CustomerEntity extends BaseEntity {
     private List<UserEntity> userEntities = new ArrayList<>();
 
     // 1 - n transaction
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    @JoinColumn(name = "customer_id")
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "customer_id")
+//    private List<TransactionEntity> transactionEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<TransactionEntity> transactionEntities = new ArrayList<>();
+
 
 
     public String getCompany() {

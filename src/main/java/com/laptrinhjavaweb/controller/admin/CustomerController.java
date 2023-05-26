@@ -4,6 +4,7 @@ import com.laptrinhjavaweb.dto.CustomerDTO;
 import com.laptrinhjavaweb.dto.request.CustomerRequest;
 import com.laptrinhjavaweb.dto.response.CustomerResponse;
 import com.laptrinhjavaweb.service.ICustomerService;
+import com.laptrinhjavaweb.service.ITransactionService;
 import com.laptrinhjavaweb.service.IUserService;
 import com.laptrinhjavaweb.utils.DisplayTagUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
+
+    @Autowired
+    private ITransactionService transactionService;
 
     @Autowired
     private IUserService userService;
@@ -57,9 +61,14 @@ public class CustomerController {
         if (customerId == null) {
             mav.addObject("customerEdit", new CustomerDTO());
             mav.addObject("staffs", userService.getAllStaff());  // userService.getAllStaff()
+            mav.addObject("transactionMap", customerService.transactions());
+            mav.addObject("findTransactionByCustomer", transactionService.findAllTransaction());
         } else { // id
             mav.addObject("customerEdit", customerService.findCustomerById(customerId));
             mav.addObject("staffs", userService.getAllStaff());  // userService.getAllSta
+            mav.addObject("transactionMap", customerService.transactions());
+            mav.addObject("findTransactionByCustomer", transactionService.findTransactionByCustomer(customerId));
+            // get transaction to customer
         }
         return mav;
     }

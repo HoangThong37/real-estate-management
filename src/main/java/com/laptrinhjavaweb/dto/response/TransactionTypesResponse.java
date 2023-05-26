@@ -7,6 +7,7 @@ import java.util.List;
 
 public class TransactionTypesResponse extends AbstractDTO {
 
+    private String code;
     private String transactionName;
 
     private List<TransactionResponse> transactions = new ArrayList<>(); // loại giao dịch
@@ -25,5 +26,13 @@ public class TransactionTypesResponse extends AbstractDTO {
 
     public void setTransactionName(String transactionName) {
         this.transactionName = transactionName;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

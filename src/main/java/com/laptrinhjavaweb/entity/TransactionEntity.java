@@ -16,8 +16,8 @@ public class TransactionEntity extends BaseEntity {
     private String staffId;
 
     // manytoone - 1 customer
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
     private CustomerEntity customer;
 
 

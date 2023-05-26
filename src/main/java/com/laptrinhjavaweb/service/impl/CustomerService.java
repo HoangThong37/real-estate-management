@@ -8,6 +8,7 @@ import com.laptrinhjavaweb.dto.CustomerDTO;
 import com.laptrinhjavaweb.dto.request.CustomerRequest;
 import com.laptrinhjavaweb.dto.response.CustomerResponse;
 import com.laptrinhjavaweb.entity.CustomerEntity;
+import com.laptrinhjavaweb.enums.TransactionsEnum;
 import com.laptrinhjavaweb.repository.CustomerRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.ICustomerService;
@@ -17,9 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CustomerService implements ICustomerService {
@@ -67,7 +66,6 @@ public class CustomerService implements ICustomerService {
 	public CustomerDTO findCustomerById(Long id) {
 		if (id != null) {
 			CustomerEntity customerEntity = customerRepository.findById(id).get();
-
 			return customerConverter.convertToDto(customerEntity);
 	     }
 	     return null;
@@ -136,5 +134,14 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public CustomerDTO findById(Long id) {
 		return id != null ? customerConverter.convertToDto(customerRepository.findById(id).get()) : null;
+	}
+
+	@Override
+	public Map<String, String> transactions() {
+		Map<String, String> result = new HashMap<>();
+		for (TransactionsEnum transaction : TransactionsEnum.values()) {
+			result.put(transaction.toString(), transaction.getTransactionTypeValue());
+		}
+		return result;
 	}
 }

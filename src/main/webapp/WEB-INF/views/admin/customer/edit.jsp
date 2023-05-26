@@ -1,8 +1,8 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="/common/taglib.jsp" %>
 <c:url var="customerEditURL" value="/admin/customer-edit"/>
-<c:url var="formUrl" value="/api/customer"/>
+<c:url var="customerApiTrans" value="/api/customer/transaction" />
+
 <html>
 <head>
     <title>CHI TIẾT KHÁCH HÀNG</title>
@@ -28,50 +28,51 @@
             <div class="row">
                 <div class="col-xs-12">
                     <form:form modelAttribute="customerEdit" action="${customerEditURL}" cssClass="form-horizontal" id="formEdit" method="get">
+
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right"> Tên đầy đủ </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-3"> Tên đầy đủ </label>
+                            <div class="col-sm-9">
                                 <form:input path="fullName" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right"> Số điện thoại </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-3"> Số điện thoại </label>
+                            <div class="col-sm-9">
                                 <form:input path="phone" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right"> Email </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-3"> Email </label>
+                            <div class="col-sm-9">
                                 <form:input path="email" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right"> Tên công ty </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-3"> Tên công ty </label>
+                            <div class="col-sm-9">
                                 <form:input path="company" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right"> Nhu cầu </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-3"> Nhu cầu </label>
+                            <div class="col-sm-9">
                                 <form:input path="requirement" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right"> Ghi chú </label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-3"> Ghi chú </label>
+                            <div class="col-sm-9">
                                 <form:input path="note" cssClass="form-control"/>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-1 control-label no-padding-right"></label>
+                            <label class="col-sm-3 control-label no-padding-right"></label>
                             <div class="col-sm-8 text-center">
                                 <c:if test="${customerEdit.id == null}" >
                                     <button type="button" class="btn btn-success" id="btnEditCustomer">Thêm Khách hàng</button>
@@ -86,38 +87,73 @@
                     </form:form>
                 </div>
             </div><!-- /.row -->
-
+            </br>
             <div class="row">
                 <div class="col-md-12">
-                    <c:forEach var="item" items="${customerEdit.transactionTypes}">
-                        <div class="row">
-                            <div>
-                                <div>
-                                    <h4>${item.transactionName}</h4>
+                    <c:forEach var="item" items="${transactionMap}">
+ <%--                       <div class="page-header">
+                            <c:if test="${not empty customerEdit.id}">
+                                <div class="col-md-2">
+                                    <h1>${item.value}</h1>
                                 </div>
-                                <button class="btn btn-white btn-info btn-bold"
-                                        data-toggle="tooltip"
-                                        title="Thêm giao dịch" onclick="btnAddTransaction(value)">
-                                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                </button>
-                            </div>
+                                <div class="col-md-10">
+                                    <button class="btn btn-white btn-info btn-bold"
+                                            type="button"
+                                            value="${item.key}"
+                                            data-toggle="tooltip" title="Thêm Giao Dịch"
+                                            onclick="btnAddTransaction(value)">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </c:if>
+
+                            <c:if test="${empty customerEdit.id}">
+                                <h1>${item.value}</h1>
+                            </c:if>
+                        </div>--%>
+                        <div>
                             <div>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>Ngày tạo</th>
-                                        <th>Ghi chú</th>
-                                    </tr>
-                                    </thead>
-                                    <c:forEach var="val" items="${item.transactions}">
+                                <div class="col-md-2">
+                                    <h4 style="color: darkred">${item.value}</h4>
+                                </div>
+                                <div class="col-md-10">
+                                    <button class="btn btn-white btn-info btn-bold"
+                                            data-toggle="tooltip"
+                                            title="Thêm giao dịch"
+                                            value="${item.key}" onclick="btnAddTransaction(value)">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Ngày Tạo</th>
+                                                <th>Ghi Chú</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>${val.createDate}</td>
-                                            <td>${val.note}</td>
-                                        </tr>
+                                            <c:forEach var="value" items="${findTransactionByCustomer}">
+                                                <tr>
+                                                   <td>${value.createdDate}</td>
+                                                   <td>${value.note}</td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
-                                    </c:forEach>
-                                </table>
+                                        <tfoot>
+                                            <tr>
+                                                <td></td>
+                                                <td><input type="text" id="note${item.key}"
+                                                           class="form-control" name="${item.key}"></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
@@ -129,6 +165,31 @@
 
 
 <script>
+
+    function btnAddTransaction(value) {
+        var data = {
+            "code" : value,
+            "note" : $("#note" + value + "").val(),
+            "customerId" : "${customerEdit.id}"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '${customerApiTrans}',
+            data: JSON.stringify(data),
+            dataType: "json",                // kiểu dữ liệu server gửi cho client
+            contentType: "application/json", //kieu du lieu tu client gui ve server
+            success: function (response) {
+                window.location.reload()
+            },
+            error: function (response) {
+                alert("error : fail")
+                console.log(response)
+            }
+        });
+    }
+
+
    $('#btnEditCustomer').click(function (e) {
         e.preventDefault();
         var data = {};

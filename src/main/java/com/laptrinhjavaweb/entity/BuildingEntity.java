@@ -116,6 +116,7 @@ public class BuildingEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "user_id", nullable = false))
     private List<UserEntity> userEntities = new ArrayList<>();
 
+
     public List<RentareaEntity> getRentareas() {
         return rentareas;
     }

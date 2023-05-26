@@ -1,8 +1,10 @@
 package com.laptrinhjavaweb.api.admin;
 import com.laptrinhjavaweb.dto.AssignmentDTO;
 import com.laptrinhjavaweb.dto.CustomerDTO;
+import com.laptrinhjavaweb.dto.TransactionDTO;
 import com.laptrinhjavaweb.dto.response.StaffResponseDTO;
 import com.laptrinhjavaweb.service.ICustomerService;
+import com.laptrinhjavaweb.service.ITransactionService;
 import com.laptrinhjavaweb.service.IUserService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class CustomerAPI {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ITransactionService transactionService;
 
     // create, update
     @PostMapping
@@ -51,5 +56,10 @@ public class CustomerAPI {
     public Long assignmentBuilding(@RequestBody(required = false) AssignmentDTO assignmentDTO) throws NotFoundException {
         customerService.assignmentCustomer(assignmentDTO);
         return assignmentDTO.getCustomerId();
+    }
+
+    @PostMapping("/transaction")
+    private TransactionDTO saveTransaction(@RequestBody TransactionDTO transaction) throws NotFoundException {
+        return transactionService.save(transaction);
     }
 }
