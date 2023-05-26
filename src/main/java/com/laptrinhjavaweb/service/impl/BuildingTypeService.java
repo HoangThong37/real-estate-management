@@ -6,8 +6,8 @@ import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.service.IBuildingTypeService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BuildingTypeService implements IBuildingTypeService {
@@ -24,9 +24,25 @@ public class BuildingTypeService implements IBuildingTypeService {
         return result;
     }
 
+    // apply java 8
     @Override
     public List<BuildingTypesResponse> getAllByBuilding(BuildingDTO buildingDTO) {
-        //System.out.println(" In building type service : " + buildingDTO.getTypes());// TANG_TRET, NGUYEN_CAN
+        List<String> types = Optional.ofNullable(buildingDTO.getTypes()).orElse(Collections.emptyList());
+        return Arrays.stream(BuildingTypesEnum.values())
+                .map(item -> {
+                    BuildingTypesResponse response = new BuildingTypesResponse();
+                    response.setCode(item.name());
+                    response.setName(item.getBuildingTypeValue());
+                    if (types.contains(item.name())) {
+                        response.setChecked("checked");
+                    }
+                    return response;
+                })
+                .collect(Collectors.toList());
+    }
+
+/*    @Override
+    public List<BuildingTypesResponse> getAllByBuilding(BuildingDTO buildingDTO) {
         List<BuildingTypesResponse> result = new ArrayList<>();
         for (BuildingTypesEnum item : BuildingTypesEnum.values()) {    // TANG_TRET, NGUYEN_CAN, noi_that
             BuildingTypesResponse types = new BuildingTypesResponse(); // code, name, checked
@@ -42,5 +58,5 @@ public class BuildingTypeService implements IBuildingTypeService {
             result.add(types);
         }
         return result;
-    }
+    }*/
 }

@@ -82,8 +82,7 @@ public class CustomerService implements ICustomerService {
 			customerEntity.setUserEntities(customerId.getUserEntities());
 			customerEntity.setTransactionEntities(customerId.getTransactionEntities());
 		}
-		CustomerEntity entity = customerRepository.save(customerEntity);
-		return customerConverter.convertToDto(entity);
+		return customerConverter.convertToDto(customerRepository.save(customerEntity));
 	}
 
 	@Override
@@ -115,6 +114,20 @@ public class CustomerService implements ICustomerService {
 		customerRepository.save(customer);
 	}
 
+	@Override
+	public CustomerDTO findById(Long id) {
+		return id != null ? customerConverter.convertToDto(customerRepository.findById(id).get()) : null;
+	}
+
+	@Override
+	public Map<String, String> transactions() {
+		Map<String, String> result = new HashMap<>();
+		for (TransactionsEnum transaction : TransactionsEnum.values()) {
+			result.put(transaction.toString(), transaction.getTransactionTypeValue());
+		}
+		return result;
+	}
+
 	// Sử dụng java 7 - task: giao khách hàng cho nhân viên quản lí
 	// test ok !
 /*	@Override
@@ -130,19 +143,5 @@ public class CustomerService implements ICustomerService {
 			System.out.println("Error assignmentBuilding service");
 		}
 	}*/
-
-	@Override
-	public CustomerDTO findById(Long id) {
-		return id != null ? customerConverter.convertToDto(customerRepository.findById(id).get()) : null;
-	}
-
-	@Override
-	public Map<String, String> transactions() {
-		Map<String, String> result = new HashMap<>();
-		for (TransactionsEnum transaction : TransactionsEnum.values()) {
-			result.put(transaction.toString(), transaction.getTransactionTypeValue());
-		}
-		return result;
-	}
 
 }
