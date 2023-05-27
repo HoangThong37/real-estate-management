@@ -2,14 +2,19 @@ package com.laptrinhjavaweb.converter;
 
 import com.laptrinhjavaweb.dto.TransactionDTO;
 import com.laptrinhjavaweb.dto.response.TransactionResponse;
+import com.laptrinhjavaweb.dto.response.TransactionTypesResponse;
 import com.laptrinhjavaweb.entity.TransactionEntity;
+import com.laptrinhjavaweb.enums.TransactionsEnum;
 import com.laptrinhjavaweb.repository.CustomerRepository;
 import com.laptrinhjavaweb.service.impl.CustomerService;
+import com.laptrinhjavaweb.utils.DateUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +48,7 @@ public class TransactionConverter {
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setNote(dto.getNote());
         transactionDTO.setCustomerId(dto.getCustomer().getId());
-        transactionDTO.setCustomerId(dto.getCustomer().getId());
+        //transactionDTO.setCreatedDate(new SimpleDateFormat("dd/MM/yyyy").format(dto.getCreatedDate()));
 
         return transactionDTO;
     }

@@ -53,7 +53,7 @@ public class CustomerAPI {
 
     // assignment customer by staff
     @PostMapping("/assignment")
-    public Long assignmentBuilding(@RequestBody(required = false) AssignmentDTO assignmentDTO) throws NotFoundException {
+    public Long assignmentCustomer(@RequestBody(required = false) AssignmentDTO assignmentDTO) throws NotFoundException {
         customerService.assignmentCustomer(assignmentDTO);
         return assignmentDTO.getCustomerId();
     }

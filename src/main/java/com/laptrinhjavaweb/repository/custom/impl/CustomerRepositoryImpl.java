@@ -32,7 +32,8 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
             StringBuilder sql = new StringBuilder("SELECT * from customer as c ");
             sql = customerJoinQuerry(builder, sql);
             sql.append(" where 1 = 1 ");
-            sql = customerSqlWithBuilder(builder, sql);
+            sql = customerSqlPart1WithBuilder(builder, sql);
+            sql = customerSqlPart2WithBuilder(builder, sql);
             sql.append(" LIMIT ").append(pageable.getPageSize()).append("\n")
                .append(" OFFSET ").append(pageable.getOffset());
             Query query = entityManager.createNativeQuery(sql.toString(), CustomerEntity.class);
@@ -44,17 +45,18 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         }
     }
 
+
     private StringBuilder customerJoinQuerry(CustomerSearchBuilder builder, StringBuilder sql) {
         if (ValidateUtils.isValid(builder.getStaffId())) {
-            sql.append( " inner join assignmentcustomer as ac on ac.building_id = c.id inner " +
-                        " join user as u on ab.user_id = u.id ");
+            sql.append( " inner join assignmentcustomer as ac on ac.customer_id = c.id " +
+                        " inner join user as u on ac.staff_id = u.id ");
         }
         return sql;
     }
 
     // sử dụng java reflection
     // name, email, phone.
-    private StringBuilder customerSqlWithBuilder(CustomerSearchBuilder builder, StringBuilder sql) {
+    private StringBuilder customerSqlPart1WithBuilder(CustomerSearchBuilder builder, StringBuilder sql) {
         Field[] fields = CustomerSearchBuilder.class.getDeclaredFields();
         try {
             for (Field field : fields) {
@@ -72,6 +74,13 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        }
+        return sql;
+    }
+
+    private StringBuilder customerSqlPart2WithBuilder(CustomerSearchBuilder builder, StringBuilder sql) {
+        if (ValidateUtils.isValid(builder.getStaffId())) {
+            sql.append(" and u.id = " + builder.getStaffId());
         }
         return sql;
     }

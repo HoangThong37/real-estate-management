@@ -93,7 +93,7 @@
                 <div class="col-md-12">
                     <c:forEach var="item" items="${transactionMap}">
                         <div class="row">
-                            <div>
+                            <div class="col-xs-12">
                                 <c:if test="${not empty customerEdit.id}">
                                     <div class="col-md-2">
                                         <h4 style="color: darkred">${item.value}</h4>

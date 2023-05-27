@@ -7,6 +7,7 @@ public class TransactionDTO extends AbstractDTO {
     private String note;
     private Long customerId;  // khách hàng
 
+
     public String getCode() {
         return code;
     }
