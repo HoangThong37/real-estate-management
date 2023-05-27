@@ -1,8 +1,6 @@
 package com.laptrinhjavaweb.dto.request;
 
 import com.laptrinhjavaweb.dto.AbstractDTO;
-import com.laptrinhjavaweb.dto.BuildingSearchParent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class BuildingSearchRequest extends AbstractDTO {
     private Integer rentAreaTo;
     private Integer rentPriceFrom;    // giá thuê từ
     private Integer rentPriceTo;      // giá thuê đến
-    private Integer staffId;          // nhân viên phụ trách
+    private Long staffId;          // nhân viên phụ trách
     private List<String> types = new ArrayList<>();
     private String managerName;
     private Integer managerPhone;
@@ -138,11 +136,11 @@ public class BuildingSearchRequest extends AbstractDTO {
         this.rentPriceTo = rentPriceTo;
     }
 
-    public Integer getStaffId() {
+    public Long getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Integer staffId) {
+    public void setStaffId(Long staffId) {
         this.staffId = staffId;
     }
 

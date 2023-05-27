@@ -17,7 +17,7 @@ public class BuildingSearchBuilder {
     private Integer rentPriceTo;   // giá thuê đến
     private String managerName;
     private Integer managerPhone;
-    private Integer staffID;       // chọn nhân viên phụ trách
+    private Long staffID;       // chọn nhân viên phụ trách
     private List<String> types;    // chọn loại tòa nhà mong muốn
 
     public String getName() {
@@ -76,7 +76,7 @@ public class BuildingSearchBuilder {
         return managerPhone;
     }
 
-    public Integer getStaffID() {
+    public Long getStaffID() {
         return staffID;
     }
 
@@ -118,7 +118,7 @@ public class BuildingSearchBuilder {
         private Integer rentPriceTo;
         private String managerName;
         private Integer managerPhone;
-        private Integer staffID;
+        private Long staffID;
         private List<String> types;
 
         public Builder setName(String name) {
@@ -215,7 +215,7 @@ public class BuildingSearchBuilder {
 
 
 
-        public Builder setStaffID(Integer staffID) {
+        public Builder setStaffID(Long staffID) {
             this.staffID = staffID;
             return this;
         }

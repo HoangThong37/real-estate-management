@@ -9,6 +9,7 @@ import com.laptrinhjavaweb.dto.request.BuildingDeleteRequest;
 import com.laptrinhjavaweb.dto.request.BuildingSearchRequest;
 import com.laptrinhjavaweb.dto.response.BuildingSearchResponse;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.security.utils.SecurityUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import com.laptrinhjavaweb.enums.BuildingTypesEnum;
 import com.laptrinhjavaweb.repository.BuildingRepository;
@@ -143,18 +144,6 @@ public class BuildingService implements IBuildingService {
 		}
 	}
 
-//	@Override
-//	@Transactional
-//	public void assignmentBuilding(AssignmentDTO assignmentDTO) {
-//		try {
-//			BuildingEntity buildingEntity = buildingRepository.findById(assignmentDTO.getBuildingid()).get();
-//			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(assignmentDTO.getStaffIds())));
-//			buildingRepository.save(buildingEntity);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("Error assignmentBuilding service");
-//		}
-//	}
 
 	@Override
 	@Transactional
@@ -168,6 +157,11 @@ public class BuildingService implements IBuildingService {
 	@Override
 	public List<BuildingSearchResponse> pageBuilding(Pageable pageable, BuildingSearchRequest buildingSearchRequest) {
 		List<BuildingSearchResponse> result = new ArrayList<>();
+		// Nếu staff thì chỉ xem đc building mình quản lí
+		if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
+			buildingSearchRequest.setStaffId(SecurityUtils.getPrincipal().getId());
+		}
+
 		BuildingSearchBuilder buildingSearchBuilder = convertParamToBuilder(buildingSearchRequest);
 		List<BuildingEntity> buildingEntities = buildingRepository.pageBuilding(pageable, buildingSearchBuilder);
 		for (BuildingEntity item : buildingEntities) {
@@ -228,5 +222,16 @@ public class BuildingService implements IBuildingService {
         buildingRepository.deleteById(buildingDelete.getId());
     }*/
 
-
+/*	@Override
+	@Transactional
+	public void assignmentBuilding(AssignmentDTO assignmentDTO) {
+		try {
+			BuildingEntity buildingEntity = buildingRepository.findById(assignmentDTO.getBuildingid()).get();
+			buildingEntity.setUserEntities(new HashSet<>(userRepository.findAllById(assignmentDTO.getStaffIds())));
+			buildingRepository.save(buildingEntity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error assignmentBuilding service");
+		}
+	}*/
 }

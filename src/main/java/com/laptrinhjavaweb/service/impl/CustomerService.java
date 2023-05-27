@@ -11,6 +11,7 @@ import com.laptrinhjavaweb.entity.CustomerEntity;
 import com.laptrinhjavaweb.enums.TransactionsEnum;
 import com.laptrinhjavaweb.repository.CustomerRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.security.utils.SecurityUtils;
 import com.laptrinhjavaweb.service.ICustomerService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public List<CustomerResponse> pageCustomer(Pageable pageable, CustomerRequest customerRequest) {
 		List<CustomerResponse> result = new ArrayList<>();
+		// Nếu staff thì chỉ xem đc customer mình quản lí
+		if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
+			customerRequest.setStaffId(SecurityUtils.getPrincipal().getId());
+		}
+
 		CustomerSearchBuilder customerSearch = convertParamToBuilder(customerRequest);
 		List<CustomerEntity> listCustomer = customerRepository.pageCustomer(pageable, customerSearch);
 		for (CustomerEntity item : listCustomer) {
