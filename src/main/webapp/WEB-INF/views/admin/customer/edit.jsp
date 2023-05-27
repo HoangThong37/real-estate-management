@@ -92,39 +92,26 @@
             <div class="row">
                 <div class="col-md-12">
                     <c:forEach var="item" items="${transactionMap}">
- <%--                       <div class="page-header">
-                            <c:if test="${not empty customerEdit.id}">
-                                <div class="col-md-2">
-                                    <h1>${item.value}</h1>
-                                </div>
-                                <div class="col-md-10">
-                                    <button class="btn btn-white btn-info btn-bold"
-                                            type="button"
-                                            value="${item.key}"
-                                            data-toggle="tooltip" title="Thêm Giao Dịch"
-                                            onclick="btnAddTransaction(value)">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                            </c:if>
-
-                            <c:if test="${empty customerEdit.id}">
-                                <h1>${item.value}</h1>
-                            </c:if>
-                        </div>--%>
-                        <div>
+                        <div class="row">
                             <div>
-                                <div class="col-md-2">
+                                <c:if test="${not empty customerEdit.id}">
+                                    <div class="col-md-2">
+                                        <h4 style="color: darkred">${item.value}</h4>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <button class="btn btn-white btn-info btn-bold"
+                                                type="button"
+                                                value="${item.key}"
+                                                data-toggle="tooltip" title="Thêm Giao Dịch"
+                                                onclick="btnAddTransaction(value)">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </c:if>
+
+                                <c:if test="${empty customerEdit.id}">
                                     <h4 style="color: darkred">${item.value}</h4>
-                                </div>
-                                <div class="col-md-10">
-                                    <button class="btn btn-white btn-info btn-bold"
-                                            data-toggle="tooltip"
-                                            title="Thêm giao dịch"
-                                            value="${item.key}" onclick="btnAddTransaction(value)">
-                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                                </c:if>
                             </div>
                         </div>
 
