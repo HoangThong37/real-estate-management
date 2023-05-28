@@ -175,13 +175,13 @@
     });
 
     function warningBeforeDelete() {
-        showAlertBeforeDelete(function () {
+        showAlertBeforeDeletes(function () {
             event.preventDefault();
             var dataArray = $('tbody input[type=checkbox]:checked').map(function () {
                 return $(this).val();
             }).get();
             deleteUser(dataArray);
-        });
+        }, "user");
     }
 
     function deleteUser(data) {

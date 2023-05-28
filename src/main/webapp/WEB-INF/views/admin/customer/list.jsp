@@ -335,14 +335,14 @@
     }
 
     function warningDeleteOne(data) {
-        showAlertBeforeDeleteCustomer(function () {
+        showAlertBeforeDeletes(function () {
             event.preventDefault();
             var dataArray  = [];
             if (data != null) {
                 dataArray.push(data);
             }
             deleteCustomer(dataArray);
-        });
+        }, "customer");
     }
 
     function deleteCustomer(data) {

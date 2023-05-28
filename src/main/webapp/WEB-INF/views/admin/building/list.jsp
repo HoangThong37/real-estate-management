@@ -461,14 +461,14 @@
     }
 
     function warningDeleteOne(data) {
-        showAlertBeforeDeleteBuilding(function () {
+        showAlertBeforeDeletes(function () {
             event.preventDefault();
             var dataArray  = [];
             if (data != null) {
                 dataArray.push(data);
             }
             deleteBuilding(dataArray);
-        });
+        }, "building");
     }
 
     function deleteBuilding(data) {
