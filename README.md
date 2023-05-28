@@ -14,7 +14,7 @@
  5. Hiển thị tất cả tòa nhà với role quản lí. Role nhân viên chỉ thấy các tòa nhà được giao.
  - Sử dụng design partern Builder trong task : Tìm kiếm tòa nhà.
 
-## Chức năng quản lí customer bao gồm: 
+## Chức năng quản lí khách hàng bao gồm: 
  1. Tìm kiếm customer theo các field khác nhau
  2. Thêm, sửa, xóa customer.
  3. Giao customer cho nhân viên quản lí.
@@ -55,6 +55,8 @@
 - Các packages trong project được chia theo tính chức năng và rõ ràng.
 - Các đoạn code được viết rõ ràng, dễ đọc và dễ hiểu. 
 - Project được đóng gói và chạy bằng Maven.
+- Review p1 : Xây dựng website với tư duy logic, giải quyết vấn đề, bài toán không sử dụng, phụ thuộc vào framework có sẵn.
+- Review p2 : Áp dụng framework vào việc xây dựng website.
 
 ## HOÀNG TRUNG THÔNG - 2023
 ### Not only try but try your best. good luck everyone !
